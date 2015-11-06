@@ -216,12 +216,16 @@ printf "        SSLProtocol all -SSLv2 -SSLv3\n" >> /etc/apache2/includes/vhost-
 printf "        SSLHonorCipherOrder On\n" >> /etc/apache2/includes/vhost-ssl
 printf "        SSLCipherSuite ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS\n" >> /etc/apache2/includes/vhost-ssl
 
+chown root:www-data /etc/apache2/includes/vshost-ssl
+
 ##### CONFIGURE THE DEFAULT SITE #####
 
-##### CREATE DIRECTORY STRUCTURE FOR DEFAULT SITE #####
+##### PREPARE DIRECTORY STRUCTURE FOR DEFAULT SITE #####
 
 printf "\n" >> /var/log/apt/auto-install.log
 printf "Create the Default Site directory structure\n\n" >> /var/log/apt/auto-install.log
+
+rm -rf /var/www/html
 
 mkdir $WEBROOT/http
 mkdir $WEBROOT/https
@@ -231,6 +235,7 @@ mkdir $WEBROOT/certs/$YEAR
 mkdir $WEBROOT/certs/$YEAR/$SSLPROVIDER
 mkdir $LOGDIR
 mkdir $WEBROOT/sockets
+mkdir $WEBROOT/tmp
 
 chown -r $USER:$USER $WEBROOT
 chmod -r 754 $WEBROOT
@@ -243,23 +248,6 @@ cp /etc/php5/fpm/php.ini /etc/php5/fpm/php.ini.original
 
 #sed -i '.bak' 's/find/replace' file.txt
 
-##### SETUP THE DEFAULT SITE FASTCGI #####
-
-##### CONFIG PHP-FPM #####
-
-mv /etc/php5/fpm/pool.d/www.conf /etc/php5/fpm/pool.d/www.conf.original
-
-##### ADD FASTCGI CONFIG FILE #####
-
-#printf "<IfModule mod_fastcgi.c>\n" > /etc/apache2/mods-available/fastcgi.conf
-#printf "\tAddType application/x-httpd-fastphp5 .php\n" >> /etc/apache2/mods-available/fastcgi.conf
-#printf "\tAction application/x-httpd-fastphp5 /php5-fcgi\n" >> /etc/apache2/mods-available/fastcgi.conf
-#printf "\tAlias /php5-fcgi /usr/lib/cgi-bin/php5-fcgi\n" >> /etc/apache2/mods-available/fastcgi.conf
-#printf "\tFastCgiExternalServer /usr/lib/cgi-bin/php5-fcgi -socket /var/run/php5-fpm.sock -pass-header Authorization\n" >> /etc/apache2/mods-available/fastcgi.conf
-#printf "\t<Directory /usr/lib/cgi-bin>\n" >> /etc/apache2/mods-available/fastcgi.conf
-#printf "\t\tRequire all granted\n" >> /etc/apache2/mods-available/fastcgi.conf
-#printf "\t</Directory>\n" >> /etc/apache2/mods-available/fastcgi.conf
-#printf "</IfModule>" >> /etc/apache2/mods-available/fastcgi.conf
 
 ##### MODIFY DEFAULT VHOST CONFIGURATION FILES #####
 
@@ -293,16 +281,14 @@ printf "<VirtualHost *:80>\n" > /etc/apache2/sites-available/default.conf
 printf "  ServerName $DOMAIN\n" >> /etc/apache2/sites-available/default.conf
 printf "  ServerAlias $HOSTNAME.$DOMAIN\n\n" >> /etc/apache2/sites-available/default.conf
 printf "  ServerAdmin $EMAIL\n" >> /etc/apache2/sites-available/default.conf
-printf "  DocumentRoot $WEBROOT/html\n\n" >> /etc/apache2/sites-available/default.conf
-printf "  ErrorLog ${APACHE_LOG_DIR}/error.log\n" >> /etc/apache2/sites-available/default.conf
-printf "  CustomLog ${APACHE_LOG_DIR}/access.log combined\n\n" >> /etc/apache2/sites-available/default.conf
-printf "  ErrorLog $WEBROOT/logs/error.log\n" >> /etc/apache2/sites-available/default.conf
-printf "  CustomLog $WEBROOT/logs/access.log combined\n" >> /etc/apache2/sites-available/default.conf
+printf "  DocumentRoot $WEBROOT/http\n\n" >> /etc/apache2/sites-available/default.conf
+printf "  ErrorLog $LOGDIR/error.log\n" >> /etc/apache2/sites-available/default.conf
+printf "  CustomLog $LOGDIR/access.log combined\n" >> /etc/apache2/sites-available/default.conf
 printf "  <IfModule mod_fastcgi.c>\n" >> /etc/apache2/sites-available/default.conf
 printf "      AddType application/x-httpd-fastphp5 .php\n" >> /etc/apache2/sites-available/default.conf
 printf "      Action application/x-httpd-fastphp5 /php5-fcgi\n" >> /etc/apache2/sites-available/default.conf
 printf "      Alias /php5-fcgi /usr/lib/cgi-bin/php5-fcgi_$DOMAIN\n" >> /etc/apache2/sites-available/default.conf
-printf "      FastCgiExternalServer /usr/lib/cgi-bin/php5-fcgi_$DOMAIN -socket $WEBROOT/sockets/$DOMAIN.sock -pass-header Authorization\n" >> /etc/apache2/sites-available/default.conf
+printf "      FastCgiExternalServer /usr/lib/cgi-bin/php5-fcgi_$DOMAIN -socket $WEBROOT/sockets/$DOMAIN.sock -pass-header Authorization -user administrator -group administrator\n" >> /etc/apache2/sites-available/default.conf
 printf "  </IfModule>\n" >> /etc/apache2/sites-available/default.conf
 printf "</VirtualHost>\n" >> /etc/apache2/sites-available/default.conf
 
@@ -396,13 +382,16 @@ printf "        </IfModule>\n\n" >> /etc/apache2/sites-available/default-ssl.con
 printf "        LogLevel warn\n\n" >> /etc/apache2/sites-available/default-ssl.conf
 printf "        ErrorLog $WEBROOT/logs/error-ssl.log\n" >> /etc/apache2/sites-available/default-ssl.conf
 printf "        CustomLog $WEBROOT/logs/access-ssl.log combined\n\n" >> /etc/apache2/sites-available/default-ssl.conf
+
 printf "        Include /etc/apache2/includes/vhost-ssl\n\n" >> /etc/apache2/sites-available/default-ssl.conf
+
 printf "        #   The StartSSL Certificate\n\n" >> /etc/apache2/sites-available/default-ssl.conf
 printf "        SSLCertificateFile $WEBROOT/certs/$YEAR/$SSLPROVIDER/ssl.crt\n" >> /etc/apache2/sites-available/default-ssl.conf
 printf "        SSLCertificateKeyFile $WEBROOT/certs/$YEAR/$SSLPROVIDER/ssl.key\n" >> /etc/apache2/sites-available/default-ssl.conf
 printf "        SSLCertificateChainFile $WEBROOT/certs/$YEAR/$SSLPROVIDER/sub.class2.server.ca.pem\n" >> /etc/apache2/sites-available/default-ssl.conf
 printf "        SSLCACertificateFile $WEBROOT/certs/$YEAR/$SSLPROVIDER/ca.pem\n\n" >> /etc/apache2/sites-available/default-ssl.conf
 printf "        \n" >> /etc/apache2/sites-available/default-ssl.conf
+
 printf "        #   SSL Protocol Adjustments:\n" >> /etc/apache2/sites-available/default-ssl.conf
 printf "        #   The safe and default but still SSL/TLS standard compliant shutdown\n" >> /etc/apache2/sites-available/default-ssl.conf
 printf "        #   approach is that mod_ssl sends the close notify alert but doesn't wait for\n" >> /etc/apache2/sites-available/default-ssl.conf
@@ -431,7 +420,7 @@ printf "        BrowserMatch \"MSIE [2-6]\" \x5C\n" >> /etc/apache2/sites-availa
 printf "            nokeepalive ssl-unclean-shutdown \x5C\n" >> /etc/apache2/sites-available/default-ssl.conf
 printf "            downgrade-1.0 force-response-1.0\n" >> /etc/apache2/sites-available/default-ssl.conf
 printf "            # MSIE 7 and newer should be able to use keepalive\n" >> /etc/apache2/sites-available/default-ssl.conf
-printf "        BrowserMatch \"MSIE [17-9]\" ssl-unclean-shutdown\n\n" >> /etc/apache2/sites-available/default-ssl.conf
+printf "        BrowserMatch \"MSIE [17-9]\" ssl-unclean-shutdown\n\n" >> /etc/apache2/sites-available/ldefault-ssl.conf
 
 printf "    </VirtualHost>\n" >> /etc/apache2/sites-available/default-ssl.conf
 printf "</IfModule>\n" >> /etc/apache2/sites-available/default-ssl.conf
@@ -453,6 +442,26 @@ printf "openssl req -nodes $ALGORITHM -newkey rsa:$KEYSIZE -keyout $WEBROOT/cert
 openssl req -nodes $ALGORITHM -newkey rsa:$KEYSIZE -keyout $WEBROOT/certs/$YEAR/$SSLPROVIDER/ssl.key -out $WEBROOT/certs/$YEAR/$SSLPROVIDER/ssl.csr -subj "/C=$COUNTRY/ST=$STATE/L=$LOCALITY/O=$ORGANIZATION/OU=$ORGANIZATIONALUNIT/CN=$DOMAIN" >> /var/log/apt/auto-install.log
 
 a2enmod actions ssl
+a2ensite default.conf
+a2ensite default-ssl.conf
+
+##### SETUP THE DEFAULT SITE FASTCGI #####
+
+##### CONFIG PHP-FPM #####
+
+mv /etc/php5/fpm/pool.d/www.conf /etc/php5/fpm/pool.d/www.conf.original
+
+##### ADD FASTCGI CONFIG FILE #####
+
+#printf "<IfModule mod_fastcgi.c>\n" > /etc/apache2/mods-available/fastcgi.conf
+#printf "\tAddType application/x-httpd-fastphp5 .php\n" >> /etc/apache2/mods-available/fastcgi.conf
+#printf "\tAction application/x-httpd-fastphp5 /php5-fcgi\n" >> /etc/apache2/mods-available/fastcgi.conf
+#printf "\tAlias /php5-fcgi /usr/lib/cgi-bin/php5-fcgi\n" >> /etc/apache2/mods-available/fastcgi.conf
+#printf "\tFastCgiExternalServer /usr/lib/cgi-bin/php5-fcgi -socket /var/run/php5-fpm.sock -pass-header Authorization \n" >> /etc/apache2/mods-available/fastcgi.conf
+#printf "\t<Directory /usr/lib/cgi-bin>\n" >> /etc/apache2/mods-available/fastcgi.conf
+#printf "\t\tRequire all granted\n" >> /etc/apache2/mods-available/fastcgi.conf
+#printf "\t</Directory>\n" >> /etc/apache2/mods-available/fastcgi.conf
+#printf "</IfModule>" >> /etc/apache2/mods-available/fastcgi.conf
 
 
 
@@ -561,7 +570,7 @@ printf "        </Directory>\n\n" >> /etc/apache2/sites-available/default-ssl.co
 
 
 
-
+disable_functions = “apache_child_terminate, apache_setenv, define_syslog_variables, escapeshellarg, escapeshellcmd, eval, exec, fp, fput, ftp_connect, ftp_exec, ftp_get, ftp_login, ftp_nb_fput, ftp_put, ftp_raw, ftp_rawlist, highlight_file, ini_alter, ini_get_all, ini_restore, inject_code, mysql_pconnect, openlog, passthru, php_uname, phpAds_remoteInfo, phpAds_XmlRpc, phpAds_xmlrpcDecode, phpAds_xmlrpcEncode, popen, posix_getpwuid, posix_kill, posix_mkfifo, posix_setpgid, posix_setsid, posix_setuid, posix_setuid, posix_uname, proc_close, proc_get_status, proc_nice, proc_open, proc_terminate, shell_exec, syslog, system, xmlrpc_entity_decode”
 
 
 
