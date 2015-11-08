@@ -238,6 +238,7 @@ mkdir $WEBROOT/sockets
 mkdir $WEBROOT/tmp
 
 chown -r $USER:$USER $WEBROOT
+
 chmod -r 754 $WEBROOT
 find $WEBROOT -type d -exec chmod 771 {} \;
 
