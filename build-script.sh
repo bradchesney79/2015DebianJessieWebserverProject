@@ -450,6 +450,14 @@ a2enmod actions fastcgi alias ssl mpm_worker
 a2ensite default.conf
 a2ensite default-ssl.conf
 
+printf "\n" >> /var/log/apt/auto-install.log
+printf "Set Apache PHP Module\n" >> /var/log/apt/auto-install.log
+apachectl -V | grep -i mpm >> /var/log/apt/auto-install.log
+printf "PHP Module Thread Safety\n" >> /var/log/apt/auto-install.log
+php -i | grep Thread >> /var/log/apt/auto-install.log
+
+
+
 ##### SETUP THE DEFAULT SITE FASTCGI #####
 
 ##### CONFIG PHP-FPM #####
