@@ -129,7 +129,7 @@ printf "Install the first batch of packages for Apache & PHP\n\n" >> /var/log/au
 echo iptables-persistent iptables-persistent/autosave_v4 boolean true | debconf-set-selections
 echo iptables-persistent iptables-persistent/autosave_v6 boolean true | debconf-set-selections
 
-apt-get -qy install sudo tcl perl python3 apache2 tmux iptables-persistent ssh openssl openssl-blacklist libnet-ssleay-perl fail2ban libapache2-mod-fastcgi php5-fpm php5 libapache2-mod-php5 php-pear php5-curl >> /var/log/auto-install.log
+apt-get -qy install sudo tcl perl python3 apache2 tmux iptables-persistent ssh openssl openssl-blacklist libnet-ssleay-perl fail2ban libapache2-mod-fastcgi php5-fpm libapache2-mod-php5 php-pear php5-curl >> /var/log/auto-install.log
 
 ##### CLEAN UP #####
 
@@ -216,7 +216,7 @@ printf "        SSLProtocol all -SSLv2 -SSLv3\n" >> /etc/apache2/includes/vhost-
 printf "        SSLHonorCipherOrder On\n" >> /etc/apache2/includes/vhost-ssl
 printf "        SSLCipherSuite ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS\n" >> /etc/apache2/includes/vhost-ssl
 
-chown root:www-data /etc/apache2/includes/vshost-ssl
+chown root:www-data /etc/apache2/includes/vhost-ssl
 
 ##### CONFIGURE THE DEFAULT SITE #####
 
@@ -240,8 +240,10 @@ mkdir $WEBROOT/tmp
 chown -r $USER:$USER $WEBROOT
 
 chmod -r 754 $WEBROOT
-find $WEBROOT -type d -exec chmod 771 {} \;
+find $WEBROOT -type d -exec chmod 751 {} \;
 
+chown -R www-data:www-data $WEBROOT/sockets
+chmod -R 666 $WEBROOT/sockets
 
 ##### CONFIGURE PHP #####
 
@@ -289,7 +291,7 @@ printf "  <IfModule mod_fastcgi.c>\n" >> /etc/apache2/sites-available/default.co
 printf "      AddType application/x-httpd-fastphp5 .php\n" >> /etc/apache2/sites-available/default.conf
 printf "      Action application/x-httpd-fastphp5 /php5-fcgi\n" >> /etc/apache2/sites-available/default.conf
 printf "      Alias /php5-fcgi /usr/lib/cgi-bin/php5-fcgi_$DOMAIN\n" >> /etc/apache2/sites-available/default.conf
-printf "      FastCgiExternalServer /usr/lib/cgi-bin/php5-fcgi_$DOMAIN -socket $WEBROOT/sockets/$DOMAIN.sock -pass-header Authorization -user administrator -group administrator\n" >> /etc/apache2/sites-available/default.conf
+printf "      FastCgiExternalServer /usr/lib/cgi-bin/php5-fcgi_$DOMAIN -socket $WEBROOT/sockets/$DOMAIN.sock -pass-header Authorization -user administrator -group administrator -idle-timeout 3600\n" >> /etc/apache2/sites-available/default.conf
 printf "  </IfModule>\n" >> /etc/apache2/sites-available/default.conf
 printf "</VirtualHost>\n" >> /etc/apache2/sites-available/default.conf
 
@@ -442,7 +444,9 @@ printf "openssl req -nodes $ALGORITHM -newkey rsa:$KEYSIZE -keyout $WEBROOT/cert
 
 openssl req -nodes $ALGORITHM -newkey rsa:$KEYSIZE -keyout $WEBROOT/certs/$YEAR/$SSLPROVIDER/ssl.key -out $WEBROOT/certs/$YEAR/$SSLPROVIDER/ssl.csr -subj "/C=$COUNTRY/ST=$STATE/L=$LOCALITY/O=$ORGANIZATION/OU=$ORGANIZATIONALUNIT/CN=$DOMAIN" >> /var/log/apt/auto-install.log
 
-a2enmod actions ssl
+a2dismod mpm_prefork
+a2enmod actions fastcgi alias ssl mpm_worker
+
 a2ensite default.conf
 a2ensite default-ssl.conf
 
@@ -465,22 +469,6 @@ mv /etc/php5/fpm/pool.d/www.conf /etc/php5/fpm/pool.d/www.conf.original
 #printf "</IfModule>" >> /etc/apache2/mods-available/fastcgi.conf
 
 
-
-
-# prefork MPM
-# StartServers: number of server processes to start
-# MinSpareServers: minimum number of server processes which are kept spare
-# MaxSpareServers: maximum number of server processes which are kept spare
-# MaxRequestWorkers: maximum number of server processes allowed to start
-# MaxConnectionsPerChild: maximum number of requests a server process serves
-
-<IfModule mpm_prefork_module>
-        StartServers              2
-        MinSpareServers           6
-        MaxSpareServers           12
-        MaxRequestWorkers         30
-        MaxConnectionsPerChild    3000
-</IfModule>
 
 
 
@@ -569,6 +557,9 @@ printf "        </Directory>\n\n" >> /etc/apache2/sites-available/default-ssl.co
 
 
 
+sudo sed -i "s/listen =.*/listen = 127.0.0.1:9000/" /etc/php5/fpm/pool.d/www.conf
+
+apt-get install php5-mysql php5-curl php5-gd php5-gmp php5-mcrypt php5-memcached php5-imagick php5-intl php5-xdebug
 
 
 disable_functions = “apache_child_terminate, apache_setenv, define_syslog_variables, escapeshellarg, escapeshellcmd, eval, exec, fp, fput, ftp_connect, ftp_exec, ftp_get, ftp_login, ftp_nb_fput, ftp_put, ftp_raw, ftp_rawlist, highlight_file, ini_alter, ini_get_all, ini_restore, inject_code, mysql_pconnect, openlog, passthru, php_uname, phpAds_remoteInfo, phpAds_XmlRpc, phpAds_xmlrpcDecode, phpAds_xmlrpcEncode, popen, posix_getpwuid, posix_kill, posix_mkfifo, posix_setpgid, posix_setsid, posix_setuid, posix_setuid, posix_uname, proc_close, proc_get_status, proc_nice, proc_open, proc_terminate, shell_exec, syslog, system, xmlrpc_entity_decode”
