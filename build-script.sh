@@ -423,7 +423,7 @@ printf "        BrowserMatch \"MSIE [2-6]\" \x5C\n" >> /etc/apache2/sites-availa
 printf "            nokeepalive ssl-unclean-shutdown \x5C\n" >> /etc/apache2/sites-available/default-ssl.conf
 printf "            downgrade-1.0 force-response-1.0\n" >> /etc/apache2/sites-available/default-ssl.conf
 printf "            # MSIE 7 and newer should be able to use keepalive\n" >> /etc/apache2/sites-available/default-ssl.conf
-printf "        BrowserMatch \"MSIE [17-9]\" ssl-unclean-shutdown\n\n" >> /etc/apache2/sites-available/ldefault-ssl.conf
+printf "        BrowserMatch \"MSIE [17-9]\" ssl-unclean-shutdown\n\n" >> /etc/apache2/sites-available/default-ssl.conf
 
 printf "    </VirtualHost>\n" >> /etc/apache2/sites-available/default-ssl.conf
 printf "</IfModule>\n" >> /etc/apache2/sites-available/default-ssl.conf
