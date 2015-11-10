@@ -85,19 +85,19 @@ printf "\nPASSWORD - $PASSWORD\n\n" >> ${EXECUTIONLOG}
 
 printf "\nSSLPROVIDER - $SSLPROVIDER\n\n" >> ${EXECUTIONLOG}
 
-printf "\n########## CREATE A PLACE TO STORE THE OUTPUT FOR SHARING TROUBLESHOOTING DATA###" >> ${EXECUTIONLOG}
+printf "\n########## CREATE A PLACE TO STORE THE OUTPUT FOR SHARING TROUBLESHOOTING DATA###\n" >> ${EXECUTIONLOG}
 
 printf "Location of troubleshooting files: $TROUBLESHOOTINGFILES\n\n"
 mkdir -pv ${TROUBLESHOOTINGFILES} >> ${EXECUTIONLOG}
 
-printf "\n########## CONFIGURE THE HOSTNAME ###" >> ${EXECUTIONLOG}
+printf "\n########## CONFIGURE THE HOSTNAME ###\n" >> ${EXECUTIONLOG}
 
 printf "\n" >> ${EXECUTIONLOG}
 printf "Set the hostname\n\n" >> ${EXECUTIONLOG}
 
 hostnamectl set-hostname $HOSTNAME >>  >> ${EXECUTIONLOG}
 
-printf "\n########## UPDATE THE HOSTS FILE ###" >> ${EXECUTIONLOG}
+printf "\n########## UPDATE THE HOSTS FILE ###\n" >> ${EXECUTIONLOG}
 
 printf "\n" >> ${EXECUTIONLOG}
 printf "Fully populate hosts file\n\n" >> ${EXECUTIONLOG}
@@ -114,7 +114,7 @@ printf "$IPV6\t$HOSTNAME.$DOMAIN $HOSTNAME" >> /etc/hosts
 
 cp /etc/hosts ${TROUBLESHOOTINGFILES}/etc-hosts
 
-printf "\n########## SET THE TIMEZONE & TIME ###" >> ${EXECUTIONLOG}
+printf "\n########## SET THE TIMEZONE & TIME ###\n" >> ${EXECUTIONLOG}
 
 printf "\n" >> /var/log/apt/auto-install.log
 printf "Set the timezone to UTC \n\n" >> /var/log/apt/auto-install.log
@@ -122,7 +122,7 @@ printf "Set the timezone to UTC \n\n" >> /var/log/apt/auto-install.log
 echo $TIMEZONE > /etc/timezone                     
 cp /usr/share/zoneinfo/${TIMEZONE} /etc/localtime # This sets the time
 
-printf "\n########## UPDATE APT SOURCES ###" >> ${EXECUTIONLOG}
+printf "\n########## UPDATE APT SOURCES ###\n" >> ${EXECUTIONLOG}
 
 printf "\n" >> /var/log/apt/auto-install.log
 printf "Update apt sources\n\n" >> /var/log/apt/auto-install.log
@@ -137,7 +137,7 @@ echo "deb http://backports.debian.org/debian-backports squeeze-backports main" >
 
 cp /etc/apt/sources.list ${TROUBLESHOOTINGFILES}/etc-apt-sources.list
 
-printf "\n########## UPDATE THE SYSTEM ###" >> ${EXECUTIONLOG}
+printf "\n########## UPDATE THE SYSTEM ###\n" >> ${EXECUTIONLOG}
 
 printf "\n" >> /var/log/apt/auto-install.log
 printf "Update the system\n\n" >> /var/log/apt/auto-install.log
@@ -149,7 +149,7 @@ printf "Upgrade the system\n\n" >> /var/log/apt/auto-install.log
 
 apt-get -qy dist-upgrade >> ${EXECUTIONLOG}
 
-printf "\n########## INSTALL THE FIRST BATCHES OF PACKAGES ###" >> ${EXECUTIONLOG}
+printf "\n########## INSTALL THE FIRST BATCHES OF PACKAGES ###\n" >> ${EXECUTIONLOG}
 
 printf "\n" >> ${EXECUTIONLOG}
 printf "Install the first batch of packages for Apache & PHP\n\n" >> ${EXECUTIONLOG}
@@ -159,7 +159,7 @@ echo iptables-persistent iptables-persistent/autosave_v6 boolean true | debconf-
 
 apt-get -qy install sudo tcl perl python3 apache2 tmux iptables-persistent ssh openssl openssl-blacklist libnet-ssleay-perl fail2ban libapache2-mod-fastcgi php5-fpm libapache2-mod-php5 php-pear php5-curl >> ${EXECUTIONLOG}
 
-printf "\n########## CLEAN UP ###" >> ${EXECUTIONLOG}
+printf "\n########## CLEAN UP ###\n" >> ${EXECUTIONLOG}
 
 printf "\n" >> ${EXECUTIONLOG}
 printf "First autoremove of packages\n\n" >> ${EXECUTIONLOG}
@@ -167,7 +167,7 @@ printf "First autoremove of packages\n\n" >> ${EXECUTIONLOG}
 apt-get -qy autoremove >> ${EXECUTIONLOG}
 
 
-printf "\n########## UPDATE THE IPTABLES RULES ###" >> ${EXECUTIONLOG}
+printf "\n########## UPDATE THE IPTABLES RULES ###\n" >> ${EXECUTIONLOG}
 
 printf "\n" >> /var/log/apt/auto-install.log
 printf "Update the IP tables rules\n\n" >> /var/log/apt/auto-install.log
@@ -208,29 +208,29 @@ echo "COMMIT" >> /etc/iptables/rules.v4
 
 cp /etc/iptables/rules.v4 ${TROUBLESHOOTINGFILES}/etc-iptables-rules.v4
 
-printf "\n########## APPLY THE IPTABLES RULES ###" >> ${EXECUTIONLOG}
+printf "\n########## APPLY THE IPTABLES RULES ###\n" >> ${EXECUTIONLOG}
 
 printf "\nApply the IP tables rules\n\n" >> ${EXECUTIONLOG}
 
 iptables-restore < /etc/iptables/rules.v4 >> /va
 
-printf "\n########## USING fail2ban DEFAULT CONFIG ###" >> ${EXECUTIONLOG}
+printf "\n########## USING fail2ban DEFAULT CONFIG ###\n" >> ${EXECUTIONLOG}
 
 # See /etc/fail2ban/jail.conf for additional options
 
 
-printf "\n########## CONFIGURE APACHE ###" >> ${EXECUTIONLOG}
+printf "\n########## CONFIGURE APACHE ###\n" >> ${EXECUTIONLOG}
 
-printf "\n########## CREATE A USER FOR THE DEFAULT SITE ###" >> ${EXECUTIONLOG}
-printf "\n########## THIS AIDS RESOURCE SEGREGATION ###" >> ${EXECUTIONLOG}
-printf "\n########## www-data HAS ACCESS TO ALL WEBSERVER FUN ###" >> ${EXECUTIONLOG}
+printf "\n########## CREATE A USER FOR THE DEFAULT SITE ###\n" >> ${EXECUTIONLOG}
+printf "\n########## THIS AIDS RESOURCE SEGREGATION ###\n" >> ${EXECUTIONLOG}
+printf "\n########## www-data HAS ACCESS TO ALL WEBSERVER FUN ###\n" >> ${EXECUTIONLOG}
 
 printf "\n" >> /var/log/apt/auto-install.log
 printf "Create the Default Web Site user\n\n" >> /var/log/apt/auto-install.log
 
 useradd -d $WEBROOT -p $PASSWORD -c "Default Web Site User" $USER
 
-printf "\n########## ADD SSL CONFIGURATION INCLUDE ###" >> ${EXECUTIONLOG}
+printf "\n########## ADD SSL CONFIGURATION INCLUDE ###\n" >> ${EXECUTIONLOG}
 
 printf "\n" >> /var/log/apt/auto-install.log
 printf "Write Apache SSL include file\n\n" >> /var/log/apt/auto-install.log
@@ -249,9 +249,9 @@ chown root:www-data /etc/apache2/includes/vhost-ssl
 
 cp /etc/apache2/includes/vhost-ssl ${TROUBLESHOOTINGFILES}/etc-apache2-includes-vhost-ssl >> ${EXECUTIONLOG}
 
-printf "\n########## CONFIGURE THE DEFAULT SITE ###" >> ${EXECUTIONLOG}
+printf "\n########## CONFIGURE THE DEFAULT SITE ###\n" >> ${EXECUTIONLOG}
 
-printf "\n########## PREPARE DIRECTORY STRUCTURE FOR DEFAULT SITE ###" >> ${EXECUTIONLOG}
+printf "\n########## PREPARE DIRECTORY STRUCTURE FOR DEFAULT SITE ###\n" >> ${EXECUTIONLOG}
 
 printf "\n" >> /var/log/apt/auto-install.log
 printf "Create the Default Site directory structure\n\n" >> /var/log/apt/auto-install.log
@@ -276,14 +276,14 @@ find $WEBROOT -type d -exec chmod 751 {} \;
 chown -R www-data:www-data $WEBROOT/sockets
 chmod -R 666 $WEBROOT/sockets
 
-printf "\n########## CONFIGURE PHP ###" >> ${EXECUTIONLOG}
+printf "\n########## CONFIGURE PHP ###\n" >> ${EXECUTIONLOG}
 
-cp /etc/php5/fpm/php.ini /etc/php5/fpm/php.ini.original
+cp /etc/php5/fpm/php.ini /etc/php5/fpm/php.ini.original 
 
 #sed -i '.bak' 's/find/replace' file.txt
+cp /etc/php5/fpm/php.ini ${TROUBLESHOOTINGFILES}/etc-php5-fpm-php.ini
 
-
-printf "\n########## MODIFY DEFAULT VHOST CONFIGURATION FILES ###" >> ${EXECUTIONLOG}
+printf "\n########## MODIFY DEFAULT VHOST CONFIGURATION FILES ###\n" >> ${EXECUTIONLOG}
 
 mv /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/000-default.conf.original
 
@@ -322,10 +322,12 @@ printf "  <IfModule mod_fastcgi.c>\n" >> /etc/apache2/sites-available/default.co
 printf "      AddType application/x-httpd-fastphp5 .php\n" >> /etc/apache2/sites-available/default.conf
 printf "      Action application/x-httpd-fastphp5 /php5-fcgi\n" >> /etc/apache2/sites-available/default.conf
 printf "      Alias /php5-fcgi /usr/lib/cgi-bin/php5-fcgi_$DOMAIN\n" >> /etc/apache2/sites-available/default.conf
-printf "      FastCgiExternalServer /usr/lib/cgi-bin/php5-fcgi_$DOMAIN -socket $WEBROOT/sockets/$DOMAIN.sock -pass-header Authorization -user administrator -group administrator -idle-timeout 3600\n" >> /etc/apache2/sites-available/default.conf
+printf "      FastCgiExternalServer /usr/lib/cgi-bin/php5-fcgi_$DOMAIN -socket $WEBROOT/sockets/$DOMAIN.sock -pass-header Authorization -user $USER -group $USER -idle-timeout 3600\n" >> /etc/apache2/sites-available/default.conf
 printf "  </IfModule>\n" >> /etc/apache2/sites-available/default.conf
 printf "</VirtualHost>\n" >> /etc/apache2/sites-available/default.conf
 
+
+cp /etc/apache2/sites-available/default.conf ${TROUBLESHOOTINGFILES}/etc-apache2-sites-available-default.conf
 
 cp /etc/apache2/sites-available/default-ssl.conf /etc/apache2/sites-available/default-ssl.conf.original
 
@@ -459,13 +461,14 @@ printf "        BrowserMatch \"MSIE [17-9]\" ssl-unclean-shutdown\n\n" >> /etc/a
 printf "    </VirtualHost>\n" >> /etc/apache2/sites-available/default-ssl.conf
 printf "</IfModule>\n" >> /etc/apache2/sites-available/default-ssl.conf
 
+cp /etc/apache2/sites-available/default-ssl.conf ${TROUBLESHOOTINGFILES}/etc-apache2-sites-available-default-ssl.conf
 
-printf "\n########## ADD STARTSSSL CLASS2 CERTIFICATE FILES ###" >> ${EXECUTIONLOG}
+printf "\n########## ADD STARTSSSL CLASS2 CERTIFICATE FILES ###\n" >> ${EXECUTIONLOG}
 
 wget -O $WEBROOT/certs/$YEAR/$SSLPROVIDER/sub.class2.server.sha2.ca.pem https://www.startssl.com/certs/class2/sha2/pem/sub.class2.server.sha2.ca.pem
 wget -O $WEBROOT/certs/$YEAR/$SSLPROVIDER/ca.pem https://www.startssl.com/certs/ca.pem
 
-printf "\n########## GENERATE SSL FOR DEFAULT SITE ###" >> ${EXECUTIONLOG}
+printf "\n########## GENERATE SSL FOR DEFAULT SITE ###\n" >> ${EXECUTIONLOG}
 printf "\n" >> /var/log/apt/auto-install.log
 printf "Configure Apache\n\n" >> /var/log/apt/auto-install.log
 
@@ -489,23 +492,42 @@ php -i | grep Thread >> /var/log/apt/auto-install.log
 
 
 
-printf "\n########## SETUP THE DEFAULT SITE FASTCGI ###" >> ${EXECUTIONLOG}
+printf "\n########## SETUP THE DEFAULT SITE FASTCGI ###\n" >> ${EXECUTIONLOG}
 
-printf "\n########## CONFIG PHP-FPM ###" >> ${EXECUTIONLOG}
+printf "\n########## CONFIG PHP-FPM ###\n" >> ${EXECUTIONLOG}
 
 mv /etc/php5/fpm/pool.d/www.conf /etc/php5/fpm/pool.d/www.conf.original
+cp /etc/php5/fpm/pool.d/www.conf.original /etc/php5/fpm/pool.d/${DOMAIN}.conf
 
-printf "\n########## ADD FASTCGI CONFIG FILE ###" >> ${EXECUTIONLOG}
 
-#printf "<IfModule mod_fastcgi.c>\n" > /etc/apache2/mods-available/fastcgi.conf
-#printf "\tAddType application/x-httpd-fastphp5 .php\n" >> /etc/apache2/mods-available/fastcgi.conf
-#printf "\tAction application/x-httpd-fastphp5 /php5-fcgi\n" >> /etc/apache2/mods-available/fastcgi.conf
-#printf "\tAlias /php5-fcgi /usr/lib/cgi-bin/php5-fcgi\n" >> /etc/apache2/mods-available/fastcgi.conf
-#printf "\tFastCgiExternalServer /usr/lib/cgi-bin/php5-fcgi -socket /var/run/php5-fpm.sock -pass-header Authorization \n" >> /etc/apache2/mods-available/fastcgi.conf
-#printf "\t<Directory /usr/lib/cgi-bin>\n" >> /etc/apache2/mods-available/fastcgi.conf
-#printf "\t\tRequire all granted\n" >> /etc/apache2/mods-available/fastcgi.conf
-#printf "\t</Directory>\n" >> /etc/apache2/mods-available/fastcgi.conf
-#printf "</IfModule>" >> /etc/apache2/mods-available/fastcgi.conf
+sed -i "s/\[www\]/$DOMAIN/" /etc/php5/fpm/pool.d/${DOMAIN}.conf >> ${EXECUTIONLOG}
+sed -i "s|listen =.*|listen = $WEBROOT/sockets/$DOMAIN.sock|" /etc/php5/fpm/pool.d/${DOMAIN}.conf >> ${EXECUTIONLOG}
+
+sed -i "s/listen.owner = www-data/listen.owner = $USER/" /etc/php5/fpm/pool.d/${DOMAIN}.conf >> ${EXECUTIONLOG}
+sed -i "s/listen.group = www-data/listen.group = $USER/" /etc/php5/fpm/pool.d/${DOMAIN}.conf >> ${EXECUTIONLOG}
+sed -i "s/;listen.mode = 0660/listen.mode = 0660/" /etc/php5/fpm/pool.d/${DOMAIN}.conf >> ${EXECUTIONLOG}
+
+cp /etc/php5/fpm/pool.d/${DOMAIN}.conf ${TROUBLESHOOTINGFILES}/etc-php5-fpm-pool.d-${DOMAIN}.conf
+
+
+printf "\n########## ADD FASTCGI CONFIG FILE ###\n" >> ${EXECUTIONLOG}
+
+printf "<IfModule mod_fastcgi.c>\n" > /etc/apache2/mods-available/fastcgi.conf
+printf "\tAddType application/x-httpd-fastphp5 .php\n" >> /etc/apache2/mods-available/fastcgi.conf
+printf "\tAction application/x-httpd-fastphp5 /php5-fcgi\n" >> /etc/apache2/mods-available/fastcgi.conf
+printf "\tAlias /php5-fcgi /usr/lib/cgi-bin/php5-fcgi\n" >> /etc/apache2/mods-available/fastcgi.conf
+printf "\t#FastCgiExternalServer /usr/lib/cgi-bin/php5-fcgi -socket /var/run/php5-fpm.sock -pass-header Authorization \n" >> /etc/apache2/mods-available/fastcgi.conf
+printf "\t<Directory /usr/lib/cgi-bin>\n" >> /etc/apache2/mods-available/fastcgi.conf
+printf "\t\tRequire all granted\n" >> /etc/apache2/mods-available/fastcgi.conf
+printf "\t</Directory>\n" >> /etc/apache2/mods-available/fastcgi.conf
+printf "</IfModule>" >> /etc/apache2/mods-available/fastcgi.conf
+
+cp /etc/apache2/mods-available/fastcgi.conf ${TROUBLESHOOTINGFILES}/etc-apache2-mods-available-fastcgi.conf
+
+tail /${LOGDIR}/error.log >> ${TROUBLESHOOTINGFILES}/apache-error.log
+tail /${LOGDIR}/access.log >> ${TROUBLESHOOTINGFILES}/apache-access.log
+
+cp ${EXECUTIONLOG} ${TROUBLESHOOTINGFILES}/execution.log
 
 printf "\n##################################################" >> ${EXECUTIONLOG}
 printf "\n#                                                #" >> ${EXECUTIONLOG}
