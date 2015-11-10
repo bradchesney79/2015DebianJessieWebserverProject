@@ -116,16 +116,16 @@ cp /etc/hosts ${TROUBLESHOOTINGFILES}/etc-hosts
 
 printf "\n########## SET THE TIMEZONE & TIME ###\n" >> ${EXECUTIONLOG}
 
-printf "\n" >> /var/log/apt/auto-install.log
-printf "Set the timezone to UTC \n\n" >> /var/log/apt/auto-install.log
+printf "\n" >> ${EXECUTIONLOG}
+printf "Set the timezone to UTC \n\n" >> ${EXECUTIONLOG}
 
 echo $TIMEZONE > /etc/timezone                     
 cp /usr/share/zoneinfo/${TIMEZONE} /etc/localtime # This sets the time
 
 printf "\n########## UPDATE APT SOURCES ###\n" >> ${EXECUTIONLOG}
 
-printf "\n" >> /var/log/apt/auto-install.log
-printf "Update apt sources\n\n" >> /var/log/apt/auto-install.log
+printf "\n" >> ${EXECUTIONLOG}
+printf "Update apt sources\n\n" >> ${EXECUTIONLOG}
 
 echo "deb http://ftp.us.debian.org/debian testing main contrib non-free" > /etc/apt/sources.list
 printf "\n" >> /etc/apt/sources.list
@@ -139,13 +139,13 @@ cp /etc/apt/sources.list ${TROUBLESHOOTINGFILES}/etc-apt-sources.list
 
 printf "\n########## UPDATE THE SYSTEM ###\n" >> ${EXECUTIONLOG}
 
-printf "\n" >> /var/log/apt/auto-install.log
-printf "Update the system\n\n" >> /var/log/apt/auto-install.log
+printf "\n" >> ${EXECUTIONLOG}
+printf "Update the system\n\n" >> ${EXECUTIONLOG}
 
-apt-get -qy update > /dev/null
+apt-get -qy update >> ${EXECUTIONLOG}
 
-printf "\n" >> /var/log/apt/auto-install.log
-printf "Upgrade the system\n\n" >> /var/log/apt/auto-install.log
+printf "\n" >> ${EXECUTIONLOG}
+printf "Upgrade the system\n\n" >> ${EXECUTIONLOG}
 
 apt-get -qy dist-upgrade >> ${EXECUTIONLOG}
 
@@ -154,8 +154,8 @@ printf "\n########## INSTALL THE FIRST BATCHES OF PACKAGES ###\n" >> ${EXECUTION
 printf "\n" >> ${EXECUTIONLOG}
 printf "Install the first batch of packages for Apache & PHP\n\n" >> ${EXECUTIONLOG}
 
-echo iptables-persistent iptables-persistent/autosave_v4 boolean true | debconf-set-selections
-echo iptables-persistent iptables-persistent/autosave_v6 boolean true | debconf-set-selections
+echo iptables-persistent iptables-persistent/autosave_v4 boolean true | debconf-set-selections >> ${EXECUTIONLOG}
+echo iptables-persistent iptables-persistent/autosave_v6 boolean true | debconf-set-selections >> ${EXECUTIONLOG}
 
 apt-get -qy install sudo tcl perl python3 apache2 tmux iptables-persistent ssh openssl openssl-blacklist libnet-ssleay-perl fail2ban libapache2-mod-fastcgi php5-fpm libapache2-mod-php5 php-pear php5-curl >> ${EXECUTIONLOG}
 
@@ -169,8 +169,8 @@ apt-get -qy autoremove >> ${EXECUTIONLOG}
 
 printf "\n########## UPDATE THE IPTABLES RULES ###\n" >> ${EXECUTIONLOG}
 
-printf "\n" >> /var/log/apt/auto-install.log
-printf "Update the IP tables rules\n\n" >> /var/log/apt/auto-install.log
+printf "\n" >> ${EXECUTIONLOG}
+printf "Update the IP tables rules\n\n" >> ${EXECUTIONLOG}
 
 echo "*filter" > /etc/iptables/rules.v4
 printf "\n" >> /etc/iptables/rules.v4
@@ -212,7 +212,7 @@ printf "\n########## APPLY THE IPTABLES RULES ###\n" >> ${EXECUTIONLOG}
 
 printf "\nApply the IP tables rules\n\n" >> ${EXECUTIONLOG}
 
-iptables-restore < /etc/iptables/rules.v4 >> /va
+iptables-restore < /etc/iptables/rules.v4 >> ${EXECUTIONLOG}
 
 printf "\n########## USING fail2ban DEFAULT CONFIG ###\n" >> ${EXECUTIONLOG}
 
@@ -225,15 +225,15 @@ printf "\n########## CREATE A USER FOR THE DEFAULT SITE ###\n" >> ${EXECUTIONLOG
 printf "\n########## THIS AIDS RESOURCE SEGREGATION ###\n" >> ${EXECUTIONLOG}
 printf "\n########## www-data HAS ACCESS TO ALL WEBSERVER FUN ###\n" >> ${EXECUTIONLOG}
 
-printf "\n" >> /var/log/apt/auto-install.log
-printf "Create the Default Web Site user\n\n" >> /var/log/apt/auto-install.log
+printf "\n" >> ${EXECUTIONLOG}
+printf "Create the Default Web Site user\n\n" >> ${EXECUTIONLOG}
 
-useradd -d $WEBROOT -p $PASSWORD -c "Default Web Site User" $USER
+useradd -d $WEBROOT -p $PASSWORD -c "Default Web Site User" $USER >> ${EXECUTIONLOG}
 
 printf "\n########## ADD SSL CONFIGURATION INCLUDE ###\n" >> ${EXECUTIONLOG}
 
-printf "\n" >> /var/log/apt/auto-install.log
-printf "Write Apache SSL include file\n\n" >> /var/log/apt/auto-install.log
+printf "\n" >> ${EXECUTIONLOG}
+printf "Write Apache SSL include file\n\n" >> ${EXECUTIONLOG}
 
 mkdir -pv /etc/apache2/includes >> ${EXECUTIONLOG}
 
@@ -245,7 +245,7 @@ printf "        SSLProtocol all -SSLv2 -SSLv3\n" >> /etc/apache2/includes/vhost-
 printf "        SSLHonorCipherOrder On\n" >> /etc/apache2/includes/vhost-ssl
 printf "        SSLCipherSuite ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS\n" >> /etc/apache2/includes/vhost-ssl
 
-chown root:www-data /etc/apache2/includes/vhost-ssl
+chown root:www-data /etc/apache2/includes/vhost-ssl >> ${EXECUTIONLOG}
 
 cp /etc/apache2/includes/vhost-ssl ${TROUBLESHOOTINGFILES}/etc-apache2-includes-vhost-ssl >> ${EXECUTIONLOG}
 
@@ -253,28 +253,28 @@ printf "\n########## CONFIGURE THE DEFAULT SITE ###\n" >> ${EXECUTIONLOG}
 
 printf "\n########## PREPARE DIRECTORY STRUCTURE FOR DEFAULT SITE ###\n" >> ${EXECUTIONLOG}
 
-printf "\n" >> /var/log/apt/auto-install.log
-printf "Create the Default Site directory structure\n\n" >> /var/log/apt/auto-install.log
+printf "\n" >> ${EXECUTIONLOG}
+printf "Create the Default Site directory structure\n\n" >> ${EXECUTIONLOG}
 
-rm -rf /var/www/html
+rm -rf /var/www/html>> ${EXECUTIONLOG}
 
-mkdir $WEBROOT/http
-mkdir $WEBROOT/https
-mkdir $WEBROOT/fonts
-mkdir $WEBROOT/certs
-mkdir $WEBROOT/certs/$YEAR
-mkdir $WEBROOT/certs/$YEAR/$SSLPROVIDER
-mkdir $LOGDIR
-mkdir $WEBROOT/sockets
-mkdir $WEBROOT/tmp
+mkdir $WEBROOT/http >> ${EXECUTIONLOG}
+mkdir $WEBROOT/https >> ${EXECUTIONLOG}
+mkdir $WEBROOT/fonts >> ${EXECUTIONLOG}
+mkdir $WEBROOT/certs >> ${EXECUTIONLOG}
+mkdir $WEBROOT/certs/$YEAR >> ${EXECUTIONLOG}
+mkdir $WEBROOT/certs/$YEAR/$SSLPROVIDER >> ${EXECUTIONLOG}
+mkdir $LOGDIR >> ${EXECUTIONLOG}
+mkdir $WEBROOT/sockets >> ${EXECUTIONLOG}
+mkdir $WEBROOT/tmp >> ${EXECUTIONLOG}
 
-chown -r $USER:$USER $WEBROOT
+chown -r $USER:$USER $WEBROOT >> ${EXECUTIONLOG}
 
-chmod -r 754 $WEBROOT
-find $WEBROOT -type d -exec chmod 751 {} \;
+chmod -r 754 $WEBROOT >> ${EXECUTIONLOG}
+find $WEBROOT -type d -exec chmod 751 {} \; >> ${EXECUTIONLOG}
 
-chown -R www-data:www-data $WEBROOT/sockets
-chmod -R 666 $WEBROOT/sockets
+chown -R www-data:www-data $WEBROOT/sockets >> ${EXECUTIONLOG}
+chmod -R 666 $WEBROOT/sockets >> ${EXECUTIONLOG}
 
 printf "\n########## CONFIGURE PHP ###\n" >> ${EXECUTIONLOG}
 
@@ -285,31 +285,8 @@ cp /etc/php5/fpm/php.ini ${TROUBLESHOOTINGFILES}/etc-php5-fpm-php.ini
 
 printf "\n########## MODIFY DEFAULT VHOST CONFIGURATION FILES ###\n" >> ${EXECUTIONLOG}
 
-mv /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/000-default.conf.original
+mv /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/000-default.conf.original >> ${EXECUTIONLOG}
 
-
-
-#<VirtualHost *:80>
-#  ServerName $DOMAIN
-#  ServerAlias $HOSTNAME.$DOMAIN
-#
-#  ServerAdmin $EMAIL
-#  DocumentRoot $WEBROOT/html
-#
-#  ErrorLog ${APACHE_LOG_DIR}/error.log
-#  CustomLog ${APACHE_LOG_DIR}/access.log combined
-#  
-#
-#  ErrorLog $WEBROOT/logs/error.log
-#  CustomLog $WEBROOT/logs/access.log combined
-#
-#  <IfModule mod_fastcgi.c>
-#      AddType application/x-httpd-fastphp5 .php
-#      Action application/x-httpd-fastphp5 /php5-fcgi
-#      Alias /php5-fcgi /usr/lib/cgi-bin/php5-fcgi_$DOMAIN
-#      FastCgiExternalServer /usr/lib/cgi-bin/php5-fcgi_$DOMAIN -socket $WEBROOT/sockets/ $DOMAIN.sock -pass-header Authorization
-#  </IfModule>
-#</VirtualHost>
 
 printf "<VirtualHost *:80>\n" > /etc/apache2/sites-available/default.conf
 printf "  ServerName $DOMAIN\n" >> /etc/apache2/sites-available/default.conf
@@ -329,74 +306,8 @@ printf "</VirtualHost>\n" >> /etc/apache2/sites-available/default.conf
 
 cp /etc/apache2/sites-available/default.conf ${TROUBLESHOOTINGFILES}/etc-apache2-sites-available-default.conf
 
-cp /etc/apache2/sites-available/default-ssl.conf /etc/apache2/sites-available/default-ssl.conf.original
+cp /etc/apache2/sites-available/default-ssl.conf /etc/apache2/sites-available/default-ssl.conf.original >> ${EXECUTIONLOG}
 
-#<IfModule mod_ssl.c>
-#    <VirtualHost _default_:443>
-#
-#        ServerName $DOMAIN
-#        ServerAlias *.$DOMAIN
-#        DocumentRoot $WEBROOT/https
-#        <Directory $WEBROOT/https/>
-#            Options Indexes FollowSymLinks MultiViews
-#            AllowOverride None
-#            Order allow,deny
-#            allow from all
-#        </Directory>
-#
-#        <IfModule mod_fastcgi.c>
-#            AddType application/x-httpd-fastphp5 .php
-#            Action application/x-httpd-fastphp5 /php5-fcgi
-#            Alias /php5-fcgi /usr/lib/cgi-bin/php5-fcgi_$DOMAIN
-#            FastCgiExternalServer /usr/lib/cgi-bin/php5-fcgi_$DOMAIN -socket /var/run/php5-fpm $DOMAIN.sock -pass-header Authorization
-#        </IfModule>
-#
-#        LogLevel warn
-#
-#        ErrorLog $WEBROOT/logs/error-ssl.log
-#        CustomLog $WEBROOT/logs/access-ssl.log combined
-#
-#        Include /etc/apache2/includes/vhost-ssl
-#
-#        #   The StartSSL Certificate
-#
-#        SSLCertificateFile $WEBROOT/certs/$YEAR/$SSLPROVIDER/ssl.crt
-#        SSLCertificateKeyFile $WEBROOT/certs/$YEAR/$SSLPROVIDER/ssl.key
-#        SSLCertificateChainFile $WEBROOT/certs/$YEAR/$SSLPROVIDER/sub.class2.server.ca.pem
-#        SSLCACertificateFile $WEBROOT/certs/$YEAR/$SSLPROVIDER/ca.pem
-#        
-#        #   SSL Protocol Adjustments:
-#        #   The safe and default but still SSL/TLS standard compliant shutdown
-#        #   approach is that mod_ssl sends the close notify alert but doesn't wait for
-#        #   the close notify alert from client. When you need a different shutdown
-#        #   approach you can use one of the following variables:
-#        #   o ssl-unclean-shutdown:
-#        #     This forces an unclean shutdown when the connection is closed, i.e. no
-#        #     SSL close notify alert is send or allowed to received.  This violates
-#        #     the SSL/TLS standard but is needed for some brain-dead browsers. Use
-#        #     this when you receive I/O errors because of the standard approach where
-#        #     mod_ssl sends the close notify alert.
-#        #   o ssl-accurate-shutdown:
-#        #     This forces an accurate shutdown when the connection is closed, i.e. a
-#        #     SSL close notify alert is send and mod_ssl waits for the close notify
-#        #     alert of the client. This is 100% SSL/TLS standard compliant, but in
-#        #     practice often causes hanging connections with brain-dead browsers. Use
-#        #     this only for browsers where you know that their SSL implementation
-#        #     works correctly.
-#        #   Notice: Most problems of broken clients are also related to the HTTP
-#        #   keep-alive facility, so you usually additionally want to disable
-#        #   keep-alive for those clients, too. Use variable "nokeepalive" for this.
-#        #   Similarly, one has to force some clients to use HTTP/1.0 to workaround
-#        #   their broken HTTP/1.1 implementation. Use variables "downgrade-1.0" and
-#        #   "force-response-1.0" for this.
-#        BrowserMatch "MSIE [2-6]" \
-#            nokeepalive ssl-unclean-shutdown \
-#            downgrade-1.0 force-response-1.0
-#            # MSIE 7 and newer should be able to use keepalive
-#        BrowserMatch "MSIE [17-9]" ssl-unclean-shutdown
-#
-#    </VirtualHost>
-#</IfModule>
 
 printf "<IfModule mod_ssl.c>\n" > /etc/apache2/sites-available/default-ssl.conf
 printf "    <VirtualHost _default_:443>\n\n" >> /etc/apache2/sites-available/default-ssl.conf
@@ -465,30 +376,37 @@ cp /etc/apache2/sites-available/default-ssl.conf ${TROUBLESHOOTINGFILES}/etc-apa
 
 printf "\n########## ADD STARTSSSL CLASS2 CERTIFICATE FILES ###\n" >> ${EXECUTIONLOG}
 
-wget -O $WEBROOT/certs/$YEAR/$SSLPROVIDER/sub.class2.server.sha2.ca.pem https://www.startssl.com/certs/class2/sha2/pem/sub.class2.server.sha2.ca.pem
-wget -O $WEBROOT/certs/$YEAR/$SSLPROVIDER/ca.pem https://www.startssl.com/certs/ca.pem
+wget -O $WEBROOT/certs/$YEAR/$SSLPROVIDER/sub.class2.server.sha2.ca.pem https://www.startssl.com/certs/class2/sha2/pem/sub.class2.server.sha2.ca.pem >> ${EXECUTIONLOG}
+wget -O $WEBROOT/certs/$YEAR/$SSLPROVIDER/ca.pem https://www.startssl.com/certs/ca.pem >> ${EXECUTIONLOG}
 
 printf "\n########## GENERATE SSL FOR DEFAULT SITE ###\n" >> ${EXECUTIONLOG}
-printf "\n" >> /var/log/apt/auto-install.log
-printf "Configure Apache\n\n" >> /var/log/apt/auto-install.log
+printf "\n" >> ${EXECUTIONLOG}
+printf "Configure Apache\n\n" >> ${EXECUTIONLOG}
 
-printf "Generating SSL\n\n" >> /var/log/apt/auto-install.log
+printf "Generating SSL\n\n" >> ${EXECUTIONLOG}
 
-printf "openssl req -nodes $ALGORITHM -newkey rsa:$KEYSIZE -keyout $WEBROOT/certs/$YEAR/$SSLPROVIDER/ssl.key -out $WEBROOT/certs/$YEAR/$SSLPROVIDER/ssl.csr -subj \"/C=$COUNTRY/ST=$STATE/L=$LOCALITY/O=$ORGANIZATION/OU=$ORGANIZATIONALUNIT/CN=$DOMAIN\"\n\n" >> /var/log/apt/auto-install.log
+printf "openssl req -nodes $ALGORITHM -newkey rsa:$KEYSIZE -keyout $WEBROOT/certs/$YEAR/$SSLPROVIDER/ssl.key -out $WEBROOT/certs/$YEAR/$SSLPROVIDER/ssl.csr -subj \"/C=$COUNTRY/ST=$STATE/L=$LOCALITY/O=$ORGANIZATION/OU=$ORGANIZATIONALUNIT/CN=$DOMAIN\"\n\n" >> ${EXECUTIONLOG}
 
-openssl req -nodes $ALGORITHM -newkey rsa:$KEYSIZE -keyout $WEBROOT/certs/$YEAR/$SSLPROVIDER/ssl.key -out $WEBROOT/certs/$YEAR/$SSLPROVIDER/ssl.csr -subj "/C=$COUNTRY/ST=$STATE/L=$LOCALITY/O=$ORGANIZATION/OU=$ORGANIZATIONALUNIT/CN=$DOMAIN" >> /var/log/apt/auto-install.log
+openssl req -nodes $ALGORITHM -newkey rsa:$KEYSIZE -keyout $WEBROOT/certs/$YEAR/$SSLPROVIDER/ssl.key -out $WEBROOT/certs/$YEAR/$SSLPROVIDER/ssl.csr -subj "/C=$COUNTRY/ST=$STATE/L=$LOCALITY/O=$ORGANIZATION/OU=$ORGANIZATIONALUNIT/CN=$DOMAIN" >> ${EXECUTIONLOG}
 
-a2dismod mpm_prefork
-a2enmod actions fastcgi alias ssl mpm_worker
+printf "\n########## DISABLE THE PREFORK PHP APACHE MODULE ###\n" >> ${EXECUTIONLOG}
+a2dismod mpm_prefork >> ${EXECUTIONLOG}
 
-a2ensite default.conf
-a2ensite default-ssl.conf
+printf "\n########## ENABLE THE MPM WORKER PHP APACHE MODULE ###\n" >> ${EXECUTIONLOG}
+a2enmod actions fastcgi alias ssl mpm_worker >> ${EXECUTIONLOG}
 
-printf "\n" >> /var/log/apt/auto-install.log
-printf "Set Apache PHP Module\n" >> /var/log/apt/auto-install.log
-apachectl -V | grep -i mpm >> /var/log/apt/auto-install.log
-printf "PHP Module Thread Safety\n" >> /var/log/apt/auto-install.log
-php -i | grep Thread >> /var/log/apt/auto-install.log
+printf "\n########## REMOVE EXISTING ENABLED SITES ###\n" >> ${EXECUTIONLOG}
+rm /etc/apache2/sites-enabled/* >> ${EXECUTIONLOG}
+
+printf "\n########## ENABLE THE DEFAULT SITES ###\n" >> ${EXECUTIONLOG}
+a2ensite default.conf >> ${EXECUTIONLOG}
+a2ensite default-ssl.conf >> ${EXECUTIONLOG}
+
+printf "\n" >> ${EXECUTIONLOG}
+printf "Set Apache PHP Module\n" >> ${EXECUTIONLOG}
+apachectl -V | grep -i mpm >> ${EXECUTIONLOG}
+printf "PHP Module Thread Safety\n" >> ${EXECUTIONLOG}
+php -i | grep Thread >> ${EXECUTIONLOG}
 
 
 
@@ -522,10 +440,15 @@ printf "\t\tRequire all granted\n" >> /etc/apache2/mods-available/fastcgi.conf
 printf "\t</Directory>\n" >> /etc/apache2/mods-available/fastcgi.conf
 printf "</IfModule>" >> /etc/apache2/mods-available/fastcgi.conf
 
+printf "\n########## RESTART THE WEBSERVER SERVICES ###\n" >> ${EXECUTIONLOG}
+
+service apache2 restart
+service php-fpm restart
+
 cp /etc/apache2/mods-available/fastcgi.conf ${TROUBLESHOOTINGFILES}/etc-apache2-mods-available-fastcgi.conf
 
-tail /${LOGDIR}/error.log >> ${TROUBLESHOOTINGFILES}/apache-error.log
-tail /${LOGDIR}/access.log >> ${TROUBLESHOOTINGFILES}/apache-access.log
+tail ${LOGDIR}/error.log >> ${TROUBLESHOOTINGFILES}/apache-error.log
+tail ${LOGDIR}/access.log >> ${TROUBLESHOOTINGFILES}/apache-access.log
 
 cp ${EXECUTIONLOG} ${TROUBLESHOOTINGFILES}/execution.log
 
