@@ -64,7 +64,7 @@ printf "\nTROUBLESHOOTINGFILES - $TROUBLESHOOTINGFILES" >> ${EXECUTIONLOG}
 printf "\n$DATE\n\n" >> ${EXECUTIONLOG}
 
 
-printf "\n########## RECORD THE VARIABLES FOR POSTERITY ####\n\n"
+printf "\n########## RECORD THE VARIABLES FOR POSTERITY ####\n\n" >> ${EXECUTIONLOG}
 
 printf "\nHOSTNAME - $HOSTNAME\n" >> ${EXECUTIONLOG}
 printf "\nDOMAIN - $DOMAIN\n" >> ${EXECUTIONLOG}
@@ -88,14 +88,14 @@ printf "\nSSLPROVIDER - $SSLPROVIDER\n\n" >> ${EXECUTIONLOG}
 printf "\n########## CREATE A PLACE TO STORE THE OUTPUT FOR SHARING TROUBLESHOOTING DATA###\n" >> ${EXECUTIONLOG}
 
 printf "Location of troubleshooting files: $TROUBLESHOOTINGFILES\n\n"
-mkdir -pv ${TROUBLESHOOTINGFILES} >> ${EXECUTIONLOG}
+mkdir -pv ${TROUBLESHOOTINGFILES} >> ${EXECUTIONLOG}  >> ${EXECUTIONLOG}
 
 printf "\n########## CONFIGURE THE HOSTNAME ###\n" >> ${EXECUTIONLOG}
 
 printf "\n" >> ${EXECUTIONLOG}
 printf "Set the hostname\n\n" >> ${EXECUTIONLOG}
 
-hostnamectl set-hostname $HOSTNAME >>  >> ${EXECUTIONLOG}
+hostnamectl set-hostname $HOSTNAME >> ${EXECUTIONLOG}
 
 printf "\n########## UPDATE THE HOSTS FILE ###\n" >> ${EXECUTIONLOG}
 
