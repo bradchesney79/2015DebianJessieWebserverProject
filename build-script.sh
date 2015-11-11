@@ -650,6 +650,8 @@ disable_functions = “apache_child_terminate, apache_setenv, define_syslog_vari
 # http://tcsoftware.net/blog/2012/02/installing-class-1-startssl-certificate-on-debian/
 # https://www.startssl.com/?app=21
 # https://www.linode.com/docs/websites/apache/running-fastcgi-php-fpm-on-debian-7-with-apache
+# http://wiki.apache.org/httpd/PHP-FPM
+
 
 vi setup.sh; chmod +x setup.sh; ./setup.sh
 
