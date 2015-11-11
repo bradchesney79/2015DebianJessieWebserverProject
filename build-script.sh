@@ -51,7 +51,7 @@ SSLPROVIDER="start-ssl"
 printf "\n##################################################" >> ${EXECUTIONLOG}
 printf "\n#                                                #" >> ${EXECUTIONLOG}
 printf "\n#                                                #" >> ${EXECUTIONLOG}
-printf "\n# SETUP SCRIPT START                                   #" >> ${EXECUTIONLOG}
+printf "\n# SETUP SCRIPT START                             #" >> ${EXECUTIONLOG}
 printf "\n#                                                #" >> ${EXECUTIONLOG}
 printf "\n#                                                #" >> ${EXECUTIONLOG}
 printf "\n##################################################\n\n" >> ${EXECUTIONLOG}
@@ -215,9 +215,6 @@ printf "\n########## CREATE A USER FOR THE DEFAULT SITE ###\n" >> ${EXECUTIONLOG
 printf "\n########## THIS AIDS RESOURCE SEGREGATION ###\n" >> ${EXECUTIONLOG}
 printf "\n########## www-data HAS ACCESS TO ALL WEBSERVER FUN ###\n" >> ${EXECUTIONLOG}
 
-printf "\n" >> ${EXECUTIONLOG}
-printf "Create the Default Web Site user\n\n" >> ${EXECUTIONLOG}
-
 useradd -d $WEBROOT -p $PASSWORD -c "Default Web Site User" $USER >> ${EXECUTIONLOG}
 
 printf "\n########## ADD SSL CONFIGURATION INCLUDE ###\n" >> ${EXECUTIONLOG}
@@ -373,6 +370,9 @@ printf "openssl req -nodes $ALGORITHM -newkey rsa:$KEYSIZE -keyout $WEBROOT/cert
 
 openssl req -nodes $ALGORITHM -newkey rsa:$KEYSIZE -keyout $WEBROOT/certs/$YEAR/$SSLPROVIDER/ssl.key -out $WEBROOT/certs/$YEAR/$SSLPROVIDER/ssl.csr -subj "/C=$COUNTRY/ST=$STATE/L=$LOCALITY/O=$ORGANIZATION/OU=$ORGANIZATIONALUNIT/CN=$DOMAIN" >> ${EXECUTIONLOG}
 
+#####!!!!! So, skipping swapping out mpm_prefork and disabling the ssl host allows the webserver to start
+#####!!!!! Using mpm_worker causes an invalid config based upon mpm_worker being threaded and php5-fpm not being threadsafe
+
 printf "\n########## DISABLE THE PREFORK PHP APACHE MODULE ###\n" >> ${EXECUTIONLOG}
 a2dismod mpm_prefork >> ${EXECUTIONLOG}
 
@@ -464,11 +464,14 @@ cp /etc/php5/fpm/pool.d/${DOMAIN}.conf ${TROUBLESHOOTINGFILES}/etc-php5-fpm-pool
 
 printf "Start collecting log files\n\n" >> ${EXECUTIONLOG}
 
+printf "Apache log files\n" >> ${EXECUTIONLOG}
 tail ${LOGDIR}/error.log >> ${TROUBLESHOOTINGFILES}/apache-error.log
 tail ${LOGDIR}/access.log >> ${TROUBLESHOOTINGFILES}/apache-access.log
 
+printf "FPM log files\n" >> ${EXECUTIONLOG}
 tail /var/log/php5-fpm.log >> ${TROUBLESHOOTINGFILES}/php5-fpm.log
 
+printf "Whole shebang log files\n\n" >> ${EXECUTIONLOG}
 cp ${EXECUTIONLOG} ${TROUBLESHOOTINGFILES}/execution.log
 
 printf "Create troubleshooting report for pastebin\n\n" >> ${EXECUTIONLOG}
@@ -646,7 +649,7 @@ disable_functions = “apache_child_terminate, apache_setenv, define_syslog_vari
 # http://www.shellhacks.com/en/HowTo-Create-CSR-using-OpenSSL-Without-Prompt-Non-Interactive
 # http://tcsoftware.net/blog/2012/02/installing-class-1-startssl-certificate-on-debian/
 # https://www.startssl.com/?app=21
-
+# https://www.linode.com/docs/websites/apache/running-fastcgi-php-fpm-on-debian-7-with-apache
 
 vi setup.sh; chmod +x setup.sh; ./setup.sh
 
