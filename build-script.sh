@@ -394,11 +394,12 @@ mv /etc/php5/fpm/pool.d/www.conf /etc/php5/fpm/pool.d/www.conf.original
 cp /etc/php5/fpm/pool.d/www.conf.original /etc/php5/fpm/pool.d/${DOMAIN}.conf
 
 
-sed -i "s/\[www\]/$DOMAIN/" /etc/php5/fpm/pool.d/${DOMAIN}.conf >> ${EXECUTIONLOG}
+sed -i "s/\[www\]/\[$DOMAIN\]/" /etc/php5/fpm/pool.d/${DOMAIN}.conf >> ${EXECUTIONLOG}
 sed -i "s|listen =.*|listen = $WEBROOT/sockets/$DOMAIN.sock|" /etc/php5/fpm/pool.d/${DOMAIN}.conf >> ${EXECUTIONLOG}
 
-sed -i "s/listen.owner = www-data/listen.owner = $USER/" /etc/php5/fpm/pool.d/${DOMAIN}.conf >> ${EXECUTIONLOG}
-sed -i "s/listen.group = www-data/listen.group = $USER/" /etc/php5/fpm/pool.d/${DOMAIN}.conf >> ${EXECUTIONLOG}
+sed -i "s/user = www-data/user = $USER/" /etc/php5/fpm/pool.d/${DOMAIN}.conf >> ${EXECUTIONLOG}
+sed -i "s/group = www-data/group = $USER/" /etc/php5/fpm/pool.d/${DOMAIN}.conf >> ${EXECUTIONLOG}
+
 sed -i "s/;listen.mode = 0660/listen.mode = 0660/" /etc/php5/fpm/pool.d/${DOMAIN}.conf >> ${EXECUTIONLOG}
 
 
