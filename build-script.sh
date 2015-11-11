@@ -460,7 +460,7 @@ cp /etc/apache2/mods-available/fastcgi.conf ${TROUBLESHOOTINGFILES}/etc-apache2-
 
 cp /etc/php5/fpm/pool.d/${DOMAIN}.conf ${TROUBLESHOOTINGFILES}/etc-php5-fpm-pool.d-${DOMAIN}.conf
 
-printf "Start collecting log files\n\n"
+printf "Start collecting log files\n\n" >> ${EXECUTIONLOG}
 
 tail ${LOGDIR}/error.log >> ${TROUBLESHOOTINGFILES}/apache-error.log
 tail ${LOGDIR}/access.log >> ${TROUBLESHOOTINGFILES}/apache-access.log
@@ -469,10 +469,12 @@ tail /var/log/php5-fpm.log >> ${TROUBLESHOOTINGFILES}/php5-fpm.log
 
 cp ${EXECUTIONLOG} ${TROUBLESHOOTINGFILES}/execution.log
 
-printf "Create troubleshooting report for pastebin\n\n"
+printf "Create troubleshooting report for pastebin\n\n" >> ${EXECUTIONLOG}
 
-printf "##########  ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt && \
-cat  >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt && \
+
+#USEFUL FOR CUT/PASTE
+#printf "##########  ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt && \
+#cat  >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt && \
 
 printf "########## TROUBLESHOOTING REPORT $DATE $UNIXTIMESTAMP ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt && \
 
@@ -519,7 +521,7 @@ printf "\n\n\n########## PHP-FPM LOG ###########\n\n" >> ${TROUBLESHOOTINGFILES}
 cat ${TROUBLESHOOTINGFILES}/php5-fpm.log >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt && \
 
 printf "\n\n\n########## UNABRIDGED SETUP LOG ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt && \
-cat ${TROUBLESHOOTINGFILES}/execution.log >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt && \
+cat ${TROUBLESHOOTINGFILES}/execution.log >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
 
 printf "\n##################################################" >> ${EXECUTIONLOG}
 printf "\n#                                                #" >> ${EXECUTIONLOG}
