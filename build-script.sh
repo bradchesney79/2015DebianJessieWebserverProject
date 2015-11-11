@@ -4,11 +4,12 @@
 
 EXECUTOR=`whoami`
 SCRIPTLOCATION=`pwd`
+UNIXTIMESTAMP=`date +%s`
 DATE=`date +%Y-%m-%d`
 YEAR=`date +%Y`
 EXECUTIONLOG="/var/log/auto-install.log"
 
-TROUBLESHOOTINGFILES="$SCRIPTLOCATION/FILES"
+TROUBLESHOOTINGFILES="$SCRIPTLOCATION/troubleshooting/$UNIXTIMESTAMP"
 
 ##### HOST INFO #####
 
@@ -50,7 +51,7 @@ SSLPROVIDER="start-ssl"
 printf "\n##################################################" >> ${EXECUTIONLOG}
 printf "\n#                                                #" >> ${EXECUTIONLOG}
 printf "\n#                                                #" >> ${EXECUTIONLOG}
-printf "\n# SCRIPT START                                   #" >> ${EXECUTIONLOG}
+printf "\n# SETUP SCRIPT START                                   #" >> ${EXECUTIONLOG}
 printf "\n#                                                #" >> ${EXECUTIONLOG}
 printf "\n#                                                #" >> ${EXECUTIONLOG}
 printf "\n##################################################\n\n" >> ${EXECUTIONLOG}
@@ -85,11 +86,6 @@ printf "\nPASSWORD - $PASSWORD\n\n" >> ${EXECUTIONLOG}
 
 printf "\nSSLPROVIDER - $SSLPROVIDER\n\n" >> ${EXECUTIONLOG}
 
-printf "\n########## CREATE A PLACE TO STORE THE OUTPUT FOR SHARING TROUBLESHOOTING DATA###\n" >> ${EXECUTIONLOG}
-
-printf "Location of troubleshooting files: $TROUBLESHOOTINGFILES\n\n"
-mkdir -pv ${TROUBLESHOOTINGFILES} >> ${EXECUTIONLOG}  >> ${EXECUTIONLOG}
-
 printf "\n########## CONFIGURE THE HOSTNAME ###\n" >> ${EXECUTIONLOG}
 
 printf "\n" >> ${EXECUTIONLOG}
@@ -112,8 +108,6 @@ printf "ff02::1\t\t\t\tip6-allnodes\n" >> /etc/hosts
 printf "ff02::2\t\t\t\tip6-allrouters\n" >> /etc/hosts
 printf "$IPV6\t$HOSTNAME.$DOMAIN $HOSTNAME" >> /etc/hosts
 
-cp /etc/hosts ${TROUBLESHOOTINGFILES}/etc-hosts
-
 printf "\n########## SET THE TIMEZONE & TIME ###\n" >> ${EXECUTIONLOG}
 
 printf "\n" >> ${EXECUTIONLOG}
@@ -134,8 +128,6 @@ printf "\n" >> /etc/apt/sources.list
 echo "deb http://security.debian.org/ jessie/updates main contrib non-free" >> /etc/apt/sources.list
 printf "\n" >> /etc/apt/sources.list
 echo "deb http://backports.debian.org/debian-backports squeeze-backports main" >> /etc/apt/sources.list
-
-cp /etc/apt/sources.list ${TROUBLESHOOTINGFILES}/etc-apt-sources.list
 
 printf "\n########## UPDATE THE SYSTEM ###\n" >> ${EXECUTIONLOG}
 
@@ -206,8 +198,6 @@ echo "-A FORWARD -j DROP" >> /etc/iptables/rules.v4
 printf "\n" >> /etc/iptables/rules.v4
 echo "COMMIT" >> /etc/iptables/rules.v4
 
-cp /etc/iptables/rules.v4 ${TROUBLESHOOTINGFILES}/etc-iptables-rules.v4
-
 printf "\n########## APPLY THE IPTABLES RULES ###\n" >> ${EXECUTIONLOG}
 
 printf "\nApply the IP tables rules\n\n" >> ${EXECUTIONLOG}
@@ -247,8 +237,6 @@ printf "        SSLCipherSuite ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+
 
 chown root:www-data /etc/apache2/includes/vhost-ssl >> ${EXECUTIONLOG}
 
-cp /etc/apache2/includes/vhost-ssl ${TROUBLESHOOTINGFILES}/etc-apache2-includes-vhost-ssl >> ${EXECUTIONLOG}
-
 printf "\n########## CONFIGURE THE DEFAULT SITE ###\n" >> ${EXECUTIONLOG}
 
 printf "\n########## PREPARE DIRECTORY STRUCTURE FOR DEFAULT SITE ###\n" >> ${EXECUTIONLOG}
@@ -281,7 +269,7 @@ printf "\n########## CONFIGURE PHP ###\n" >> ${EXECUTIONLOG}
 cp /etc/php5/fpm/php.ini /etc/php5/fpm/php.ini.original 
 
 #sed -i '.bak' 's/find/replace' file.txt
-cp /etc/php5/fpm/php.ini ${TROUBLESHOOTINGFILES}/etc-php5-fpm-php.ini
+
 
 printf "\n########## MODIFY DEFAULT VHOST CONFIGURATION FILES ###\n" >> ${EXECUTIONLOG}
 
@@ -303,8 +291,6 @@ printf "      FastCgiExternalServer /usr/lib/cgi-bin/php5-fcgi_$DOMAIN -socket $
 printf "  </IfModule>\n" >> /etc/apache2/sites-available/default.conf
 printf "</VirtualHost>\n" >> /etc/apache2/sites-available/default.conf
 
-
-cp /etc/apache2/sites-available/default.conf ${TROUBLESHOOTINGFILES}/etc-apache2-sites-available-default.conf
 
 cp /etc/apache2/sites-available/default-ssl.conf /etc/apache2/sites-available/default-ssl.conf.original >> ${EXECUTIONLOG}
 
@@ -372,8 +358,6 @@ printf "        BrowserMatch \"MSIE [17-9]\" ssl-unclean-shutdown\n\n" >> /etc/a
 printf "    </VirtualHost>\n" >> /etc/apache2/sites-available/default-ssl.conf
 printf "</IfModule>\n" >> /etc/apache2/sites-available/default-ssl.conf
 
-cp /etc/apache2/sites-available/default-ssl.conf ${TROUBLESHOOTINGFILES}/etc-apache2-sites-available-default-ssl.conf
-
 printf "\n########## ADD STARTSSSL CLASS2 CERTIFICATE FILES ###\n" >> ${EXECUTIONLOG}
 
 wget -O $WEBROOT/certs/$YEAR/$SSLPROVIDER/sub.class2.server.sha2.ca.pem https://www.startssl.com/certs/class2/sha2/pem/sub.class2.server.sha2.ca.pem >> ${EXECUTIONLOG}
@@ -402,14 +386,6 @@ printf "\n########## ENABLE THE DEFAULT SITES ###\n" >> ${EXECUTIONLOG}
 a2ensite default.conf >> ${EXECUTIONLOG}
 a2ensite default-ssl.conf >> ${EXECUTIONLOG}
 
-printf "\n" >> ${EXECUTIONLOG}
-printf "Set Apache PHP Module\n" >> ${EXECUTIONLOG}
-apachectl -V | grep -i mpm >> ${EXECUTIONLOG}
-printf "PHP Module Thread Safety\n" >> ${EXECUTIONLOG}
-php -i | grep Thread >> ${EXECUTIONLOG}
-
-
-
 printf "\n########## SETUP THE DEFAULT SITE FASTCGI ###\n" >> ${EXECUTIONLOG}
 
 printf "\n########## CONFIG PHP-FPM ###\n" >> ${EXECUTIONLOG}
@@ -424,8 +400,6 @@ sed -i "s|listen =.*|listen = $WEBROOT/sockets/$DOMAIN.sock|" /etc/php5/fpm/pool
 sed -i "s/listen.owner = www-data/listen.owner = $USER/" /etc/php5/fpm/pool.d/${DOMAIN}.conf >> ${EXECUTIONLOG}
 sed -i "s/listen.group = www-data/listen.group = $USER/" /etc/php5/fpm/pool.d/${DOMAIN}.conf >> ${EXECUTIONLOG}
 sed -i "s/;listen.mode = 0660/listen.mode = 0660/" /etc/php5/fpm/pool.d/${DOMAIN}.conf >> ${EXECUTIONLOG}
-
-cp /etc/php5/fpm/pool.d/${DOMAIN}.conf ${TROUBLESHOOTINGFILES}/etc-php5-fpm-pool.d-${DOMAIN}.conf
 
 
 printf "\n########## ADD FASTCGI CONFIG FILE ###\n" >> ${EXECUTIONLOG}
@@ -445,17 +419,112 @@ printf "\n########## RESTART THE WEBSERVER SERVICES ###\n" >> ${EXECUTIONLOG}
 service apache2 restart
 service php-fpm restart
 
-cp /etc/apache2/mods-available/fastcgi.conf ${TROUBLESHOOTINGFILES}/etc-apache2-mods-available-fastcgi.conf
-
-tail ${LOGDIR}/error.log >> ${TROUBLESHOOTINGFILES}/apache-error.log
-tail ${LOGDIR}/access.log >> ${TROUBLESHOOTINGFILES}/apache-access.log
-
-cp ${EXECUTIONLOG} ${TROUBLESHOOTINGFILES}/execution.log
+printf "\n##################################################" >> ${EXECUTIONLOG}
+printf "\n#                                                #" >> ${EXECUTIONLOG}
+printf "\n#                                                #" >> ${EXECUTIONLOG}
+printf "\n# SETUP SCRIPT END                               #" >> ${EXECUTIONLOG}
+printf "\n#                                                #" >> ${EXECUTIONLOG}
+printf "\n#                                                #" >> ${EXECUTIONLOG}
+printf "\n##################################################\n\n" >> ${EXECUTIONLOG}
 
 printf "\n##################################################" >> ${EXECUTIONLOG}
 printf "\n#                                                #" >> ${EXECUTIONLOG}
 printf "\n#                                                #" >> ${EXECUTIONLOG}
-printf "\n# SCRIPT END                                     #" >> ${EXECUTIONLOG}
+printf "\n# INITIAL TROUBLESHOOTING SCRIPT START           #" >> ${EXECUTIONLOG}
+printf "\n#                                                #" >> ${EXECUTIONLOG}
+printf "\n#                                                #" >> ${EXECUTIONLOG}
+printf "\n##################################################\n\n" >> ${EXECUTIONLOG}
+
+printf "\n########## CREATE A PLACE TO STORE THE OUTPUT FOR SHARING TROUBLESHOOTING DATA###\n" >> ${EXECUTIONLOG}
+
+printf "Location of troubleshooting files: $TROUBLESHOOTINGFILES\n\n"
+mkdir -pv ${TROUBLESHOOTINGFILES}
+
+printf "Start collecting config files\n\n"
+
+cp /etc/hosts ${TROUBLESHOOTINGFILES}/etc-hosts
+
+cp /etc/apt/sources.list ${TROUBLESHOOTINGFILES}/etc-apt-sources.list
+
+cp /etc/iptables/rules.v4 ${TROUBLESHOOTINGFILES}/etc-iptables-rules.v4
+
+cp /etc/apache2/sites-available/default.conf ${TROUBLESHOOTINGFILES}/etc-apache2-sites-available-default.conf
+
+cp /etc/apache2/includes/vhost-ssl ${TROUBLESHOOTINGFILES}/etc-apache2-includes-vhost-ssl
+
+cp /etc/apache2/sites-available/default-ssl.conf ${TROUBLESHOOTINGFILES}/etc-apache2-sites-available-default-ssl.conf
+
+cp /etc/php5/fpm/php.ini ${TROUBLESHOOTINGFILES}/etc-php5-fpm-php.ini
+
+cp /etc/apache2/mods-available/fastcgi.conf ${TROUBLESHOOTINGFILES}/etc-apache2-mods-available-fastcgi.conf
+
+cp /etc/php5/fpm/pool.d/${DOMAIN}.conf ${TROUBLESHOOTINGFILES}/etc-php5-fpm-pool.d-${DOMAIN}.conf
+
+printf "Start collecting log files\n\n"
+
+tail ${LOGDIR}/error.log >> ${TROUBLESHOOTINGFILES}/apache-error.log
+tail ${LOGDIR}/access.log >> ${TROUBLESHOOTINGFILES}/apache-access.log
+
+tail /var/log/php5-fpm.log >> ${TROUBLESHOOTINGFILES}/php5-fpm.log
+
+cp ${EXECUTIONLOG} ${TROUBLESHOOTINGFILES}/execution.log
+
+printf "Create troubleshooting report for pastebin\n\n"
+
+printf "##########  ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt && \
+cat  >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt && \
+
+printf "########## TROUBLESHOOTING REPORT $DATE $UNIXTIMESTAMP ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt && \
+
+printf "########## PHP MODULE LOADED ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt && \
+apachectl -V | grep -i mpm >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt && \
+
+printf "\n########## PHP MODULE THREAD SAFETY ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt && \
+php -i | grep Thread >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt && \
+
+printf "\n\n\n########## HOSTS ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt && \
+cat ${TROUBLESHOOTINGFILES}/etc-hosts >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt && \
+
+printf "\n\n\n########## SOURCES.LIST ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt && \
+cat ${TROUBLESHOOTINGFILES}/etc-apt-sources.list >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt && \
+
+printf "\n\n\n########## IPTABLES-RULES.V4 ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt && \
+cat ${TROUBLESHOOTINGFILES}/etc-iptables-rules.v4 >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt && \
+
+printf "\n\n\n########## SITES-AVAILABLE/DEFAULT.CONF ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt && \
+cat ${TROUBLESHOOTINGFILES}/etc-apache2-sites-available-default.conf >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt && \
+
+printf "\n\n\n########## INCLUDES/VHOST-SSL ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt && \
+cat ${TROUBLESHOOTINGFILES}/etc-apache2-includes-vhost-ssl >> ${EXECUTIONLOG} >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt && \
+
+printf "\n\n\n########## SITES-AVAILABLE/DEFAULT-SSL.CONF ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt && \
+cat ${TROUBLESHOOTINGFILES}/etc-apache2-sites-available-default-ssl.conf >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt && \
+
+printf "\n\n\n########## PHP.INI ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt && \
+cat ${TROUBLESHOOTINGFILES}/etc-php5-fpm-php.ini >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt && \
+
+printf "\n\n\n########## FASTCGI.CONF ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt && \
+cat ${TROUBLESHOOTINGFILES}/etc-apache2-mods-available-fastcgi.conf >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt && \
+
+printf "\n\n\n########## FPM/POOL.D/$DOMAIN.CONF ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt && \
+cat ${TROUBLESHOOTINGFILES}/etc-php5-fpm-pool.d-${DOMAIN}.conf >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt && \
+
+printf "\n\n\n########## APACHE ACCESS.LOG ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt && \
+cat ${TROUBLESHOOTINGFILES}/apache-access.log >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt && \
+
+printf "\n\n\n########## APACHE ERROR.LOG ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt && \
+cat ${TROUBLESHOOTINGFILES}/apache-error.log >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt && \
+
+printf "\n\n\n########## PHP-FPM LOG ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt && \
+cat ${TROUBLESHOOTINGFILES}/php5-fpm.log >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt && \
+
+printf "\n\n\n########## UNABRIDGED SETUP LOG ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt && \
+cat ${TROUBLESHOOTINGFILES}/execution.log >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt && \
+
+printf "\n##################################################" >> ${EXECUTIONLOG}
+printf "\n#                                                #" >> ${EXECUTIONLOG}
+printf "\n#                                                #" >> ${EXECUTIONLOG}
+printf "\n# INITIAL TROUBLESHOOTING SCRIPT END             #" >> ${EXECUTIONLOG}
 printf "\n#                                                #" >> ${EXECUTIONLOG}
 printf "\n#                                                #" >> ${EXECUTIONLOG}
 printf "\n##################################################\n\n" >> ${EXECUTIONLOG}
