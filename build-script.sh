@@ -149,7 +149,7 @@ printf "Install the first batch of packages for Apache & PHP\n\n" >> ${EXECUTION
 echo iptables-persistent iptables-persistent/autosave_v4 boolean true | debconf-set-selections >> ${EXECUTIONLOG}
 echo iptables-persistent iptables-persistent/autosave_v6 boolean true | debconf-set-selections >> ${EXECUTIONLOG}
 
-apt-get -qy install sudo tcl perl python3 apache2 tmux iptables-persistent ssh openssl openssl-blacklist libnet-ssleay-perl fail2ban libapache2-mod-fastcgi php5-fpm libapache2-mod-php5 php-pear php5-curl >> ${EXECUTIONLOG}
+apt-get -qy install sudo tcl perl python3 apache2 tmux iptables-persistent ssh openssl openssl-blacklist libnet-ssleay-perl fail2ban php5-fpm libapache2-mod-php5 php-pear php5-curl >> ${EXECUTIONLOG}
 
 printf "\n########## CLEAN UP ###\n" >> ${EXECUTIONLOG}
 
