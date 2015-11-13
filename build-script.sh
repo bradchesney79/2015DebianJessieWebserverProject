@@ -149,7 +149,7 @@ printf "Install the first batch of packages for Apache & PHP\n\n" >> ${EXECUTION
 echo iptables-persistent iptables-persistent/autosave_v4 boolean true | debconf-set-selections >> ${EXECUTIONLOG}
 echo iptables-persistent iptables-persistent/autosave_v6 boolean true | debconf-set-selections >> ${EXECUTIONLOG}
 
-apt-get -qy install sudo tcl perl python3 apache2 tmux iptables-persistent ssh openssl openssl-blacklist libnet-ssleay-perl fail2ban libapache2-mod-fastcgi php5-fpm libapache2-mod-php5 php-pear php5-curl >> ${EXECUTIONLOG}
+apt-get -qy install sudo tcl perl python3 apache2 tmux iptables-persistent ssh openssl openssl-blacklist libnet-ssleay-perl fail2ban php5-fpm libapache2-mod-php5 php-pear php5-curl >> ${EXECUTIONLOG}
 
 printf "\n########## CLEAN UP ###\n" >> ${EXECUTIONLOG}
 
@@ -288,10 +288,14 @@ printf "  </FilesMatch>\n\n" >> /etc/apache2/sites-available/default.conf
 printf "  <Proxy fcgi://$DOMAIN>\n" >> /etc/apache2/sites-available/default.conf
 printf "    ProxySet connectiontimeout=5 timeout=240\n" >> /etc/apache2/sites-available/default.conf
 printf "  </Proxy>\n\n" >> /etc/apache2/sites-available/default.conf
+<<<<<<< HEAD
 
 
 printf "</VirtualHost>\n" >> /etc/apache2/sites-available/default.conf
+=======
+>>>>>>> a35f155aad5079c5a8e44e55530f03355bd41420
 
+printf "</VirtualHost>\n" >> /etc/apache2/sites-available/default.conf
 
 cp /etc/apache2/sites-available/default-ssl.conf /etc/apache2/sites-available/default-ssl.conf.original >> ${EXECUTIONLOG}
 
@@ -312,10 +316,17 @@ printf "        ErrorLog $WEBROOT/logs/error-ssl.log\n" >> /etc/apache2/sites-av
 printf "        CustomLog $WEBROOT/logs/access-ssl.log combined\n\n" >> /etc/apache2/sites-available/default-ssl.conf
 
 printf "        <FilesMatch \"\.php$\">\n" >> /etc/apache2/sites-available/default-ssl.conf
+<<<<<<< HEAD
 printf "          SetHandler \"proxy:unix://$WEBROOT/sockets/$DOMAIN-ssl.sock|fcgi://$DOMAIN-SSL\"\n" >> /etc/apache2/sites-available/default-ssl.conf
 printf "        </FilesMatch>\n\n" >> /etc/apache2/sites-available/default-ssl.conf
 
 printf "        <Proxy fcgi://$DOMAIN-SSL>\n\n" >> /etc/apache2/sites-available/default-ssl.conf
+=======
+printf "          SetHandler \"proxy:unix://$WEBROOT/sockets/$DOMAIN-SSL.sock|fcgi://$DOMAIN-SSL\"\n" >> /etc/apache2/sites-available/default-ssl.conf
+printf "        </FilesMatch>\n" >> /etc/apache2/sites-available/default-ssl.conf
+
+printf "        <Proxy fcgi://$DOMAIN-SSL>\n" >> /etc/apache2/sites-available/default-ssl.conf
+>>>>>>> a35f155aad5079c5a8e44e55530f03355bd41420
 printf "          ProxySet connectiontimeout=5 timeout=240\n" >> /etc/apache2/sites-available/default-ssl.conf
 printf "        </Proxy>\n" >> /etc/apache2/sites-available/default-ssl.conf
 
@@ -379,11 +390,11 @@ openssl req -nodes $ALGORITHM -newkey rsa:$KEYSIZE -keyout $WEBROOT/certs/$YEAR/
 #####!!!!! So, skipping swapping out mpm_prefork and disabling the ssl host allows the webserver to start
 #####!!!!! Using mpm_worker causes an invalid config based upon mpm_worker being threaded and php5-fpm not being threadsafe
 
-printf "\n########## DISABLE THE PREFORK PHP APACHE MODULE ###\n" >> ${EXECUTIONLOG}
-a2dismod mpm_prefork >> ${EXECUTIONLOG}
+printf "\n########## DISABLE THE ACTIONS APACHE MODULE ###\n" >> ${EXECUTIONLOG}
+a2dismod -f actions >> ${EXECUTIONLOG}
 
-printf "\n########## ENABLE THE MPM WORKER PHP APACHE MODULE ###\n" >> ${EXECUTIONLOG}
-a2enmod actions fastcgi alias ssl mpm_worker >> ${EXECUTIONLOG}
+printf "\n########## ENABLE THE PROXY FCGI APACHE MODULE ###\n" >> ${EXECUTIONLOG}
+a2enmod proxy_fcgi ssl >> ${EXECUTIONLOG}
 
 printf "\n########## REMOVE EXISTING ENABLED SITES ###\n" >> ${EXECUTIONLOG}
 rm /etc/apache2/sites-enabled/* >> ${EXECUTIONLOG}
@@ -398,7 +409,9 @@ printf "\n########## CONFIG PHP-FPM ###\n" >> ${EXECUTIONLOG}
 
 mv /etc/php5/fpm/pool.d/www.conf /etc/php5/fpm/pool.d/www.conf.original
 cp /etc/php5/fpm/pool.d/www.conf.original /etc/php5/fpm/pool.d/${DOMAIN}.conf
+cp /etc/php5/fpm/pool.d/www.conf.original /etc/php5/fpm/pool.d/${DOMAIN}-ssl.conf
 
+printf "\n########## THE HTTP POOL ###\n" >> ${EXECUTIONLOG}
 
 printf "\n########## DEFAULT HTTP POOL ###\n" >> ${EXECUTIONLOG}
 
@@ -410,6 +423,7 @@ sed -i "s/group = www-data/group = $USER/" /etc/php5/fpm/pool.d/${DOMAIN}.conf >
 
 sed -i "s/;listen.mode = 0660/listen.mode = 0660/" /etc/php5/fpm/pool.d/${DOMAIN}.conf >> ${EXECUTIONLOG}
 
+<<<<<<< HEAD
 printf "\n########## DEFAULT HTTPS POOL ###\n" >> ${EXECUTIONLOG}
 
 sed -i "s/\[www\]/\[$DOMAIN-ssl\]/" /etc/php5/fpm/pool.d/${DOMAIN}-ssl.conf >> ${EXECUTIONLOG}
@@ -417,6 +431,17 @@ sed -i "s|listen =.*|listen = $WEBROOT/sockets/$DOMAIN-SSL.sock|" /etc/php5/fpm/
 
 sed -i "s/user = www-data/user = $USER/" /etc/php5/fpm/pool.d/${DOMAIN}-ssl.conf >> ${EXECUTIONLOG}
 sed -i "s/group = www-data/group = $USER/" /etc/php5/fpm/pool.d/${DOMAIN}-ssl.conf >> ${EXECUTIONLOG}
+=======
+printf "\n########## THE HTTPS POOL ###\n" >> ${EXECUTIONLOG}
+
+sed -i "s/\[www\]/\[$DOMAIN-SSL\]/" /etc/php5/fpm/pool.d/${DOMAIN}-ssl.conf >> ${EXECUTIONLOG}
+sed -i "s|listen =.*|listen = $WEBROOT/sockets/$DOMAIN-SSL.sock|" /etc/php5/fpm/pool.d/${DOMAIN}-ssl.conf >> ${EXECUTIONLOG}
+
+sed -i "s/user = www-data/user = $USER/" /etc/php5/fpm/pool.d/${DOMAIN}-ssl.conf >> ${EXECUTIONLOG}
+sed -i "s/group = www-data/group = $USER/" /etc/php5/fpm/pool.d/${DOMAIN}-ssl.conf >> ${EXECUTIONLOG}
+
+sed -i "s/;listen.mode = 0660/listen.mode = 0660/" /etc/php5/fpm/pool.d/${DOMAIN}-ssl.conf >> ${EXECUTIONLOG}
+>>>>>>> a35f155aad5079c5a8e44e55530f03355bd41420
 
 sed -i "s/;listen.mode = 0660/listen.mode = 0660/" /etc/php5/fpm/pool.d/${DOMAIN}-ssl.conf >> ${EXECUTIONLOG}
 printf "\n########## RESTART THE WEBSERVER SERVICES ###\n" >> ${EXECUTIONLOG}
@@ -655,7 +680,8 @@ disable_functions = “apache_child_terminate, apache_setenv, define_syslog_vari
 # https://www.startssl.com/?app=21
 # https://www.linode.com/docs/websites/apache/running-fastcgi-php-fpm-on-debian-7-with-apache
 # http://wiki.apache.org/httpd/PHP-FPM
-
+# http://serverfault.com/a/672969/106593
+# http://float64.uk/blog/2014/08/20/php-fpm-sockets-apache-mod-proxy-fcgi-ubuntu/
 
 vi setup.sh; chmod +x setup.sh; ./setup.sh
 
