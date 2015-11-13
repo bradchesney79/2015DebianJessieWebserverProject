@@ -486,7 +486,16 @@ printf "Create troubleshooting report for pastebin\n\n" >> ${EXECUTIONLOG}
 
 printf "########## TROUBLESHOOTING REPORT $DATE $UNIXTIMESTAMP ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
 
-printf "########## PHP MODULE LOADED ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
+printf "\n########## HOSTNAME ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
+hostname >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
+
+printf "\n\n########## IP TABLE RULES LOADED ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
+iptables -L >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
+
+printf "\n\n########## PACKAGES INSTALLED ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
+dpkg -l >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
+
+printf "\n\n########## PHP MODULE LOADED ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
 apachectl -V | grep -i mpm >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
 
 printf "\n########## PHP MODULE THREAD SAFETY ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
@@ -548,12 +557,6 @@ printf "\n##################################################\n\n" >> ${EXECUTION
 ######################################################################
 
 
-SSLEngine on
-
-SSLProtocol all -SSLv2 -SSLv3
-SSLHonorCipherOrder On
-SSLCipherSuite ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS
-
 
 
 
@@ -573,66 +576,6 @@ SSLCipherSuite ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:EC
 
 ##### INSTALL IMAGICK #####
 
-
-
-
-
-
-
-
-
-
-
-        # phpMyAdmin default Apache configuration
-
-Alias /dbmanager /usr/share/phpmyadmin
-printf "        <FilesMatch "\.(shtml|phtml|php)$">\n" >> /etc/apache2/sites-available/default-ssl.conf
-printf "                SSLOptions +StdEnvVars\n" >> /etc/apache2/sites-available/default-ssl.conf
-printf "        </FilesMatch>\n" >> /etc/apache2/sites-available/default-ssl.conf
-printf "        <Directory /usr/lib/cgi-bin>\n" >> /etc/apache2/sites-available/default-ssl.conf
-printf "                SSLOptions +StdEnvVars\n" >> /etc/apache2/sites-available/default-ssl.conf
-printf "        </Directory>\n\n" >> /etc/apache2/sites-available/default-ssl.conf
-<Directory /usr/share/phpmyadmin>
-        Options FollowSymLinks
-        DirectoryIndex index.php
-
-        <IfModule mod_php5.c>
-                AddType application/x-httpd-php .php
-
-                php_flag magic_quotes_gpc Off
-                php_flag track_vars On
-                php_flag register_globals Off
-                php_admin_flag allow_url_fopen Off
-                php_value include_path .
-                php_admin_value upload_tmp_dir /var/lib/phpmyadmin/tmp
-                php_admin_value open_basedir /usr/share/phpmyadmin/:/etc/phpmyadmin/:/var/lib/phpmyadmin/
-        </IfModule>
-        
-</Directory>
-
-# Authorize for setup
-<Directory /usr/share/phpmyadmin/setup>
-    <IfModule mod_authn_file.c>
-    AuthType Basic
-    AuthName "phpMyAdmin Setup"
-    AuthUserFile /etc/phpmyadmin/htpasswd.setup
-    </IfModule>
-#    Require valid-user
-</Directory>
-
-# Disallow web access to directories that don't need it
-<Directory /usr/share/phpmyadmin/libraries>
-    Order Deny,Allow
-    Deny from All
-</Directory>
-<Directory /usr/share/phpmyadmin/setup/lib>
-    Order Deny,Allow
-    Deny from All
-</Directory>
-
-
-
-sudo sed -i "s/listen =.*/listen = 127.0.0.1:9000/" /etc/php5/fpm/pool.d/www.conf
 
 apt-get install php5-mysql php5-curl php5-gd php5-gmp php5-mcrypt php5-memcached php5-imagick php5-intl php5-xdebug
 
@@ -659,21 +602,5 @@ disable_functions = “apache_child_terminate, apache_setenv, define_syslog_vari
 
 vi setup.sh; chmod +x setup.sh; ./setup.sh
 
-#test settings with:
-hostname
-iptables -L
-dpkg -l
 
-#myhost specific:
 
-hostnamectl set-hostname www
-
-printf "127.0.0.1\t\t\tlocalhost.localdomain localhost\n" > /etc/hosts
-printf "127.0.1.1\t\t\tdebian\n" >> /etc/hosts
-printf "45.33.112.226\t\t\twww.rustbeltrebellion.com www\n" >> /etc/hosts
-printf "\n" >> /etc/hosts
-printf "# The following lines are desirable for IPv6 capable hosts\n" >> /etc/hosts
-printf "::1\t\t\t\tlocalhost ip6-localhost ip6-loopback\n" >> /etc/hosts
-printf "ff02::1\t\t\t\tip6-allnodes\n" >> /etc/hosts
-printf "ff02::2\t\t\t\tip6-allrouters\n" >> /etc/hosts
-printf "2600:3c00::f03c:91ff:fe26:42cf\twww.rustbeltrebellion.com www" >> /etc/hosts
