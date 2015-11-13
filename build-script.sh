@@ -288,12 +288,6 @@ printf "  </FilesMatch>\n\n" >> /etc/apache2/sites-available/default.conf
 printf "  <Proxy fcgi://$DOMAIN>\n" >> /etc/apache2/sites-available/default.conf
 printf "    ProxySet connectiontimeout=5 timeout=240\n" >> /etc/apache2/sites-available/default.conf
 printf "  </Proxy>\n\n" >> /etc/apache2/sites-available/default.conf
-<<<<<<< HEAD
-
-
-printf "</VirtualHost>\n" >> /etc/apache2/sites-available/default.conf
-=======
->>>>>>> a35f155aad5079c5a8e44e55530f03355bd41420
 
 printf "</VirtualHost>\n" >> /etc/apache2/sites-available/default.conf
 
@@ -316,17 +310,10 @@ printf "        ErrorLog $WEBROOT/logs/error-ssl.log\n" >> /etc/apache2/sites-av
 printf "        CustomLog $WEBROOT/logs/access-ssl.log combined\n\n" >> /etc/apache2/sites-available/default-ssl.conf
 
 printf "        <FilesMatch \"\.php$\">\n" >> /etc/apache2/sites-available/default-ssl.conf
-<<<<<<< HEAD
 printf "          SetHandler \"proxy:unix://$WEBROOT/sockets/$DOMAIN-ssl.sock|fcgi://$DOMAIN-SSL\"\n" >> /etc/apache2/sites-available/default-ssl.conf
 printf "        </FilesMatch>\n\n" >> /etc/apache2/sites-available/default-ssl.conf
 
 printf "        <Proxy fcgi://$DOMAIN-SSL>\n\n" >> /etc/apache2/sites-available/default-ssl.conf
-=======
-printf "          SetHandler \"proxy:unix://$WEBROOT/sockets/$DOMAIN-SSL.sock|fcgi://$DOMAIN-SSL\"\n" >> /etc/apache2/sites-available/default-ssl.conf
-printf "        </FilesMatch>\n" >> /etc/apache2/sites-available/default-ssl.conf
-
-printf "        <Proxy fcgi://$DOMAIN-SSL>\n" >> /etc/apache2/sites-available/default-ssl.conf
->>>>>>> a35f155aad5079c5a8e44e55530f03355bd41420
 printf "          ProxySet connectiontimeout=5 timeout=240\n" >> /etc/apache2/sites-available/default-ssl.conf
 printf "        </Proxy>\n" >> /etc/apache2/sites-available/default-ssl.conf
 
@@ -411,8 +398,6 @@ mv /etc/php5/fpm/pool.d/www.conf /etc/php5/fpm/pool.d/www.conf.original
 cp /etc/php5/fpm/pool.d/www.conf.original /etc/php5/fpm/pool.d/${DOMAIN}.conf
 cp /etc/php5/fpm/pool.d/www.conf.original /etc/php5/fpm/pool.d/${DOMAIN}-ssl.conf
 
-printf "\n########## THE HTTP POOL ###\n" >> ${EXECUTIONLOG}
-
 printf "\n########## DEFAULT HTTP POOL ###\n" >> ${EXECUTIONLOG}
 
 sed -i "s/\[www\]/\[$DOMAIN\]/" /etc/php5/fpm/pool.d/${DOMAIN}.conf >> ${EXECUTIONLOG}
@@ -423,16 +408,7 @@ sed -i "s/group = www-data/group = $USER/" /etc/php5/fpm/pool.d/${DOMAIN}.conf >
 
 sed -i "s/;listen.mode = 0660/listen.mode = 0660/" /etc/php5/fpm/pool.d/${DOMAIN}.conf >> ${EXECUTIONLOG}
 
-<<<<<<< HEAD
 printf "\n########## DEFAULT HTTPS POOL ###\n" >> ${EXECUTIONLOG}
-
-sed -i "s/\[www\]/\[$DOMAIN-ssl\]/" /etc/php5/fpm/pool.d/${DOMAIN}-ssl.conf >> ${EXECUTIONLOG}
-sed -i "s|listen =.*|listen = $WEBROOT/sockets/$DOMAIN-SSL.sock|" /etc/php5/fpm/pool.d/${DOMAIN}.conf >> ${EXECUTIONLOG}
-
-sed -i "s/user = www-data/user = $USER/" /etc/php5/fpm/pool.d/${DOMAIN}-ssl.conf >> ${EXECUTIONLOG}
-sed -i "s/group = www-data/group = $USER/" /etc/php5/fpm/pool.d/${DOMAIN}-ssl.conf >> ${EXECUTIONLOG}
-=======
-printf "\n########## THE HTTPS POOL ###\n" >> ${EXECUTIONLOG}
 
 sed -i "s/\[www\]/\[$DOMAIN-SSL\]/" /etc/php5/fpm/pool.d/${DOMAIN}-ssl.conf >> ${EXECUTIONLOG}
 sed -i "s|listen =.*|listen = $WEBROOT/sockets/$DOMAIN-SSL.sock|" /etc/php5/fpm/pool.d/${DOMAIN}-ssl.conf >> ${EXECUTIONLOG}
@@ -441,9 +417,7 @@ sed -i "s/user = www-data/user = $USER/" /etc/php5/fpm/pool.d/${DOMAIN}-ssl.conf
 sed -i "s/group = www-data/group = $USER/" /etc/php5/fpm/pool.d/${DOMAIN}-ssl.conf >> ${EXECUTIONLOG}
 
 sed -i "s/;listen.mode = 0660/listen.mode = 0660/" /etc/php5/fpm/pool.d/${DOMAIN}-ssl.conf >> ${EXECUTIONLOG}
->>>>>>> a35f155aad5079c5a8e44e55530f03355bd41420
 
-sed -i "s/;listen.mode = 0660/listen.mode = 0660/" /etc/php5/fpm/pool.d/${DOMAIN}-ssl.conf >> ${EXECUTIONLOG}
 printf "\n########## RESTART THE WEBSERVER SERVICES ###\n" >> ${EXECUTIONLOG}
 
 service apache2 restart
