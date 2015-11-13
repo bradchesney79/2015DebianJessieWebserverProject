@@ -2,7 +2,7 @@
 
 ##### THE USER INFO, SCRIPT LOCATION, & DATE #####
 
-EXECUTOR=`whoami`
+EXECUTOR=$(whoami)
 SCRIPTLOCATION=`pwd`
 UNIXTIMESTAMP=`date +%s`
 DATE=`date +%Y-%m-%d`
@@ -71,7 +71,7 @@ printf "\nEXECUTOR - $EXECUTIONLOGLOCATION" >> ${EXECUTIONLOG}
 printf "\nSCRIPTLOCATION - $SCRIPTLOCATION" >> ${EXECUTIONLOG}
 printf "\nEXECUTIONLOG - $EXECUTIONLOG" >> ${EXECUTIONLOG}
 printf "\nTROUBLESHOOTINGFILES - $TROUBLESHOOTINGFILES" >> ${EXECUTIONLOG}
-printf "\n$DATE\n\n" >> ${EXECUTIONLOG}
+printf "\n$DATE - $UNIXTIMESTAMP\n\n" >> ${EXECUTIONLOG}
 
 
 printf "\n########## RECORD THE VARIABLES FOR POSTERITY ####\n\n" >> ${EXECUTIONLOG}
@@ -97,21 +97,19 @@ printf "\nSSLPROVIDER - $SSLPROVIDER\n\n" >> ${EXECUTIONLOG}
 
 printf "\n########## CONFIGURE THE HOSTNAME ###\n" >> ${EXECUTIONLOG}
 
-printf "\n" >> ${EXECUTIONLOG}
-printf "Set the hostname\n\n" >> ${EXECUTIONLOG}
+
+printf "\nSet the hostname\n\n" >> ${EXECUTIONLOG}
 
 hostnamectl set-hostname $HOSTNAME >> ${EXECUTIONLOG}
 
 printf "\n########## UPDATE THE HOSTS FILE ###\n" >> ${EXECUTIONLOG}
 
-printf "\n" >> ${EXECUTIONLOG}
-printf "Fully populate hosts file\n\n" >> ${EXECUTIONLOG}
+printf "\nFully populate hosts file\n\n" >> ${EXECUTIONLOG}
 
 printf "127.0.0.1\t\t\tlocalhost.localdomain localhost\n" > /etc/hosts
 printf "127.0.1.1\t\t\tdebian\n" >> /etc/hosts
-printf "$IPV4\t\t$HOSTNAME.$DOMAIN $HOSTNAME\n" >> /etc/hosts
-printf "\n" >> /etc/hosts
-printf "# The following lines are desirable for IPv6 capable hosts\n" >> /etc/hosts
+printf "$IPV4\t\t\t\t$HOSTNAME.$DOMAIN $HOSTNAME\n" >> /etc/hosts
+printf "\n# The following lines are desirable for IPv6 capable hosts\n" >> /etc/hosts
 printf "::1\t\t\t\tlocalhost ip6-localhost ip6-loopback\n" >> /etc/hosts
 printf "ff02::1\t\t\t\tip6-allnodes\n" >> /etc/hosts
 printf "ff02::2\t\t\t\tip6-allrouters\n" >> /etc/hosts
@@ -253,13 +251,11 @@ mkdir $LOGDIR >> ${EXECUTIONLOG}
 mkdir $WEBROOT/sockets >> ${EXECUTIONLOG}
 mkdir $WEBROOT/tmp >> ${EXECUTIONLOG}
 
-chown -r $USER:$USER $WEBROOT >> ${EXECUTIONLOG}
-
-chmod -r 754 $WEBROOT >> ${EXECUTIONLOG}
-find $WEBROOT -type d -exec chmod 751 {} \; >> ${EXECUTIONLOG}
+chown -R $USER:$USER $WEBROOT >> ${EXECUTIONLOG}
+chmod -R 744 $WEBROOT >> ${EXECUTIONLOG}
 
 chown -R www-data:www-data $WEBROOT/sockets >> ${EXECUTIONLOG}
-chmod -R 666 $WEBROOT/sockets >> ${EXECUTIONLOG}
+find $WEBROOT -type d -exec chmod -R 755 {} \; >> ${EXECUTIONLOG}
 
 printf "\n########## INSTALL MYSQL ###\n" >> ${EXECUTIONLOG}
 
@@ -300,12 +296,6 @@ mysql -u "root" -p "$DBPASSWORD" -e "$SQL4"
 mysql -u "root" -p "$DBPASSWORD" -e "$SQL5"
 mysql -u "root" -p "$DBPASSWORD" -e "$SQL6"
 mysql -u "root" -p "$DBPASSWORD" -e "$SQL7"
-
-#mysql -u "root" -p "$DBPASSWORD" -e "$SQL"
-
-#don't forget to make the backup user password match
-#delete the root user
-
 
 printf "\n########## CONFIGURE PHP ###\n" >> ${EXECUTIONLOG}
 
@@ -436,15 +426,15 @@ rm /etc/apache2/sites-enabled/* >> ${EXECUTIONLOG}
 
 printf "\n########## ENABLE THE DEFAULT SITES ###\n" >> ${EXECUTIONLOG}
 a2ensite default.conf >> ${EXECUTIONLOG}
-a2ensite default-ssl.conf >> ${EXECUTIONLOG}
+#a2ensite default-ssl.conf >> ${EXECUTIONLOG}
 
 printf "\n########## SETUP THE DEFAULT SITE FASTCGI ###\n" >> ${EXECUTIONLOG}
 
 printf "\n########## CONFIG PHP-FPM ###\n" >> ${EXECUTIONLOG}
 
-mv /etc/php5/fpm/pool.d/www.conf /etc/php5/fpm/pool.d/www.conf.original
-cp /etc/php5/fpm/pool.d/www.conf.original /etc/php5/fpm/pool.d/${DOMAIN}.conf
-cp /etc/php5/fpm/pool.d/www.conf.original /etc/php5/fpm/pool.d/${DOMAIN}-ssl.conf
+mv /etc/php5/fpm/pool.d/www.conf /etc/php5/fpm/pool.d/www.conf.original >> ${EXECUTIONLOG}
+cp /etc/php5/fpm/pool.d/www.conf.original /etc/php5/fpm/pool.d/${DOMAIN}.conf >> ${EXECUTIONLOG}
+cp /etc/php5/fpm/pool.d/www.conf.original /etc/php5/fpm/pool.d/${DOMAIN}-ssl.conf >> ${EXECUTIONLOG}
 
 printf "\n########## DEFAULT HTTP POOL ###\n" >> ${EXECUTIONLOG}
 
@@ -502,8 +492,14 @@ sed -i "s/;*disable_functions.*/disable_functions = apache_child_terminate, apac
 
 printf "\n########## RESTART THE WEBSERVER SERVICES ###\n" >> ${EXECUTIONLOG}
 
-service apache2 restart
-service php-fpm restart
+service apache2 restart >> ${EXECUTIONLOG}
+service php-fpm restart >> ${EXECUTIONLOG}
+
+printf "\n########## CLEAN UP ###\n" >> ${EXECUTIONLOG}
+
+printf "\nLast autoremove of packages\n\n" >> ${EXECUTIONLOG}
+
+apt-get -qy autoremove >> ${EXECUTIONLOG}
 
 printf "\n##################################################" >> ${EXECUTIONLOG}
 printf "\n#                                                #" >> ${EXECUTIONLOG}
@@ -546,6 +542,8 @@ cp /etc/apache2/mods-available/fastcgi.conf ${TROUBLESHOOTINGFILES}/etc-apache2-
 
 
 cp /etc/php5/fpm/pool.d/${DOMAIN}.conf ${TROUBLESHOOTINGFILES}/etc-php5-fpm-pool.d-${DOMAIN}.conf
+
+cp /etc/php5/fpm/pool.d/${DOMAIN}-ssl.conf ${TROUBLESHOOTINGFILES}/etc-php5-fpm-pool.d-${DOMAIN}ssl.conf
 
 printf "Start collecting log files\n\n" >> ${EXECUTIONLOG}
 
@@ -610,17 +608,17 @@ cat ${TROUBLESHOOTINGFILES}/etc-php5-fpm-pool.d-${DOMAIN}.conf >> ${TROUBLESHOOT
 printf "\n\n\n########## FPM/POOL.D/$DOMAIN-SSL.CONF ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
 cat ${TROUBLESHOOTINGFILES}/etc-php5-fpm-pool.d-${DOMAIN}-ssl.conf >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
 
-printf "\n\n\n########## APACHE ACCESS.LOG ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
-cat ${TROUBLESHOOTINGFILES}/apache-access.log >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
+#printf "\n\n\n########## APACHE ACCESS.LOG ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
+#cat ${TROUBLESHOOTINGFILES}/apache-access.log >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
 
-printf "\n\n\n########## APACHE ERROR.LOG ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
-cat ${TROUBLESHOOTINGFILES}/apache-error.log >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
+#printf "\n\n\n########## APACHE ERROR.LOG ###########\n\n" >> #${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
+#cat ${TROUBLESHOOTINGFILES}/apache-error.log >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
 
 printf "\n\n\n########## PHP-FPM LOG ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
 cat ${TROUBLESHOOTINGFILES}/php5-fpm.log >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
 
 printf "\n\n\n########## UNABRIDGED SETUP LOG ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
-cat ${TROUBLESHOOTINGFILES}/execution.log >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
+cat ${EXECUTIONLOG} >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
 
 printf "\n##################################################" >> ${EXECUTIONLOG}
 printf "\n#                                                #" >> ${EXECUTIONLOG}
