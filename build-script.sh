@@ -56,6 +56,32 @@ DBBACKUPUSERPASSWORD="thirddummypassword"
 
 #####  #####
 
+######################################################################
+######################################################################
+
+#####NOTES & SNIPPETS#####
+
+######################################################################
+######################################################################
+
+#based upon:
+# 
+# https://www.linode.com/docs/security/securing-your-server
+# https://www.thomas-krenn.com/en/wiki/Saving_Iptables_Firewall_Rules_Permanently
+# https://bbs.archlinux.org/viewtopic.php?id=156064
+# https://www.linode.com/docs/getting-started
+# http://serverfault.com/questions/94991/setting-the-timezone-with-an-automated-script
+# http://www.shellhacks.com/en/HowTo-Create-CSR-using-OpenSSL-Without-Prompt-Non-Interactive
+# http://tcsoftware.net/blog/2012/02/installing-class-1-startssl-certificate-on-debian/
+# https://www.startssl.com/?app=21
+# https://www.linode.com/docs/websites/apache/running-fastcgi-php-fpm-on-debian-7-with-apache
+# http://wiki.apache.org/httpd/PHP-FPM
+# http://serverfault.com/a/672969/106593
+# http://float64.uk/blog/2014/08/20/php-fpm-sockets-apache-mod-proxy-fcgi-ubuntu/
+
+#exit; halt
+#pushd /root; mkdir bin; pushd bin; wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/build-script.sh; chmod +x build-script.sh; time ./build-script.sh; popd; popd
+
 
 printf "\n##################################################" >> ${EXECUTIONLOG}
 printf "\n#                                                #" >> ${EXECUTIONLOG}
@@ -82,7 +108,20 @@ printf "\nIPV4 - $IPV4\n" >> ${EXECUTIONLOG}
 printf "\nIPV6 - $IPV6\n" >> ${EXECUTIONLOG}
 printf "\nTIMEZONE - $TIMEZONE\n\n" >> ${EXECUTIONLOG}
 
+##### PERSON RESPONSIBLE FOR DEFAULT DOMAIN #####
+
 printf "\nUSER - $USER\n\n" >> ${EXECUTIONLOG}
+printf "\nPASSWORD - $PASSWORD\n" >> ${EXECUTIONLOG}
+printf "\nEMAIL - $EMAIL=\n\n" >> ${EXECUTIONLOG}
+
+printf "\nWEBROOT - $WEBROOT\n" >> ${EXECUTIONLOG}
+printf "\nLOGDIR - $LOGDIR\n\n" >> ${EXECUTIONLOG}
+
+
+##### SSL KEY PARTICULARS #####
+
+printf "\nKEYSIZE - $KEYSIZE\n" >> ${EXECUTIONLOG}
+printf "\nALGORITHM - $ALGORITHM\n\n" >> ${EXECUTIONLOG}
 
 printf "\nCOUNTRY - $COUNTRY\n" >> ${EXECUTIONLOG}
 printf "\nSTATE - $STATE\n" >> ${EXECUTIONLOG}
@@ -94,6 +133,16 @@ printf "\nEMAIL - $EMAIL\n\n" >> ${EXECUTIONLOG}
 printf "\nPASSWORD - $PASSWORD\n\n" >> ${EXECUTIONLOG}
 
 printf "\nSSLPROVIDER - $SSLPROVIDER\n\n" >> ${EXECUTIONLOG}
+
+##### DATABASE INFO #####
+
+printf "\nDBROOTUSER - $DBROOTUSER\n" >> ${EXECUTIONLOG}
+printf "\nDBPASSWORD - $DBPASSWORD\n\n" >> ${EXECUTIONLOG}
+
+printf "\nDEFAULTSITEDBUSER - $DEFAULTSITEDBUSER\n" >> ${EXECUTIONLOG}
+printf "\nDEFAULTSITEDBPASSWORD - $DEFAULTSITEDBPASSWORD\n\n" >> ${EXECUTIONLOG}
+
+printf "\nDBBACKUPPASSWORD - $DBBACKUPUSERPASSWORD\n\n" >> ${EXECUTIONLOG}
 
 printf "\n########## CONFIGURE THE HOSTNAME ###\n" >> ${EXECUTIONLOG}
 
@@ -627,39 +676,5 @@ printf "\n# INITIAL TROUBLESHOOTING SCRIPT END             #" >> ${EXECUTIONLOG}
 printf "\n#                                                #" >> ${EXECUTIONLOG}
 printf "\n#                                                #" >> ${EXECUTIONLOG}
 printf "\n##################################################\n\n" >> ${EXECUTIONLOG}
-
-######################################################################
-######################################################################
-
-#####NOTES & SNIPPETS#####
-
-######################################################################
-######################################################################
-
-
-
-
-
-
-
-
-#based upon:
-# 
-# https://www.linode.com/docs/security/securing-your-server
-# https://www.thomas-krenn.com/en/wiki/Saving_Iptables_Firewall_Rules_Permanently
-# https://bbs.archlinux.org/viewtopic.php?id=156064
-# https://www.linode.com/docs/getting-started
-# http://serverfault.com/questions/94991/setting-the-timezone-with-an-automated-script
-# http://www.shellhacks.com/en/HowTo-Create-CSR-using-OpenSSL-Without-Prompt-Non-Interactive
-# http://tcsoftware.net/blog/2012/02/installing-class-1-startssl-certificate-on-debian/
-# https://www.startssl.com/?app=21
-# https://www.linode.com/docs/websites/apache/running-fastcgi-php-fpm-on-debian-7-with-apache
-# http://wiki.apache.org/httpd/PHP-FPM
-# http://serverfault.com/a/672969/106593
-# http://float64.uk/blog/2014/08/20/php-fpm-sockets-apache-mod-proxy-fcgi-ubuntu/
-
-#exit; halt
-#pushd /root; mkdir bin; pushd bin; wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/build-script.sh; chmod +x build-script.sh; time ./build-script.sh; popd; popd
-
 
 
