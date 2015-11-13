@@ -149,7 +149,7 @@ printf "Install the first batch of packages for Apache & PHP\n\n" >> ${EXECUTION
 echo iptables-persistent iptables-persistent/autosave_v4 boolean true | debconf-set-selections >> ${EXECUTIONLOG}
 echo iptables-persistent iptables-persistent/autosave_v6 boolean true | debconf-set-selections >> ${EXECUTIONLOG}
 
-apt-get -qy install sudo tcl perl python3 apache2 tmux iptables-persistent ssh openssl openssl-blacklist libnet-ssleay-perl fail2ban php5-fpm libapache2-mod-php5 php-pear php5-curl >> ${EXECUTIONLOG}
+apt-get -qy install sudo tcl perl python3 apache2 tmux iptables-persistent ssh openssl openssl-blacklist libnet-ssleay-perl fail2ban php5-fpm libapache2-mod-php5 php-pear php5-curl git >> ${EXECUTIONLOG}
 
 printf "\n########## CLEAN UP ###\n" >> ${EXECUTIONLOG}
 
@@ -418,6 +418,32 @@ sed -i "s/group = www-data/group = $USER/" /etc/php5/fpm/pool.d/${DOMAIN}-ssl.co
 
 sed -i "s/;listen.mode = 0660/listen.mode = 0660/" /etc/php5/fpm/pool.d/${DOMAIN}-ssl.conf >> ${EXECUTIONLOG}
 
+printf "\n########## INSTALL PHP PACKAGES ###\n" >> ${EXECUTIONLOG}
+
+apt-get install php5-mysql php5-curl php5-gd php5-gmp php5-mcrypt php5-memcached imagemagick php5-imagick php5-intl php5-xdebug
+
+printf "\n########## CONFIGURE PHP ###\n" >> ${EXECUTIONLOG}
+
+
+(at line 213 for me)
+short_open_tag = Off
+
+(at line 674 for me)
+post_max_size = 12M
+
+(at line 802 for me)
+upload_max_filesize = 12M
+
+(at line 1360 for me)
+session.cookie_secure = 1
+
+(at line 1391 for me)
+session.cookie_httponly = 1
+
+#disable_functions = “apache_child_terminate, apache_setenv, define_syslog_variables, escapeshellarg, escapeshellcmd, eval, exec, fp, fput, ftp_connect, ftp_exec, ftp_get, ftp_login, ftp_nb_fput, ftp_put, ftp_raw, ftp_rawlist, highlight_file, ini_alter, ini_get_all, ini_restore, inject_code, mysql_pconnect, openlog, passthru, php_uname, phpAds_remoteInfo, phpAds_XmlRpc, phpAds_xmlrpcDecode, phpAds_xmlrpcEncode, popen, posix_getpwuid, posix_kill, posix_mkfifo, posix_setpgid, posix_setsid, posix_setuid, posix_setuid, posix_uname, proc_close, proc_get_status, proc_nice, proc_open, proc_terminate, shell_exec, syslog, system, xmlrpc_entity_decode”
+
+
+
 printf "\n########## RESTART THE WEBSERVER SERVICES ###\n" >> ${EXECUTIONLOG}
 
 service apache2 restart
@@ -571,16 +597,29 @@ printf "\n##################################################\n\n" >> ${EXECUTION
 
 
 
-    mysql -u root -p
+mysql -uroot -p
+
+USE mysql
 
 
-##### INSTALL IMAGICK #####
+A common vector is to attack the MySQL root user since it is the default omipotent user put on almost all MySQL installs.
+So, give your 'root' user a different name. (Is admin more secure than root, meh. Yeah, I guess.)
 
 
-apt-get install php5-mysql php5-curl php5-gd php5-gmp php5-mcrypt php5-memcached php5-imagick php5-intl php5-xdebug
+GRANT ALL PRIVILEGES ON *.* TO 'admin'@'localhost' IDENTIFIED BY 'pwork' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON *.* TO 'admin'@'127.0.0.1' IDENTIFIED BY 'pwork' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON *.* TO 'admin'@'::1' IDENTIFIED BY 'pwork' WITH GRANT OPTION;
 
 
-disable_functions = “apache_child_terminate, apache_setenv, define_syslog_variables, escapeshellarg, escapeshellcmd, eval, exec, fp, fput, ftp_connect, ftp_exec, ftp_get, ftp_login, ftp_nb_fput, ftp_put, ftp_raw, ftp_rawlist, highlight_file, ini_alter, ini_get_all, ini_restore, inject_code, mysql_pconnect, openlog, passthru, php_uname, phpAds_remoteInfo, phpAds_XmlRpc, phpAds_xmlrpcDecode, phpAds_xmlrpcEncode, popen, posix_getpwuid, posix_kill, posix_mkfifo, posix_setpgid, posix_setsid, posix_setuid, posix_setuid, posix_uname, proc_close, proc_get_status, proc_nice, proc_open, proc_terminate, shell_exec, syslog, system, xmlrpc_entity_decode”
+CREATE USER 'backup'@'localhost' IDENTIFIED BY 'password';
+GRANT SELECT, SHOW VIEW, RELOAD, REPLICATION CLIENT, EVENT, TRIGGER ON *.* TO 'backup'@'localhost';
+
+FLUSH PRIVILEGES;
+
+EXIT
+
+
+
 
 
 
