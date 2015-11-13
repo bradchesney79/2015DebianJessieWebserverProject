@@ -654,7 +654,8 @@ printf "\n##################################################\n\n" >> ${EXECUTION
 # http://serverfault.com/a/672969/106593
 # http://float64.uk/blog/2014/08/20/php-fpm-sockets-apache-mod-proxy-fcgi-ubuntu/
 
-#vi setup.sh; chmod +x setup.sh; ./setup.sh
+#exit; halt
+#pushd /root; mkdir bin; pushd bin; wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/build-script.sh; chmod +x setup.sh; time ./setup.sh
 
 
 
