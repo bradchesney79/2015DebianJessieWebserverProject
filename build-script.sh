@@ -52,6 +52,8 @@ DBPASSWORD="seconddummypassword"
 DEFAULTSITEDBUSER="administrator"
 DEFAULTSITEDBPASSWORD="dummypassword"
 
+DBBACKUPUSERPASSWORD="thirddummypassword"
+
 #####  #####
 
 
@@ -258,6 +260,46 @@ find $WEBROOT -type d -exec chmod 751 {} \; >> ${EXECUTIONLOG}
 
 chown -R www-data:www-data $WEBROOT/sockets >> ${EXECUTIONLOG}
 chmod -R 666 $WEBROOT/sockets >> ${EXECUTIONLOG}
+
+
+sudo debconf-set-selections <<< "mysql-server mysql-server/root_password password $DBPASSWORD"
+sudo debconf-set-selections <<< "mysql-server mysql-server/root_password_again password $DBPASSWORD"
+sudo apt-get -qy install mysql-server
+
+mysql_secure_installation
+
+
+##### INSTALL MYSQL #####
+
+#USE mysql
+
+
+#A common vector is to attack the MySQL root user since it is the default omipotent user put on almost all #MySQL installs.
+#So, give your 'root' user a different name. (Is admin more secure than root, meh. Yeah, I guess.)
+
+
+SQL1="GRANT ALL PRIVILEGES ON *.* TO '$DBROOTUSER'@'localhost' IDENTIFIED BY '$DBPASSWORD' WITH GRANT OPTION;"
+SQL2="GRANT ALL PRIVILEGES ON *.* TO '$DBROOTUSER'@'127.0.0.1' IDENTIFIED BY '$DBPASSWORD' WITH GRANT OPTION;"
+SQL3="GRANT ALL PRIVILEGES ON *.* TO '$DBROOTUSER'@'::1' IDENTIFIED BY '$DBPASSWORD' WITH GRANT OPTION;"
+
+
+SQL4="CREATE USER 'backup'@'localhost' IDENTIFIED BY '$DBBACKUPUSERPASSWORD';"
+SQL5="GRANT SELECT, SHOW VIEW, RELOAD, REPLICATION CLIENT, EVENT, TRIGGER ON *.* TO 'backup'@'localhost';"
+
+SQL6="FLUSH PRIVILEGES;"
+
+mysql -u "root" -p "$DBPASSWORD" -e "$SQL1"
+mysql -u "root" -p "$DBPASSWORD" -e "$SQL2"
+mysql -u "root" -p "$DBPASSWORD" -e "$SQL3"
+mysql -u "root" -p "$DBPASSWORD" -e "$SQL4"
+mysql -u "root" -p "$DBPASSWORD" -e "$SQL5"
+mysql -u "root" -p "$DBPASSWORD" -e "$SQL6"
+
+#mysql -u "root" -p "$DBPASSWORD" -e "$SQL"
+
+#don't forget to make the backup user password match
+#delete the root user
+
 
 printf "\n########## CONFIGURE PHP ###\n" >> ${EXECUTIONLOG}
 
@@ -594,43 +636,6 @@ printf "\n##################################################\n\n" >> ${EXECUTION
 
 
 
-##### INSTALL MYSQL #####
-
-    sudo apt-get install  mysql-server
-sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password password your_password'
-sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password your_password'
-sudo apt-get -y install mysql-server
-
-    mysql_secure_installation
-
-
-
-
-
-mysql -uroot -p
-
-USE mysql
-
-
-A common vector is to attack the MySQL root user since it is the default omipotent user put on almost all MySQL installs.
-So, give your 'root' user a different name. (Is admin more secure than root, meh. Yeah, I guess.)
-
-
-GRANT ALL PRIVILEGES ON *.* TO 'admin'@'localhost' IDENTIFIED BY 'pwork' WITH GRANT OPTION;
-GRANT ALL PRIVILEGES ON *.* TO 'admin'@'127.0.0.1' IDENTIFIED BY 'pwork' WITH GRANT OPTION;
-GRANT ALL PRIVILEGES ON *.* TO 'admin'@'::1' IDENTIFIED BY 'pwork' WITH GRANT OPTION;
-
-
-CREATE USER 'backup'@'localhost' IDENTIFIED BY 'password';
-GRANT SELECT, SHOW VIEW, RELOAD, REPLICATION CLIENT, EVENT, TRIGGER ON *.* TO 'backup'@'localhost';
-
-FLUSH PRIVILEGES;
-
-EXIT
-
-
-
-
 
 
 
@@ -649,7 +654,7 @@ EXIT
 # http://serverfault.com/a/672969/106593
 # http://float64.uk/blog/2014/08/20/php-fpm-sockets-apache-mod-proxy-fcgi-ubuntu/
 
-vi setup.sh; chmod +x setup.sh; ./setup.sh
+#vi setup.sh; chmod +x setup.sh; ./setup.sh
 
 
 
