@@ -261,18 +261,15 @@ find $WEBROOT -type d -exec chmod 751 {} \; >> ${EXECUTIONLOG}
 chown -R www-data:www-data $WEBROOT/sockets >> ${EXECUTIONLOG}
 chmod -R 666 $WEBROOT/sockets >> ${EXECUTIONLOG}
 
+printf "\n########## INSTALL MYSQL ###\n" >> ${EXECUTIONLOG}
 
-sudo debconf-set-selections <<< "mysql-server mysql-server/root_password password $DBPASSWORD"
-sudo debconf-set-selections <<< "mysql-server mysql-server/root_password_again password $DBPASSWORD"
+echo mysql-server mysql-server/root_password password $DBPASSWORD | debconf-set-selections >> ${EXECUTIONLOG}
+echo mysql-server mysql-server/root_password_again password $DBPASSWORD | debconf-set-selections >> ${EXECUTIONLOG}
 sudo apt-get -qy install mysql-server
 
 mysql_secure_installation
 
-
-##### INSTALL MYSQL #####
-
 #USE mysql
-
 
 #A common vector is to attack the MySQL root user since it is the default omipotent user put on almost all #MySQL installs.
 #So, give your 'root' user a different name. (Is admin more secure than root, meh. Yeah, I guess.)
@@ -281,7 +278,6 @@ mysql_secure_installation
 SQL1="GRANT ALL PRIVILEGES ON *.* TO '$DBROOTUSER'@'localhost' IDENTIFIED BY '$DBPASSWORD' WITH GRANT OPTION;"
 SQL2="GRANT ALL PRIVILEGES ON *.* TO '$DBROOTUSER'@'127.0.0.1' IDENTIFIED BY '$DBPASSWORD' WITH GRANT OPTION;"
 SQL3="GRANT ALL PRIVILEGES ON *.* TO '$DBROOTUSER'@'::1' IDENTIFIED BY '$DBPASSWORD' WITH GRANT OPTION;"
-
 
 SQL4="CREATE USER 'backup'@'localhost' IDENTIFIED BY '$DBBACKUPUSERPASSWORD';"
 SQL5="GRANT SELECT, SHOW VIEW, RELOAD, REPLICATION CLIENT, EVENT, TRIGGER ON *.* TO 'backup'@'localhost';"
