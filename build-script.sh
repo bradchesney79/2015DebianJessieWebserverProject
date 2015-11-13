@@ -64,6 +64,18 @@ DBBACKUPUSERPASSWORD="thirddummypassword"
 ######################################################################
 ######################################################################
 
+# have a website system user -- scripts to add new system users & human user acccounts
+
+# a script to add a new virtualhost
+
+# make security changes to apache
+
+# install global webdev resources like composer, node, fonts
+
+# improve troubleshooting resources
+
+# improve readability
+
 #based upon:
 # 
 # https://www.linode.com/docs/security/securing-your-server
@@ -82,6 +94,7 @@ DBBACKUPUSERPASSWORD="thirddummypassword"
 #exit; halt
 #pushd /root; mkdir bin; pushd bin; wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/build-script.sh; chmod +x build-script.sh; time ./build-script.sh; popd; popd
 
+#Takes ~11.5 mins on a Linode 1024
 
 printf "\n##################################################" >> ${EXECUTIONLOG}
 printf "\n#                                                #" >> ${EXECUTIONLOG}
@@ -189,11 +202,13 @@ printf "\n########## UPDATE THE SYSTEM ###\n" >> ${EXECUTIONLOG}
 
 printf "\n" >> ${EXECUTIONLOG}
 printf "Update the system\n\n" >> ${EXECUTIONLOG}
+printf "Update the system\n\n"
 
 apt-get -qy update >> ${EXECUTIONLOG}
 
 printf "\n" >> ${EXECUTIONLOG}
 printf "Upgrade the system\n\n" >> ${EXECUTIONLOG}
+printf "Upgrade the system\n\n"
 
 apt-get -qy dist-upgrade >> ${EXECUTIONLOG}
 
@@ -201,11 +216,6 @@ printf "\n########## INSTALL THE FIRST BATCHES OF PACKAGES ###\n" >> ${EXECUTION
 
 printf "\n" >> ${EXECUTIONLOG}
 printf "Install the first batch of packages for Apache & PHP\n\n" >> ${EXECUTIONLOG}
-
-echo iptables-persistent iptables-persistent/autosave_v4 boolean true | debconf-set-selections >> ${EXECUTIONLOG}
-echo iptables-persistent iptables-persistent/autosave_v6 boolean true | debconf-set-selections >> ${EXECUTIONLOG}
-
-
 
 apt-get -qy install sudo tcl perl python3 apache2 tmux iptables-persistent ssh openssl openssl-blacklist libnet-ssleay-perl fail2ban git debconf-utils imagemagick expect >> ${EXECUTIONLOG}
 
@@ -215,8 +225,10 @@ printf "\nFirst autoremove of packages\n\n" >> ${EXECUTIONLOG}
 
 apt-get -qy autoremove >> ${EXECUTIONLOG}
 
-
 printf "\n########## UPDATE THE IPTABLES RULES ###\n" >> ${EXECUTIONLOG}
+
+echo iptables-persistent iptables-persistent/autosave_v4 boolean true | debconf-set-selections >> ${EXECUTIONLOG}
+echo iptables-persistent iptables-persistent/autosave_v6 boolean true | debconf-set-selections >> ${EXECUTIONLOG}
 
 printf "\nUpdate the IP tables rules\n\n" >> ${EXECUTIONLOG}
 
@@ -308,7 +320,7 @@ find $WEBROOT -type d -exec chmod -R 755 {} \; >> ${EXECUTIONLOG}
 
 printf "\n########## INSTALL MYSQL ###\n" >> ${EXECUTIONLOG}
 
-EXPECT=`which expect`
+EXPECT=`which expect` >> ${EXECUTIONLOG}
 
 ${EXPECT} <<EOD
 spawn apt-get -qy install mysql-server
@@ -318,42 +330,36 @@ EOD
 
 #mysql_secure_installation #bug report, currently requires an expect script
 
-
-#USE mysql
+SQL0="DELETE FROM mysql.user WHERE User=\'\'; DELETE FROM mysql.user WHERE User=\'root\' AND Host NOT IN (\'localhost\', \'127.0.0.1\', \'::1\'); DROP DATABASE IF EXISTS test; FLUSH PRIVILEGES;"
 
 #A common vector is to attack the MySQL root user since it is the default omipotent user put on almost all #MySQL installs.
 #So, give your 'root' user a different name. (Is admin more secure than root, meh. Yeah, I guess.)
-
-SQL0="DELETE FROM mysql.user WHERE User=\'\'; DELETE FROM mysql.user WHERE User=\'root\' AND Host NOT IN (\'localhost\', \'127.0.0.1\', \'::1\'); DROP DATABASE IF EXISTS test; FLUSH PRIVILEGES;"
 
 SQL1="GRANT ALL PRIVILEGES ON *.* TO '$DBROOTUSER'@'localhost' IDENTIFIED BY '$DBPASSWORD' WITH GRANT OPTION;"
 SQL2="GRANT ALL PRIVILEGES ON *.* TO '$DBROOTUSER'@'127.0.0.1' IDENTIFIED BY '$DBPASSWORD' WITH GRANT OPTION;"
 SQL3="GRANT ALL PRIVILEGES ON *.* TO '$DBROOTUSER'@'::1' IDENTIFIED BY '$DBPASSWORD' WITH GRANT OPTION;"
 
-SQL4="CREATE USER 'backup'@'localhost' IDENTIFIED BY '$DBBACKUPUSERPASSWORD';"
-SQL5="GRANT SELECT, SHOW VIEW, RELOAD, REPLICATION CLIENT, EVENT, TRIGGER ON *.* TO 'backup'@'localhost';"
+SQL4="DELETE FROM mysql.user WHERE User=\'root\';"
 
-SQL6="DELETE FROM mysql.user WHERE User=\'root\';"
+SQL5="CREATE USER 'backup'@'localhost' IDENTIFIED BY '$DBBACKUPUSERPASSWORD';"
+SQL6="GRANT SELECT, SHOW VIEW, RELOAD, REPLICATION CLIENT, EVENT, TRIGGER ON *.* TO 'backup'@'localhost';"
 
 SQL7="FLUSH PRIVILEGES;"
 
-mysql -u "root" -p "$DBPASSWORD" -e "$SQL0"
-mysql -u "root" -p "$DBPASSWORD" -e "$SQL1"
-mysql -u "root" -p "$DBPASSWORD" -e "$SQL2"
-mysql -u "root" -p "$DBPASSWORD" -e "$SQL3"
-mysql -u "root" -p "$DBPASSWORD" -e "$SQL4"
-mysql -u "root" -p "$DBPASSWORD" -e "$SQL5"
-mysql -u "root" -p "$DBPASSWORD" -e "$SQL6"
-mysql -u "root" -p "$DBPASSWORD" -e "$SQL7"
+mysql -u "root" -p "$DBPASSWORD" -e "$SQL0" >> ${EXECUTIONLOG}
+mysql -u "root" -p "$DBPASSWORD" -e "$SQL1" >> ${EXECUTIONLOG}
+mysql -u "root" -p "$DBPASSWORD" -e "$SQL2" >> ${EXECUTIONLOG}
+mysql -u "root" -p "$DBPASSWORD" -e "$SQL3" >> ${EXECUTIONLOG}
+mysql -u "root" -p "$DBPASSWORD" -e "$SQL4" >> ${EXECUTIONLOG}
+mysql -u "root" -p "$DBPASSWORD" -e "$SQL5" >> ${EXECUTIONLOG}
+mysql -u "root" -p "$DBPASSWORD" -e "$SQL6" >> ${EXECUTIONLOG}
+mysql -u "root" -p "$DBPASSWORD" -e "$SQL7" >> ${EXECUTIONLOG}
 
 printf "\n########## CONFIGURE PHP ###\n" >> ${EXECUTIONLOG}
 
-apt-get -qy install php5-fpm libapache2-mod-php5 php-pear php5-curl php5-mysql php5-gd php5-gmp php5-mcrypt php5-memcached php5-imagick php5-intl php5-xdebug
+apt-get -qy install php5-fpm libapache2-mod-php5 php-pear php5-curl php5-mysql php5-gd php5-gmp php5-mcrypt php5-memcached php5-imagick php5-intl php5-xdebug >> ${EXECUTIONLOG}
 
-cp /etc/php5/fpm/php.ini /etc/php5/fpm/php.ini.original 
-
-#sed -i '.bak' 's/find/replace' file.txt
-
+cp /etc/php5/fpm/php.ini /etc/php5/fpm/php.ini.original  >> ${EXECUTIONLOG}
 
 printf "\n########## MODIFY DEFAULT VHOST CONFIGURATION FILES ###\n" >> ${EXECUTIONLOG}
 
@@ -538,6 +544,8 @@ sed -i "s/;*disable_functions.*/disable_functions = apache_child_terminate, apac
 
 #disable_functions = apache_child_terminate, apache_setenv, define_syslog_variables, escapeshellarg, escapeshellcmd, eval, exec, fp, fput, ftp_connect, ftp_exec, ftp_get, ftp_login, ftp_nb_fput, ftp_put, ftp_raw, ftp_rawlist, highlight_file, ini_alter, ini_get_all, ini_restore, inject_code, mysql_pconnect, openlog, passthru, pcntl_alarm, pcntl_exec, pcntl_fork, pcntl_get_last_error, pcntl_getpriority, pcntl_setpriority, pcntl_signal, pcntl_signal_dispatch, pcntl_sigprocmask, pcntl_sigtimedwait, pcntl_sigwaitinfo, pcntl_strerror, pcntl_wait, pcntl_waitpid, pcntl_wexitstatus, pcntl_wifexited, pcntl_wifsignaled, pcntl_wifstopped, pcntl_wstopsig, pcntl_wtermsig, phpAds_XmlRpc, phpAds_remoteInfo, phpAds_xmlrpcDecode, phpAds_xmlrpcEncode, php_uname, popen, posix_getpwuid, posix_kill, posix_mkfifo, posix_setpgid, posix_setsid, posix_setuid, posix_uname, proc_close, proc_get_status, proc_nice, proc_open, proc_terminate, shell_exec, syslog, system, xmlrpc_entity_decode
 
+printf "\n########## INSTALL WEBDEVELOPER RESOURCES ###\n" >> ${EXECUTIONLOG}
+
 
 printf "\n########## RESTART THE WEBSERVER SERVICES ###\n" >> ${EXECUTIONLOG}
 
@@ -585,14 +593,15 @@ cp /etc/apache2/includes/vhost-ssl ${TROUBLESHOOTINGFILES}/etc-apache2-includes-
 
 cp /etc/apache2/sites-available/default-ssl.conf ${TROUBLESHOOTINGFILES}/etc-apache2-sites-available-default-ssl.conf
 
+cp /etc/mysql/mysql.cnf ${TROUBLESHOOTINGFILES}/etc-mysql-mysql.cnf
+
 cp /etc/php5/fpm/php.ini ${TROUBLESHOOTINGFILES}/etc-php5-fpm-php.ini
 
 cp /etc/apache2/mods-available/fastcgi.conf ${TROUBLESHOOTINGFILES}/etc-apache2-mods-available-fastcgi.conf
 
-
 cp /etc/php5/fpm/pool.d/${DOMAIN}.conf ${TROUBLESHOOTINGFILES}/etc-php5-fpm-pool.d-${DOMAIN}.conf
 
-cp /etc/php5/fpm/pool.d/${DOMAIN}-ssl.conf ${TROUBLESHOOTINGFILES}/etc-php5-fpm-pool.d-${DOMAIN}ssl.conf
+cp /etc/php5/fpm/pool.d/${DOMAIN}-ssl.conf ${TROUBLESHOOTINGFILES}/etc-php5-fpm-pool.d-${DOMAIN}-ssl.conf
 
 printf "Start collecting log files\n\n" >> ${EXECUTIONLOG}
 
@@ -647,6 +656,9 @@ cat ${TROUBLESHOOTINGFILES}/etc-apache2-includes-vhost-ssl >> ${TROUBLESHOOTINGF
 
 printf "\n\n\n########## SITES-AVAILABLE/DEFAULT-SSL.CONF ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
 cat ${TROUBLESHOOTINGFILES}/etc-apache2-sites-available-default-ssl.conf >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
+
+printf "########## MYSQL.CNF ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
+cat ${TROUBLESHOOTINGFILES}/etc-mysql-mysql.cnf >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
 
 printf "\n\n\n########## PHP.INI ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
 cat ${TROUBLESHOOTINGFILES}/etc-php5-fpm-php.ini >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
