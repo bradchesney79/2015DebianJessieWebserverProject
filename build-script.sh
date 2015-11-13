@@ -263,17 +263,23 @@ chmod -R 666 $WEBROOT/sockets >> ${EXECUTIONLOG}
 
 printf "\n########## INSTALL MYSQL ###\n" >> ${EXECUTIONLOG}
 
-echo mysql-server mysql-server/root_password password $DBPASSWORD | debconf-set-selections >> ${EXECUTIONLOG}
-echo mysql-server mysql-server/root_password_again password $DBPASSWORD | debconf-set-selections >> ${EXECUTIONLOG}
-sudo apt-get -qy install mysql-server
+EXPECT=`which expect`
 
-mysql_secure_installation
+${EXPECT} <<EOD
+spawn apt-get -qy install mysql-server
+expect "none):"
+send $DBPASSWORD
+EOD
+
+#mysql_secure_installation #bug report, currently requires an expect script
+
 
 #USE mysql
 
 #A common vector is to attack the MySQL root user since it is the default omipotent user put on almost all #MySQL installs.
 #So, give your 'root' user a different name. (Is admin more secure than root, meh. Yeah, I guess.)
 
+SQL0="DELETE FROM mysql.user WHERE User=\'\'; DELETE FROM mysql.user WHERE User=\'root\' AND Host NOT IN (\'localhost\', \'127.0.0.1\', \'::1\'); DROP DATABASE IF EXISTS test; FLUSH PRIVILEGES;"
 
 SQL1="GRANT ALL PRIVILEGES ON *.* TO '$DBROOTUSER'@'localhost' IDENTIFIED BY '$DBPASSWORD' WITH GRANT OPTION;"
 SQL2="GRANT ALL PRIVILEGES ON *.* TO '$DBROOTUSER'@'127.0.0.1' IDENTIFIED BY '$DBPASSWORD' WITH GRANT OPTION;"
@@ -282,14 +288,18 @@ SQL3="GRANT ALL PRIVILEGES ON *.* TO '$DBROOTUSER'@'::1' IDENTIFIED BY '$DBPASSW
 SQL4="CREATE USER 'backup'@'localhost' IDENTIFIED BY '$DBBACKUPUSERPASSWORD';"
 SQL5="GRANT SELECT, SHOW VIEW, RELOAD, REPLICATION CLIENT, EVENT, TRIGGER ON *.* TO 'backup'@'localhost';"
 
-SQL6="FLUSH PRIVILEGES;"
+SQL6="DELETE FROM mysql.user WHERE User=\'root\';"
 
+SQL7="FLUSH PRIVILEGES;"
+
+mysql -u "root" -p "$DBPASSWORD" -e "$SQL0"
 mysql -u "root" -p "$DBPASSWORD" -e "$SQL1"
 mysql -u "root" -p "$DBPASSWORD" -e "$SQL2"
 mysql -u "root" -p "$DBPASSWORD" -e "$SQL3"
 mysql -u "root" -p "$DBPASSWORD" -e "$SQL4"
 mysql -u "root" -p "$DBPASSWORD" -e "$SQL5"
 mysql -u "root" -p "$DBPASSWORD" -e "$SQL6"
+mysql -u "root" -p "$DBPASSWORD" -e "$SQL7"
 
 #mysql -u "root" -p "$DBPASSWORD" -e "$SQL"
 
