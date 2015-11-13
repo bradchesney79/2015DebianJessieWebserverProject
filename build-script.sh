@@ -160,7 +160,7 @@ echo iptables-persistent iptables-persistent/autosave_v6 boolean true | debconf-
 
 
 
-apt-get -qy install sudo tcl perl python3 apache2 tmux iptables-persistent ssh openssl openssl-blacklist libnet-ssleay-perl fail2ban git debconf-utils imagemagick >> ${EXECUTIONLOG}
+apt-get -qy install sudo tcl perl python3 apache2 tmux iptables-persistent ssh openssl openssl-blacklist libnet-ssleay-perl fail2ban git debconf-utils imagemagick expect >> ${EXECUTIONLOG}
 
 printf "\n########## CLEAN UP ###\n" >> ${EXECUTIONLOG}
 
