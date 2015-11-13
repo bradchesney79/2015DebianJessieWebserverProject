@@ -44,6 +44,13 @@ ORGANIZATIONALUNIT="Web Development"
 
 SSLPROVIDER="start-ssl"
 
+##### DATABASE INFO #####
+
+DBROOTUSER="datalord"
+DBPASSWORD="seconddummypassword"
+
+DEFAULTSITEDBUSER="administrator"
+DEFAULTSITEDBPASSWORD="dummypassword"
 
 #####  #####
 
@@ -149,54 +156,45 @@ printf "Install the first batch of packages for Apache & PHP\n\n" >> ${EXECUTION
 echo iptables-persistent iptables-persistent/autosave_v4 boolean true | debconf-set-selections >> ${EXECUTIONLOG}
 echo iptables-persistent iptables-persistent/autosave_v6 boolean true | debconf-set-selections >> ${EXECUTIONLOG}
 
-apt-get -qy install sudo tcl perl python3 apache2 tmux iptables-persistent ssh openssl openssl-blacklist libnet-ssleay-perl fail2ban php5-fpm libapache2-mod-php5 php-pear php5-curl git >> ${EXECUTIONLOG}
+
+
+apt-get -qy install sudo tcl perl python3 apache2 tmux iptables-persistent ssh openssl openssl-blacklist libnet-ssleay-perl fail2ban git debconf-utils imagemagick >> ${EXECUTIONLOG}
 
 printf "\n########## CLEAN UP ###\n" >> ${EXECUTIONLOG}
 
-printf "\n" >> ${EXECUTIONLOG}
-printf "First autoremove of packages\n\n" >> ${EXECUTIONLOG}
+printf "\nFirst autoremove of packages\n\n" >> ${EXECUTIONLOG}
 
 apt-get -qy autoremove >> ${EXECUTIONLOG}
 
 
 printf "\n########## UPDATE THE IPTABLES RULES ###\n" >> ${EXECUTIONLOG}
 
-printf "\n" >> ${EXECUTIONLOG}
-printf "Update the IP tables rules\n\n" >> ${EXECUTIONLOG}
+printf "\nUpdate the IP tables rules\n\n" >> ${EXECUTIONLOG}
 
-echo "*filter" > /etc/iptables/rules.v4
-printf "\n" >> /etc/iptables/rules.v4
-echo "#  Allow all loopback (lo0) traffic and drop all traffic to 127/8 that doesn't use lo0" >> /etc/iptables/rules.v4
-echo "-A INPUT -i lo -j ACCEPT" >> /etc/iptables/rules.v4
-echo "-A INPUT -d 127.0.0.0/8 -j REJECT" >> /etc/iptables/rules.v4
-printf "\n" >> /etc/iptables/rules.v4
-echo "#  Accept all established inbound connections" >> /etc/iptables/rules.v4
-echo "-A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT" >> /etc/iptables/rules.v4
-printf "\n" >> /etc/iptables/rules.v4
-echo "#  Allow all outbound traffic - you can modify this to only allow certain traffic" >> /etc/iptables/rules.v4
-echo "-A OUTPUT -j ACCEPT" >> /etc/iptables/rules.v4
-printf "\n" >> /etc/iptables/rules.v4
-echo "#  Allow HTTP and HTTPS connections from anywhere (the normal ports for websites and SSL)." >> /etc/iptables/rules.v4
-echo "-A INPUT -p tcp --dport 80 -j ACCEPT" >> /etc/iptables/rules.v4
-echo "-A INPUT -p tcp --dport 443 -j ACCEPT" >> /etc/iptables/rules.v4
-printf "\n" >> /etc/iptables/rules.v4
-echo "#  Allow SSH connections" >> /etc/iptables/rules.v4
-echo "#" >> /etc/iptables/rules.v4
-echo "#  The -dport number should be the same port number you set in sshd_config" >> /etc/iptables/rules.v4
-echo "#" >> /etc/iptables/rules.v4
-echo "-A INPUT -p tcp -m state --state NEW --dport 22 -j ACCEPT" >> /etc/iptables/rules.v4
-printf "\n" >> /etc/iptables/rules.v4
-echo "#  Allow ping" >> /etc/iptables/rules.v4
-echo "-A INPUT -p icmp --icmp-type echo-request -j ACCEPT" >> /etc/iptables/rules.v4
-printf "\n" >> /etc/iptables/rules.v4
-echo "#  Log iptables denied calls" >> /etc/iptables/rules.v4
-echo "#-A INPUT -m limit --limit 5/min -j LOG --log-prefix "iptables denied: " --log-level 7" >> /etc/iptables/rules.v4
-printf "\n" >> /etc/iptables/rules.v4
-echo "#  Drop all other inbound - default deny unless explicitly allowed policy" >> /etc/iptables/rules.v4
-echo "-A INPUT -j DROP" >> /etc/iptables/rules.v4
-echo "-A FORWARD -j DROP" >> /etc/iptables/rules.v4
-printf "\n" >> /etc/iptables/rules.v4
-echo "COMMIT" >> /etc/iptables/rules.v4
+printf "*filter\n\n" > /etc/iptables/rules.v4
+printf "#  Allow all loopback (lo0) traffic and drop all traffic to 127/8 that doesn't use lo0\n" >> /etc/iptables/rules.v4
+printf "-A INPUT -i lo -j ACCEPT\n" >> /etc/iptables/rules.v4
+printf "-A INPUT -d 127.0.0.0/8 -j REJECT\n\n" >> /etc/iptables/rules.v4
+printf "#  Accept all established inbound connections\n" >> /etc/iptables/rules.v4
+printf "-A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT\n\n" >> /etc/iptables/rules.v4
+printf "#  Allow all outbound traffic - you can modify this to only allow certain traffic\n" >> /etc/iptables/rules.v4
+printf "-A OUTPUT -j ACCEPT\n\n" >> /etc/iptables/rules.v4
+printf "#  Allow HTTP and HTTPS connections from anywhere (the normal ports for websites and SSL).\n" >> /etc/iptables/rules.v4
+printf "-A INPUT -p tcp --dport 80 -j ACCEPT\n" >> /etc/iptables/rules.v4
+printf "-A INPUT -p tcp --dport 443 -j ACCEPT\n\n" >> /etc/iptables/rules.v4
+printf "#  Allow SSH connections\n" >> /etc/iptables/rules.v4
+printf "#\n" >> /etc/iptables/rules.v4
+printf "#  The -dport number should be the same port number you set in sshd_config\n" >> /etc/iptables/rules.v4
+printf "#\n" >> /etc/iptables/rules.v4
+printf "-A INPUT -p tcp -m state --state NEW --dport 22 -j ACCEPT\n\n" >> /etc/iptables/rules.v4
+printf "#  Allow ping\n" >> /etc/iptables/rules.v4
+printf "-A INPUT -p icmp --icmp-type echo-request -j ACCEPT\n\n" >> /etc/iptables/rules.v4
+printf "#  Log iptables denied calls\n" >> /etc/iptables/rules.v4
+printf "#-A INPUT -m limit --limit 5/min -j LOG --log-prefix \"iptables denied: \" --log-level 7\n\n" >> /etc/iptables/rules.v4
+printf "#  Drop all other inbound - default deny unless explicitly allowed policy\n" >> /etc/iptables/rules.v4
+printf "-A INPUT -j DROP\n" >> /etc/iptables/rules.v4
+printf "-A FORWARD -j DROP\n\n" >> /etc/iptables/rules.v4
+printf "COMMIT" >> /etc/iptables/rules.v4
 
 printf "\n########## APPLY THE IPTABLES RULES ###\n" >> ${EXECUTIONLOG}
 
@@ -262,6 +260,8 @@ chown -R www-data:www-data $WEBROOT/sockets >> ${EXECUTIONLOG}
 chmod -R 666 $WEBROOT/sockets >> ${EXECUTIONLOG}
 
 printf "\n########## CONFIGURE PHP ###\n" >> ${EXECUTIONLOG}
+
+apt-get -qy install php5-fpm libapache2-mod-php5 php-pear php5-curl php5-mysql php5-gd php5-gmp php5-mcrypt php5-memcached php5-imagick php5-intl php5-xdebug
 
 cp /etc/php5/fpm/php.ini /etc/php5/fpm/php.ini.original 
 
@@ -418,30 +418,38 @@ sed -i "s/group = www-data/group = $USER/" /etc/php5/fpm/pool.d/${DOMAIN}-ssl.co
 
 sed -i "s/;listen.mode = 0660/listen.mode = 0660/" /etc/php5/fpm/pool.d/${DOMAIN}-ssl.conf >> ${EXECUTIONLOG}
 
-printf "\n########## INSTALL PHP PACKAGES ###\n" >> ${EXECUTIONLOG}
-
-apt-get install php5-mysql php5-curl php5-gd php5-gmp php5-mcrypt php5-memcached imagemagick php5-imagick php5-intl php5-xdebug
-
 printf "\n########## CONFIGURE PHP ###\n" >> ${EXECUTIONLOG}
 
+cp /etc/php5/fpm/php.ini /etc/php5/fpm/php.ini.original
 
-(at line 213 for me)
-short_open_tag = Off
 
-(at line 674 for me)
-post_max_size = 12M
+sed -i "s/;*short_open_tag.*/short_open_tag = Off/" /etc/php5/fpm/php.ini >> ${EXECUTIONLOG}
 
-(at line 802 for me)
-upload_max_filesize = 12M
+sed -i "s/;*post_max_size.*/post_max_size = 12M/" /etc/php5/fpm/php.ini >> ${EXECUTIONLOG}
 
-(at line 1360 for me)
-session.cookie_secure = 1
 
-(at line 1391 for me)
-session.cookie_httponly = 1
+sed -i "s/;*upload_max_filesize.*/upload_max_filesize = 12M/" /etc/php5/fpm/php.ini >> ${EXECUTIONLOG}
 
-#disable_functions = “apache_child_terminate, apache_setenv, define_syslog_variables, escapeshellarg, escapeshellcmd, eval, exec, fp, fput, ftp_connect, ftp_exec, ftp_get, ftp_login, ftp_nb_fput, ftp_put, ftp_raw, ftp_rawlist, highlight_file, ini_alter, ini_get_all, ini_restore, inject_code, mysql_pconnect, openlog, passthru, php_uname, phpAds_remoteInfo, phpAds_XmlRpc, phpAds_xmlrpcDecode, phpAds_xmlrpcEncode, popen, posix_getpwuid, posix_kill, posix_mkfifo, posix_setpgid, posix_setsid, posix_setuid, posix_setuid, posix_uname, proc_close, proc_get_status, proc_nice, proc_open, proc_terminate, shell_exec, syslog, system, xmlrpc_entity_decode”
 
+sed -i "s/;*session.cookie_secure.*/session.cookie_secure = 1/" /etc/php5/fpm/php.ini >> ${EXECUTIONLOG}
+
+
+sed -i "s/;*session.cookie_httponly.*/session.cookie_httponly = 1/" /etc/php5/fpm/php.ini >> ${EXECUTIONLOG}
+
+
+sed -i "s/;*disable_functions.*/disable_functions = apache_child_terminate, apache_setenv, define_syslog_variables, escapeshellarg, escapeshellcmd, eval, exec, fp, fput, ftp_connect, ftp_exec, ftp_get, ftp_login, ftp_nb_fput, ftp_put, ftp_raw, ftp_rawlist, highlight_file, ini_alter, ini_get_all, ini_restore, inject_code, mysql_pconnect, openlog, passthru, pcntl_alarm, pcntl_exec, pcntl_fork, pcntl_get_last_error, pcntl_getpriority, pcntl_setpriority, pcntl_signal, pcntl_signal_dispatch, pcntl_sigprocmask, pcntl_sigtimedwait, pcntl_sigwaitinfo, pcntl_strerror, pcntl_wait, pcntl_waitpid, pcntl_wexitstatus, pcntl_wifexited, pcntl_wifsignaled, pcntl_wifstopped, pcntl_wstopsig, pcntl_wtermsig, phpAds_XmlRpc, phpAds_remoteInfo, phpAds_xmlrpcDecode, phpAds_xmlrpcEncode, php_uname, popen, posix_getpwuid, posix_kill, posix_mkfifo, posix_setpgid, posix_setsid, posix_setuid, posix_uname, proc_close, proc_get_status, proc_nice, proc_open, proc_terminate, shell_exec, syslog, system, xmlrpc_entity_decode/" /etc/php5/fpm/php.ini >> ${EXECUTIONLOG}
+
+#List from previous notes
+
+#disable_functions = apache_child_terminate, apache_setenv, define_syslog_variables, escapeshellarg, escapeshellcmd, eval, exec, fp, fput, ftp_connect, ftp_exec, ftp_get, ftp_login, ftp_nb_fput, ftp_put, ftp_raw, ftp_rawlist, highlight_file, ini_alter, ini_get_all, ini_restore, inject_code, mysql_pconnect, openlog, passthru, php_uname, phpAds_remoteInfo, phpAds_XmlRpc, phpAds_xmlrpcDecode, phpAds_xmlrpcEncode, popen, posix_getpwuid, posix_kill, posix_mkfifo, posix_setpgid, posix_setsid, posix_setuid, posix_setuid, posix_uname, proc_close, proc_get_status, proc_nice, proc_open, proc_terminate, shell_exec, syslog, system, xmlrpc_entity_decode
+
+# From default installation list
+
+#disable_functions = pcntl_alarm, pcntl_fork, pcntl_waitpid, pcntl_wait, pcntl_wifexited, pcntl_wifstopped, pcntl_wifsignaled, pcntl_wexitstatus, pcntl_wtermsig, pcntl_wstopsig, pcntl_signal, pcntl_signal_dispatch, pcntl_get_last_error, pcntl_strerror, pcntl_sigprocmask, pcntl_sigwaitinfo, pcntl_sigtimedwait, pcntl_exec, pcntl_getpriority, pcntl_setpriority
+
+#Combined and deduped list
+
+#disable_functions = apache_child_terminate, apache_setenv, define_syslog_variables, escapeshellarg, escapeshellcmd, eval, exec, fp, fput, ftp_connect, ftp_exec, ftp_get, ftp_login, ftp_nb_fput, ftp_put, ftp_raw, ftp_rawlist, highlight_file, ini_alter, ini_get_all, ini_restore, inject_code, mysql_pconnect, openlog, passthru, pcntl_alarm, pcntl_exec, pcntl_fork, pcntl_get_last_error, pcntl_getpriority, pcntl_setpriority, pcntl_signal, pcntl_signal_dispatch, pcntl_sigprocmask, pcntl_sigtimedwait, pcntl_sigwaitinfo, pcntl_strerror, pcntl_wait, pcntl_waitpid, pcntl_wexitstatus, pcntl_wifexited, pcntl_wifsignaled, pcntl_wifstopped, pcntl_wstopsig, pcntl_wtermsig, phpAds_XmlRpc, phpAds_remoteInfo, phpAds_xmlrpcDecode, phpAds_xmlrpcEncode, php_uname, popen, posix_getpwuid, posix_kill, posix_mkfifo, posix_setpgid, posix_setsid, posix_setuid, posix_uname, proc_close, proc_get_status, proc_nice, proc_open, proc_terminate, shell_exec, syslog, system, xmlrpc_entity_decode
 
 
 printf "\n########## RESTART THE WEBSERVER SERVICES ###\n" >> ${EXECUTIONLOG}
@@ -588,8 +596,10 @@ printf "\n##################################################\n\n" >> ${EXECUTION
 
 ##### INSTALL MYSQL #####
 
-    sudo apt-get install mysql-server
-
+    sudo apt-get install  mysql-server
+sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password password your_password'
+sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password your_password'
+sudo apt-get -y install mysql-server
 
     mysql_secure_installation
 
