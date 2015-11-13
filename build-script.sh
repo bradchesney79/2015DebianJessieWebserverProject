@@ -279,13 +279,17 @@ printf "  ServerAlias $HOSTNAME.$DOMAIN\n\n" >> /etc/apache2/sites-available/def
 printf "  ServerAdmin $EMAIL\n" >> /etc/apache2/sites-available/default.conf
 printf "  DocumentRoot $WEBROOT/http\n\n" >> /etc/apache2/sites-available/default.conf
 printf "  ErrorLog $LOGDIR/error.log\n" >> /etc/apache2/sites-available/default.conf
-printf "  CustomLog $LOGDIR/access.log combined\n" >> /etc/apache2/sites-available/default.conf
-printf "  <IfModule mod_fastcgi.c>\n" >> /etc/apache2/sites-available/default.conf
-printf "      AddType application/x-httpd-fastphp5 .php\n" >> /etc/apache2/sites-available/default.conf
-printf "      Action application/x-httpd-fastphp5 /php5-fcgi\n" >> /etc/apache2/sites-available/default.conf
-printf "      Alias /php5-fcgi /usr/lib/cgi-bin/php5-fcgi_$DOMAIN\n" >> /etc/apache2/sites-available/default.conf
-printf "      FastCgiExternalServer /usr/lib/cgi-bin/php5-fcgi_$DOMAIN -socket $WEBROOT/sockets/$DOMAIN.sock -pass-header Authorization -user $USER -group $USER -idle-timeout 3600\n" >> /etc/apache2/sites-available/default.conf
-printf "  </IfModule>\n" >> /etc/apache2/sites-available/default.conf
+printf "  CustomLog $LOGDIR/access.log combined\n\n" >> /etc/apache2/sites-available/default.conf
+
+printf "  <FilesMatch \"\.php$\">\n" >> /etc/apache2/sites-available/default.conf
+printf "    SetHandler \"proxy:unix://$WEBROOT/sockets/$DOMAIN.sock|fcgi://$DOMAIN\"\n" >> /etc/apache2/sites-available/default.conf
+printf "  </FilesMatch>\n\n" >> /etc/apache2/sites-available/default.conf
+
+printf "  <Proxy fcgi://$DOMAIN>\n" >> /etc/apache2/sites-available/default.conf
+printf "    ProxySet connectiontimeout=5 timeout=240\n" >> /etc/apache2/sites-available/default.conf
+printf "  </Proxy>\n\n" >> /etc/apache2/sites-available/default.conf
+
+
 printf "</VirtualHost>\n" >> /etc/apache2/sites-available/default.conf
 
 
@@ -303,15 +307,17 @@ printf "            AllowOverride None\n" >> /etc/apache2/sites-available/defaul
 printf "            Order allow,deny\n" >> /etc/apache2/sites-available/default-ssl.conf
 printf "            allow from all\n" >> /etc/apache2/sites-available/default-ssl.conf
 printf "        </Directory>\n\n" >> /etc/apache2/sites-available/default-ssl.conf
-printf "        <IfModule mod_fastcgi.c>\n" >> /etc/apache2/sites-available/default-ssl.conf
-printf "            AddType application/x-httpd-fastphp5 .php\n" >> /etc/apache2/sites-available/default-ssl.conf
-printf "            Action application/x-httpd-fastphp5 /php5-fcgi\n" >> /etc/apache2/sites-available/default-ssl.conf
-printf "            Alias /php5-fcgi /usr/lib/cgi-bin/php5-fcgi_$DOMAIN\n" >> /etc/apache2/sites-available/default-ssl.conf
-printf "            FastCgiExternalServer /usr/lib/cgi-bin/php5-fcgi_$DOMAIN -socket /var/run/php5-fpm $DOMAIN.sock -pass-header Authorization\n" >> /etc/apache2/sites-available/default-ssl.conf
-printf "        </IfModule>\n\n" >> /etc/apache2/sites-available/default-ssl.conf
 printf "        LogLevel warn\n\n" >> /etc/apache2/sites-available/default-ssl.conf
 printf "        ErrorLog $WEBROOT/logs/error-ssl.log\n" >> /etc/apache2/sites-available/default-ssl.conf
 printf "        CustomLog $WEBROOT/logs/access-ssl.log combined\n\n" >> /etc/apache2/sites-available/default-ssl.conf
+
+printf "        <FilesMatch \"\.php$\">\n" >> /etc/apache2/sites-available/default-ssl.conf
+printf "          SetHandler \"proxy:unix://$WEBROOT/sockets/$DOMAIN-ssl.sock|fcgi://$DOMAIN-SSL\"\n" >> /etc/apache2/sites-available/default-ssl.conf
+printf "        </FilesMatch>\n\n" >> /etc/apache2/sites-available/default-ssl.conf
+
+printf "        <Proxy fcgi://$DOMAIN-SSL>\n\n" >> /etc/apache2/sites-available/default-ssl.conf
+printf "          ProxySet connectiontimeout=5 timeout=240\n" >> /etc/apache2/sites-available/default-ssl.conf
+printf "        </Proxy>\n" >> /etc/apache2/sites-available/default-ssl.conf
 
 printf "        Include /etc/apache2/includes/vhost-ssl\n\n" >> /etc/apache2/sites-available/default-ssl.conf
 
@@ -394,6 +400,8 @@ mv /etc/php5/fpm/pool.d/www.conf /etc/php5/fpm/pool.d/www.conf.original
 cp /etc/php5/fpm/pool.d/www.conf.original /etc/php5/fpm/pool.d/${DOMAIN}.conf
 
 
+printf "\n########## DEFAULT HTTP POOL ###\n" >> ${EXECUTIONLOG}
+
 sed -i "s/\[www\]/\[$DOMAIN\]/" /etc/php5/fpm/pool.d/${DOMAIN}.conf >> ${EXECUTIONLOG}
 sed -i "s|listen =.*|listen = $WEBROOT/sockets/$DOMAIN.sock|" /etc/php5/fpm/pool.d/${DOMAIN}.conf >> ${EXECUTIONLOG}
 
@@ -402,19 +410,15 @@ sed -i "s/group = www-data/group = $USER/" /etc/php5/fpm/pool.d/${DOMAIN}.conf >
 
 sed -i "s/;listen.mode = 0660/listen.mode = 0660/" /etc/php5/fpm/pool.d/${DOMAIN}.conf >> ${EXECUTIONLOG}
 
+printf "\n########## DEFAULT HTTPS POOL ###\n" >> ${EXECUTIONLOG}
 
-printf "\n########## ADD FASTCGI CONFIG FILE ###\n" >> ${EXECUTIONLOG}
+sed -i "s/\[www\]/\[$DOMAIN-ssl\]/" /etc/php5/fpm/pool.d/${DOMAIN}-ssl.conf >> ${EXECUTIONLOG}
+sed -i "s|listen =.*|listen = $WEBROOT/sockets/$DOMAIN-SSL.sock|" /etc/php5/fpm/pool.d/${DOMAIN}.conf >> ${EXECUTIONLOG}
 
-printf "<IfModule mod_fastcgi.c>\n" > /etc/apache2/mods-available/fastcgi.conf
-printf "\tAddType application/x-httpd-fastphp5 .php\n" >> /etc/apache2/mods-available/fastcgi.conf
-printf "\tAction application/x-httpd-fastphp5 /php5-fcgi\n" >> /etc/apache2/mods-available/fastcgi.conf
-printf "\tAlias /php5-fcgi /usr/lib/cgi-bin/php5-fcgi\n" >> /etc/apache2/mods-available/fastcgi.conf
-printf "\t#FastCgiExternalServer /usr/lib/cgi-bin/php5-fcgi -socket /var/run/php5-fpm.sock -pass-header Authorization \n" >> /etc/apache2/mods-available/fastcgi.conf
-printf "\t<Directory /usr/lib/cgi-bin>\n" >> /etc/apache2/mods-available/fastcgi.conf
-printf "\t\tRequire all granted\n" >> /etc/apache2/mods-available/fastcgi.conf
-printf "\t</Directory>\n" >> /etc/apache2/mods-available/fastcgi.conf
-printf "</IfModule>" >> /etc/apache2/mods-available/fastcgi.conf
+sed -i "s/user = www-data/user = $USER/" /etc/php5/fpm/pool.d/${DOMAIN}-ssl.conf >> ${EXECUTIONLOG}
+sed -i "s/group = www-data/group = $USER/" /etc/php5/fpm/pool.d/${DOMAIN}-ssl.conf >> ${EXECUTIONLOG}
 
+sed -i "s/;listen.mode = 0660/listen.mode = 0660/" /etc/php5/fpm/pool.d/${DOMAIN}-ssl.conf >> ${EXECUTIONLOG}
 printf "\n########## RESTART THE WEBSERVER SERVICES ###\n" >> ${EXECUTIONLOG}
 
 service apache2 restart
@@ -510,11 +514,11 @@ cat ${TROUBLESHOOTINGFILES}/etc-apache2-sites-available-default-ssl.conf >> ${TR
 printf "\n\n\n########## PHP.INI ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
 cat ${TROUBLESHOOTINGFILES}/etc-php5-fpm-php.ini >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
 
-printf "\n\n\n########## FASTCGI.CONF ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
-cat ${TROUBLESHOOTINGFILES}/etc-apache2-mods-available-fastcgi.conf >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
-
 printf "\n\n\n########## FPM/POOL.D/$DOMAIN.CONF ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
 cat ${TROUBLESHOOTINGFILES}/etc-php5-fpm-pool.d-${DOMAIN}.conf >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
+
+printf "\n\n\n########## FPM/POOL.D/$DOMAIN-SSL.CONF ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
+cat ${TROUBLESHOOTINGFILES}/etc-php5-fpm-pool.d-${DOMAIN}-ssl.conf >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
 
 printf "\n\n\n########## APACHE ACCESS.LOG ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
 cat ${TROUBLESHOOTINGFILES}/apache-access.log >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
