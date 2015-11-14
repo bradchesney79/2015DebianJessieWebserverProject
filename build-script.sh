@@ -228,6 +228,8 @@ expect "none):"
 send "\r"
 EOD
 
+sleep 30
+
 printf "\n########## CLEAN UP ###\n" >> ${EXECUTIONLOG}
 
 printf "\nFirst autoremove of packages\n\n" >> ${EXECUTIONLOG}
