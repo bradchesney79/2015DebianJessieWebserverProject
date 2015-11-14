@@ -251,7 +251,7 @@ printf "\nBegin updating the IP tables rules\n\n" >> ${EXECUTIONLOG}
 
 #apt-get -y install iptables-persistent
 
-EXPECT=`which expect` >> ${EXECUTIONLOG}
+po
 
 printf "\nEXPECT - $EXPECT\n\n"
 
@@ -376,20 +376,10 @@ find $WEBROOT -type d -exec chmod -R 755 {} \; >> ${EXECUTIONLOG}
 
 printf "\n########## INSTALL MYSQL ###\n" >> ${EXECUTIONLOG}
 
-${EXPECT} <<EOD
-set timeout 240
-log_file -a /tmp/mysql.log
-spawn apt-get -y install mysql-server
-expect {
-  timeout { send_user "\nFailed to install MySQL.\n"; exit 1 }
-  eof { send_user "\nFailure for MySQL setup\n"; exit 1 }
-  "none):"}
-send $DBPASSWORD
-EOD
+echo "mysql-server mysql-server/root_password select $DBPASSWORD" | debconf-set-selections
+echo "mysql-server mysql-server/root_password_again select $DBPASSWORD" | debconf-set-selections
 
-cat /tmp/mysql.log >> ${EXECUTIONLOG}
-
-cat /tmp/mysql.log
+apt-get -y install mysql-server
 
 #mysql_secure_installation #bug report, currently requires an expect script
 
