@@ -274,6 +274,7 @@ if [ -a /etc/iptables/rules.v4 ]
   then
     mkdir /etc/iptables
     touch /etc/iptables/rules.v4
+    touch /etc/iptables/rules.v6
 fi
 
 printf "\nUpdate the IP tables rules\n\n" >> ${EXECUTIONLOG}
@@ -620,10 +621,6 @@ printf "\n#                                                #" >> ${EXECUTIONLOG}
 printf "\n#                                                #" >> ${EXECUTIONLOG}
 printf "\n##################################################\n\n" >> ${EXECUTIONLOG}
 
-apachectl configtest
-
-apachectl fullstatus
-
 printf "\n########## CREATE A PLACE TO STORE THE OUTPUT FOR SHARING TROUBLESHOOTING DATA###\n" >> ${EXECUTIONLOG}
 
 printf "Location of troubleshooting files: $TROUBLESHOOTINGFILES\n\n"
@@ -682,6 +679,11 @@ iptables -L >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
 
 printf "\n\n########## PACKAGES INSTALLED ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
 dpkg -l >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
+
+printf "\n\n########## APACHECTL INFO ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
+apachectl configtest
+printf "\n\n"
+apachectl fullstatus
 
 printf "\n\n########## PHP MODULE LOADED ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
 apachectl -V | grep -i mpm >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
