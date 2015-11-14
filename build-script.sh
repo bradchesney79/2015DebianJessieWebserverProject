@@ -211,42 +211,45 @@ printf "\n" >> ${EXECUTIONLOG}
 printf "Update the system\n\n" >> ${EXECUTIONLOG}
 printf "Update the system\n\n"
 
-apt-get -qy update >> ${EXECUTIONLOG}
+apt-get -y update >> ${EXECUTIONLOG}
 
 printf "\n" >> ${EXECUTIONLOG}
 printf "Upgrade the system\n\n" >> ${EXECUTIONLOG}
 printf "Upgrade the system\n\n"
 
-apt-get -qy dist-upgrade >> ${EXECUTIONLOG}
+apt-get -y dist-upgrade >> ${EXECUTIONLOG}
+apt-get -y upgrade
 
 printf "\n########## INSTALL THE FIRST BATCHES OF PACKAGES ###\n" >> ${EXECUTIONLOG}
 
 printf "\n" >> ${EXECUTIONLOG}
 printf "Install the first batch of packages for Apache & PHP\n\n" >> ${EXECUTIONLOG}
 
-apt-get -qy install sudo tcl perl python3 apache2 tmux ssh openssl openssl-blacklist libnet-ssleay-perl fail2ban git debconf-utils imagemagick expect >> ${EXECUTIONLOG}
+apt-get -y install sudo tcl perl python3 apache2 tmux ssh openssl openssl-blacklist libnet-ssleay-perl fail2ban git debconf-utils imagemagick expect >> ${EXECUTIONLOG}
 
 printf "\n########## CLEAN UP ###\n" >> ${EXECUTIONLOG}
 
 printf "\nFirst autoremove of packages\n\n" >> ${EXECUTIONLOG}
 
-apt-get -qy autoremove >> ${EXECUTIONLOG}
+apt-get -y autoremove >> ${EXECUTIONLOG}
 
 printf "\n########## UPDATE THE IPTABLES RULES ###\n" >> ${EXECUTIONLOG}
 
 printf "\nBegin updating the IP tables rules\n\n" >> ${EXECUTIONLOG}
 
-apt-get -qy install iptables-persistent
+apt-get -y install iptables-persistent
 
 EXPECT=`which expect` >> ${EXECUTIONLOG}
 
-#${EXPECT} <<EOD
-#spawn apt-get -qy iptables-persistent >> ${EXECUTIONLOG}
-#expect "IPv4 rules?"
-#send "\r"
-#expect "IPv6 rules?"
-#send "\r"
-#EOD
+printf "\nEXPECT - $EXPECT\n\n"
+
+${EXPECT} <<EOD
+spawn apt-get -y iptables-persistent
+expect "IPv4 rules?"
+send "\r"
+expect "IPv6 rules?"
+send "\r"
+EOD
 
 
 
@@ -353,7 +356,7 @@ find $WEBROOT -type d -exec chmod -R 755 {} \; >> ${EXECUTIONLOG}
 printf "\n########## INSTALL MYSQL ###\n" >> ${EXECUTIONLOG}
 
 ${EXPECT} <<EOD
-spawn apt-get -qy install mysql-server
+spawn apt-get -y install mysql-server
 expect "none):"
 send $DBPASSWORD
 EOD
@@ -387,7 +390,7 @@ mysql -u "root" -p "$DBPASSWORD" -e "$SQL7" >> ${EXECUTIONLOG}
 
 printf "\n########## CONFIGURE PHP ###\n" >> ${EXECUTIONLOG}
 
-apt-get -qy install php5-fpm libapache2-mod-php5 php-pear php5-curl php5-mysql php5-gd php5-gmp php5-mcrypt php5-memcached php5-imagick php5-intl php5-xdebug >> ${EXECUTIONLOG}
+apt-get -y install php5-fpm libapache2-mod-php5 php-pear php5-curl php5-mysql php5-gd php5-gmp php5-mcrypt php5-memcached php5-imagick php5-intl php5-xdebug >> ${EXECUTIONLOG}
 
 cp /etc/php5/fpm/php.ini /etc/php5/fpm/php.ini.original  >> ${EXECUTIONLOG}
 
@@ -588,7 +591,7 @@ printf "\n########## CLEAN UP ###\n" >> ${EXECUTIONLOG}
 
 printf "\nLast autoremove of packages\n\n" >> ${EXECUTIONLOG}
 
-apt-get -qy autoremove >> ${EXECUTIONLOG}
+apt-get -y autoremove >> ${EXECUTIONLOG}
 
 printf "\n##################################################" >> ${EXECUTIONLOG}
 printf "\n#                                                #" >> ${EXECUTIONLOG}
