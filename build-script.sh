@@ -235,6 +235,21 @@ apt-get -y autoremove >> ${EXECUTIONLOG}
 
 printf "\n########## UPDATE THE IPTABLES RULES ###\n" >> ${EXECUTIONLOG}
 
+if [ -a /etc/iptables/rules.v4 ]
+  then
+	echo "Creating the iptables directory in /etc"
+    mkdir /etc/iptables >> ${EXECUTIONLOG}
+fi
+
+printf "\n/etc/iptables exists!!\n\n"
+
+ls /etc/iptables
+
+printf "\n/PROOF!\n\n"
+
+touch /etc/iptables/rules.v4
+touch /etc/iptables/rules.v6
+
 printf "\nBegin updating the IP tables rules\n\n" >> ${EXECUTIONLOG}
 
 #apt-get -y install iptables-persistent
@@ -244,18 +259,19 @@ EXPECT=`which expect` >> ${EXECUTIONLOG}
 printf "\nEXPECT - $EXPECT\n\n"
 
 ${EXPECT} <<EOD
-set timeout 20
+set timeout 120
 log_file -a /tmp/iptables-persistent.log
 spawn apt-get -y install iptables-persistent
 expect {
   timeout { send_user "\nFailed to find IPV4 prompt.\n"; exit 1 }
   eof { send_user "\nIPV4 failure for iptables-persistent setup\n"; exit 1 }
-  "*IPv4 rules?"}
+  "*Save current IPv4 rules"}
 send "\r"
+
 expect {
   timeout { send_user "\nFailed to find IPV6 prompt.\n"; exit 1 }
   eof { send_user "\nIPV6 failure for iptables-persistent setup\n"; exit 1 }
-  "*IPv6 rules?"}
+  "*Save current IPv6 rules"}
 send "\r"
 EOD
 
@@ -264,18 +280,6 @@ cat /tmp/iptables-persistent.log >> ${EXECUTIONLOG}
 cat /tmp/iptables-persistent.log
 
 #FIXME rm /tmp/iptables-persistent.log
-
-printf "\nMake the IP tables rules persistent\n\n" >> ${EXECUTIONLOG}
-
-echo iptables-persistent iptables-persistent/autosave_v4 boolean true | debconf-set-selections >> ${EXECUTIONLOG}
-echo iptables-persistent iptables-persistent/autosave_v6 boolean true | debconf-set-selections >> ${EXECUTIONLOG}
-
-if [ -a /etc/iptables/rules.v4 ]
-  then
-    mkdir /etc/iptables
-    touch /etc/iptables/rules.v4
-    touch /etc/iptables/rules.v6
-fi
 
 printf "\nUpdate the IP tables rules\n\n" >> ${EXECUTIONLOG}
 
@@ -303,6 +307,14 @@ echo "#  Drop all other inbound - default deny unless explicitly allowed policy"
 echo "-A INPUT -j DROP" >> /etc/iptables/rules.v4
 echo "-A FORWARD -j DROP" >> /etc/iptables/rules.v4
 echo "COMMIT" >> /etc/iptables/rules.v4
+
+printf "\nMake the IP tables rules persistent\n\n" >> ${EXECUTIONLOG}
+
+#echo iptables-persistent iptables-persistent/autosave_v4 boolean true | debconf-set-selections >> ${EXECUTIONLOG}
+#echo iptables-persistent iptables-persistent/autosave_v6 boolean true | debconf-set-selections >> ${EXECUTIONLOG}
+
+iptables-save > /etc/iptables/rules.v4 >> ${EXECUTIONLOG}
+ip6tables-save > /etc/iptables/rules.v6 >> ${EXECUTIONLOG}
 
 printf "\n########## APPLY THE IPTABLES RULES ###\n" >> ${EXECUTIONLOG}
 
