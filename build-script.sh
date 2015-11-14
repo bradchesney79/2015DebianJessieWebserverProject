@@ -245,7 +245,7 @@ printf "\n########## UPDATE THE IPTABLES RULES ###\n" >> ${EXECUTIONLOG}
 
 printf "\nBegin updating the IP tables rules\n\n" >> ${EXECUTIONLOG}
 
-apt-get -gy install iptables-persistent
+apt-get -qy install iptables-persistent
 
 printf "\nMake the IP tables rules persistent\n\n" >> ${EXECUTIONLOG}
 
