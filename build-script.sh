@@ -270,6 +270,12 @@ expect {
   eof { send_user "\nIPV6 failure for iptables-persistent setup\n"; exit 1 }
   "*Save current IPv6 rules"}
 send "\r"
+expect {
+  timeout { send_user "\nFailsafe failed, timeout.\n"; exit 1 }
+  eof { send_user "\nFailsafe failed.\n"; exit 1 }
+  "*"}
+send "\r"
+
 EOD
 
 cat /tmp/iptables-persistent.log >> ${EXECUTIONLOG}
