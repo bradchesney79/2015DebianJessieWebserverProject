@@ -244,15 +244,26 @@ EXPECT=`which expect` >> ${EXECUTIONLOG}
 printf "\nEXPECT - $EXPECT\n\n"
 
 ${EXPECT} <<EOD
+set timeout 20
+log_file -a /tmp/iptables-persistent.log
 spawn apt-get -y iptables-persistent
-expect "IPv4 rules?"
+expect {
+  timeout { send_user "\nFailed to find IPV4 prompt.\n"; exit 1 }
+  eof { send_user "\nIPV4 failure for iptables-persistent setup\n"; exit 1 }
+  "*IPv4 rules?"}
 send "\r"
-expect "IPv6 rules?"
+expect {
+  timeout { send_user "\nFailed to find IPV6 prompt.\n"; exit 1 }
+  eof { send_user "\nIPV6 failure for iptables-persistent setup\n"; exit 1 }
+  "*IPv6 rules?"}
 send "\r"
 EOD
 
+cat /tmp/iptables-persistent.log >> ${EXECUTIONLOG}
 
+cat /tmp/iptables-persistent.log
 
+#FIXME rm /tmp/iptables-persistent.log
 
 printf "\nMake the IP tables rules persistent\n\n" >> ${EXECUTIONLOG}
 
