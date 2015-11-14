@@ -224,15 +224,6 @@ printf "\n########## INSTALL THE FIRST BATCHES OF PACKAGES ###\n" >> ${EXECUTION
 printf "\n" >> ${EXECUTIONLOG}
 printf "Install the first batch of packages for Apache & PHP\n\n" >> ${EXECUTIONLOG}
 
-
-EXPECT=`which expect` >> ${EXECUTIONLOG}
-
-#${EXPECT} <<EOD
-#spawn apt-get -qy install sudo tcl perl python3 apache2 tmux iptables-persistent ssh openssl openssl-blacklist libnet-ssleay-perl fail2ban git debconf-utils imagemagick expect >> ${EXECUTIONLOG}
-#expect "none):"
-#send "\r"
-#EOD
-
 apt-get -qy install sudo tcl perl python3 apache2 tmux ssh openssl openssl-blacklist libnet-ssleay-perl fail2ban git debconf-utils imagemagick expect >> ${EXECUTIONLOG}
 
 printf "\n########## CLEAN UP ###\n" >> ${EXECUTIONLOG}
@@ -245,7 +236,17 @@ printf "\n########## UPDATE THE IPTABLES RULES ###\n" >> ${EXECUTIONLOG}
 
 printf "\nBegin updating the IP tables rules\n\n" >> ${EXECUTIONLOG}
 
-apt-get -qy install iptables-persistent
+EXPECT=`which expect` >> ${EXECUTIONLOG}
+
+${EXPECT} <<EOD
+spawn apt-get -q iptables-persistent >> ${EXECUTIONLOG}
+expect "IPv4 rules?"
+send "\r"
+expect "IPv6 rules?"
+send "\r"
+EOD
+
+#apt-get -qy install iptables-persistent
 
 printf "\nMake the IP tables rules persistent\n\n" >> ${EXECUTIONLOG}
 
@@ -254,30 +255,30 @@ echo iptables-persistent iptables-persistent/autosave_v6 boolean true | debconf-
 
 printf "\nUpdate the IP tables rules\n\n" >> ${EXECUTIONLOG}
 
-printf "*filter\n\n" > /etc/iptables/rules.v4
-printf "#  Allow all loopback (lo0) traffic and drop all traffic to 127/8 that doesn't use lo0\n" >> /etc/iptables/rules.v4
-printf "-A INPUT -i lo -j ACCEPT\n" >> /etc/iptables/rules.v4
-printf "-A INPUT -d 127.0.0.0/8 -j REJECT\n\n" >> /etc/iptables/rules.v4
-printf "#  Accept all established inbound connections\n" >> /etc/iptables/rules.v4
-printf "-A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT\n\n" >> /etc/iptables/rules.v4
-printf "#  Allow all outbound traffic - you can modify this to only allow certain traffic\n" >> /etc/iptables/rules.v4
-printf "-A OUTPUT -j ACCEPT\n\n" >> /etc/iptables/rules.v4
-printf "#  Allow HTTP and HTTPS connections from anywhere (the normal ports for websites and SSL).\n" >> /etc/iptables/rules.v4
-printf "-A INPUT -p tcp --dport 80 -j ACCEPT\n" >> /etc/iptables/rules.v4
-printf "-A INPUT -p tcp --dport 443 -j ACCEPT\n\n" >> /etc/iptables/rules.v4
-printf "#  Allow SSH connections\n" >> /etc/iptables/rules.v4
-printf "#\n" >> /etc/iptables/rules.v4
-printf "#  The -dport number should be the same port number you set in sshd_config\n" >> /etc/iptables/rules.v4
-printf "#\n" >> /etc/iptables/rules.v4
-printf "-A INPUT -p tcp -m state --state NEW --dport 22 -j ACCEPT\n\n" >> /etc/iptables/rules.v4
-printf "#  Allow ping\n" >> /etc/iptables/rules.v4
-printf "-A INPUT -p icmp --icmp-type echo-request -j ACCEPT\n\n" >> /etc/iptables/rules.v4
-printf "#  Log iptables denied calls\n" >> /etc/iptables/rules.v4
-printf "#-A INPUT -m limit --limit 5/min -j LOG --log-prefix \"iptables denied: \" --log-level 7\n\n" >> /etc/iptables/rules.v4
-printf "#  Drop all other inbound - default deny unless explicitly allowed policy\n" >> /etc/iptables/rules.v4
-printf "-A INPUT -j DROP\n" >> /etc/iptables/rules.v4
-printf "-A FORWARD -j DROP\n\n" >> /etc/iptables/rules.v4
-printf "COMMIT" >> /etc/iptables/rules.v4
+echo "*filter\n\n" > /etc/iptables/rules.v4
+echo "#  Allow all loopback (lo0) traffic and drop all traffic to 127/8 that doesn't use lo0\n" >> /etc/iptables/rules.v4
+echo "-A INPUT -i lo -j ACCEPT\n" >> /etc/iptables/rules.v4
+echo "-A INPUT -d 127.0.0.0/8 -j REJECT\n\n" >> /etc/iptables/rules.v4
+echo "#  Accept all established inbound connections\n" >> /etc/iptables/rules.v4
+echo "-A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT\n\n" >> /etc/iptables/rules.v4
+echo "#  Allow all outbound traffic - you can modify this to only allow certain traffic\n" >> /etc/iptables/rules.v4
+echo "-A OUTPUT -j ACCEPT\n\n" >> /etc/iptables/rules.v4
+echo "#  Allow HTTP and HTTPS connections from anywhere (the normal ports for websites and SSL).\n" >> /etc/iptables/rules.v4
+echo "-A INPUT -p tcp --dport 80 -j ACCEPT\n" >> /etc/iptables/rules.v4
+echo "-A INPUT -p tcp --dport 443 -j ACCEPT\n\n" >> /etc/iptables/rules.v4
+echo "#  Allow SSH connections\n" >> /etc/iptables/rules.v4
+echo "#\n" >> /etc/iptables/rules.v4
+echo "#  The -dport number should be the same port number you set in sshd_config\n" >> /etc/iptables/rules.v4
+echo "#\n" >> /etc/iptables/rules.v4
+echo "-A INPUT -p tcp -m state --state NEW --dport 22 -j ACCEPT\n\n" >> /etc/iptables/rules.v4
+echo "#  Allow ping\n" >> /etc/iptables/rules.v4
+echo "-A INPUT -p icmp --icmp-type echo-request -j ACCEPT\n\n" >> /etc/iptables/rules.v4
+echo "#  Log iptables denied calls\n" >> /etc/iptables/rules.v4
+echo "#-A INPUT -m limit --limit 5/min -j LOG --log-prefix \"iptables denied: \" --log-level 7\n\n" >> /etc/iptables/rules.v4
+echo "#  Drop all other inbound - default deny unless explicitly allowed policy\n" >> /etc/iptables/rules.v4
+echo "-A INPUT -j DROP\n" >> /etc/iptables/rules.v4
+echo "-A FORWARD -j DROP\n\n" >> /etc/iptables/rules.v4
+echo "COMMIT" >> /etc/iptables/rules.v4
 
 printf "\n########## APPLY THE IPTABLES RULES ###\n" >> ${EXECUTIONLOG}
 
@@ -715,6 +716,9 @@ printf "\n#                                                #" >> ${EXECUTIONLOG}
 printf "\n#                                                #" >> ${EXECUTIONLOG}
 printf "\n##################################################\n\n" >> ${EXECUTIONLOG}
 
-tar -czvf /root/bin/troubleshooting.tgz /root/bin/troubleshooting/${UNIXTIMESTAMP}/*
+tar -czvf /root/bin/troubleshooting.tgz /root/bin/troubleshooting/${UNIXTIMESTAMP}/*  
 mv /root/bin/troubleshooting/troubleshooting.tgz /root/bin/troubleshooting/${UNIXTIMESTAMP}/
+
+echo "Thinking inside my head that a few minutes of uptime is trivial at this point-- nobody is actually depending on/using the system being up at this exact moment-- a reboot might be a smart idea"
+
 exit 0
