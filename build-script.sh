@@ -385,7 +385,7 @@ apt-get -y install mysql-server
 
 #mysql_secure_installation #bug report, currently requires an expect script
 
-SQL0="DELETE FROM mysql.user WHERE User=\'\'; DELETE FROM mysql.user WHERE User=\'root\' AND Host NOT IN (\'localhost\', \'127.0.0.1\', \'::1\'); DROP DATABASE IF EXISTS test; FLUSH PRIVILEGES;"
+SQL0="DELETE FROM mysql.user WHERE User=''; DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1'); DROP DATABASE IF EXISTS test; FLUSH PRIVILEGES;"
 
 #A common vector is to attack the MySQL root user since it is the default omipotent user put on almost all #MySQL installs.
 #So, give your 'root' user a different name. (Is admin more secure than root, meh. Yeah, I guess.)
@@ -394,7 +394,7 @@ SQL1="GRANT ALL PRIVILEGES ON *.* TO '$DBROOTUSER'@'localhost' IDENTIFIED BY '$D
 SQL2="GRANT ALL PRIVILEGES ON *.* TO '$DBROOTUSER'@'127.0.0.1' IDENTIFIED BY '$DBPASSWORD' WITH GRANT OPTION;"
 SQL3="GRANT ALL PRIVILEGES ON *.* TO '$DBROOTUSER'@'::1' IDENTIFIED BY '$DBPASSWORD' WITH GRANT OPTION;"
 
-SQL4="DELETE FROM mysql.user WHERE User=\'root\';"
+SQL4="DELETE FROM mysql.user WHERE User='root';"
 
 SQL5="CREATE USER 'backup'@'localhost' IDENTIFIED BY '$DBBACKUPUSERPASSWORD';"
 SQL6="GRANT SELECT, SHOW VIEW, RELOAD, REPLICATION CLIENT, EVENT, TRIGGER ON *.* TO 'backup'@'localhost';"
@@ -605,7 +605,7 @@ printf "\n########## INSTALL WEBDEVELOPER RESOURCES ###\n" >> ${EXECUTIONLOG}
 printf "\n########## RESTART THE WEBSERVER SERVICES ###\n" >> ${EXECUTIONLOG}
 
 service apache2 restart >> ${EXECUTIONLOG}
-service php-fpm restart >> ${EXECUTIONLOG}
+service php5-fpm restart >> ${EXECUTIONLOG}
 
 echo "<?php phpinfo(); ?>" >> /var/www/http/index.php
 
