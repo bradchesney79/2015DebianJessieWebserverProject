@@ -237,7 +237,7 @@ printf "\n########## UPDATE THE IPTABLES RULES ###\n" >> ${EXECUTIONLOG}
 
 printf "\nBegin updating the IP tables rules\n\n" >> ${EXECUTIONLOG}
 
-apt-get -y install iptables-persistent
+#apt-get -y install iptables-persistent
 
 EXPECT=`which expect` >> ${EXECUTIONLOG}
 
@@ -246,7 +246,7 @@ printf "\nEXPECT - $EXPECT\n\n"
 ${EXPECT} <<EOD
 set timeout 20
 log_file -a /tmp/iptables-persistent.log
-spawn apt-get -y iptables-persistent
+spawn apt-get -y install iptables-persistent
 expect {
   timeout { send_user "\nFailed to find IPV4 prompt.\n"; exit 1 }
   eof { send_user "\nIPV4 failure for iptables-persistent setup\n"; exit 1 }
