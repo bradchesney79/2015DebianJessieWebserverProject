@@ -387,6 +387,10 @@ expect {
 send $DBPASSWORD
 EOD
 
+cat /tmp/mysql.log >> ${EXECUTIONLOG}
+
+cat /tmp/mysql.log
+
 #mysql_secure_installation #bug report, currently requires an expect script
 
 SQL0="DELETE FROM mysql.user WHERE User=\'\'; DELETE FROM mysql.user WHERE User=\'root\' AND Host NOT IN (\'localhost\', \'127.0.0.1\', \'::1\'); DROP DATABASE IF EXISTS test; FLUSH PRIVILEGES;"
