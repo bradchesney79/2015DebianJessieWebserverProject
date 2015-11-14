@@ -101,6 +101,8 @@ DBBACKUPUSERPASSWORD="thirddummypassword"
 #pushd /root; mkdir bin; pushd bin; wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/build-script.sh; chmod +x build-script.sh; time ./build-script.sh; popd; popd
 
 #Takes ~11.5 mins on a Linode 1024
+#real    7m55.128s
+
 
 printf "\n##################################################" >> ${EXECUTIONLOG}
 printf "\n#                                                #" >> ${EXECUTIONLOG}
@@ -231,7 +233,7 @@ EXPECT=`which expect` >> ${EXECUTIONLOG}
 #send "\r"
 #EOD
 
-pushd /root; mkdir bin; pushd bin; wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/build-script.sh; chmod +x build-script.sh; time ./build-script.sh; popd; popd
+apt-get -qy install sudo tcl perl python3 apache2 tmux ssh openssl openssl-blacklist libnet-ssleay-perl fail2ban git debconf-utils imagemagick expect >> ${EXECUTIONLOG}
 
 printf "\n########## CLEAN UP ###\n" >> ${EXECUTIONLOG}
 
@@ -241,8 +243,9 @@ apt-get -qy autoremove >> ${EXECUTIONLOG}
 
 printf "\n########## UPDATE THE IPTABLES RULES ###\n" >> ${EXECUTIONLOG}
 
-echo iptables-persistent iptables-persistent/autosave_v4 boolean true | debconf-set-selections >> ${EXECUTIONLOG}
-echo iptables-persistent iptables-persistent/autosave_v6 boolean true | debconf-set-selections >> ${EXECUTIONLOG}
+printf "\nBegin updating the IP tables rules\n\n" >> ${EXECUTIONLOG}
+
+apt-get -gy install iptables-persistent
 
 printf "\nUpdate the IP tables rules\n\n" >> ${EXECUTIONLOG}
 
@@ -273,9 +276,14 @@ printf "COMMIT" >> /etc/iptables/rules.v4
 
 printf "\n########## APPLY THE IPTABLES RULES ###\n" >> ${EXECUTIONLOG}
 
-printf "\nApply the IP tables rules\n\n" >> ${EXECUTIONLOG}
+printf "\nApply the IP tables rules\n\n"
 
 iptables-restore < /etc/iptables/rules.v4 >> ${EXECUTIONLOG}
+
+printf "\nMake the IP tables rules persistent\n\n" >> ${EXECUTIONLOG}
+
+echo iptables-persistent iptables-persistent/autosave_v4 boolean true | debconf-set-selections >> ${EXECUTIONLOG}
+echo iptables-persistent iptables-persistent/autosave_v6 boolean true | debconf-set-selections >> ${EXECUTIONLOG}
 
 printf "\n########## USING fail2ban DEFAULT CONFIG ###\n" >> ${EXECUTIONLOG}
 
