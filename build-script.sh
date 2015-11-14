@@ -251,8 +251,6 @@ printf "\nBegin updating the IP tables rules\n\n" >> ${EXECUTIONLOG}
 
 #apt-get -y install iptables-persistent
 
-po
-
 printf "\nEXPECT - $EXPECT\n\n"
 
 ${EXPECT} <<EOD
@@ -264,7 +262,6 @@ expect {
   eof { send_user "\nIPV4 failure for iptables-persistent setup\n"; exit 1 }
   "*Save current IPv4 rules"}
 send "\r"
-
 expect {
   timeout { send_user "\nFailed to find IPV6 prompt.\n"; exit 1 }
   eof { send_user "\nIPV6 failure for iptables-persistent setup\n"; exit 1 }
@@ -275,7 +272,6 @@ expect {
   eof { send_user "\nFailsafe failed.\n"; exit 1 }
   "*"}
 send "\r"
-
 EOD
 
 cat /tmp/iptables-persistent.log >> ${EXECUTIONLOG}
@@ -405,14 +401,14 @@ SQL6="GRANT SELECT, SHOW VIEW, RELOAD, REPLICATION CLIENT, EVENT, TRIGGER ON *.*
 
 SQL7="FLUSH PRIVILEGES;"
 
-mysql -u "root" -p "$DBPASSWORD" -e "$SQL0" >> ${EXECUTIONLOG}
-mysql -u "root" -p "$DBPASSWORD" -e "$SQL1" >> ${EXECUTIONLOG}
-mysql -u "root" -p "$DBPASSWORD" -e "$SQL2" >> ${EXECUTIONLOG}
-mysql -u "root" -p "$DBPASSWORD" -e "$SQL3" >> ${EXECUTIONLOG}
-mysql -u "root" -p "$DBPASSWORD" -e "$SQL4" >> ${EXECUTIONLOG}
-mysql -u "root" -p "$DBPASSWORD" -e "$SQL5" >> ${EXECUTIONLOG}
-mysql -u "root" -p "$DBPASSWORD" -e "$SQL6" >> ${EXECUTIONLOG}
-mysql -u "root" -p "$DBPASSWORD" -e "$SQL7" >> ${EXECUTIONLOG}
+mysql -u "root" -p"$DBPASSWORD" -e "$SQL0" >> ${EXECUTIONLOG}
+mysql -u "root" -p"$DBPASSWORD" -e "$SQL1" >> ${EXECUTIONLOG}
+mysql -u "root" -p"$DBPASSWORD" -e "$SQL2" >> ${EXECUTIONLOG}
+mysql -u "root" -p"$DBPASSWORD" -e "$SQL3" >> ${EXECUTIONLOG}
+mysql -u "root" -p"$DBPASSWORD" -e "$SQL4" >> ${EXECUTIONLOG}
+mysql -u "root" -p"$DBPASSWORD" -e "$SQL5" >> ${EXECUTIONLOG}
+mysql -u "root" -p"$DBPASSWORD" -e "$SQL6" >> ${EXECUTIONLOG}
+mysql -u "root" -p"$DBPASSWORD" -e "$SQL7" >> ${EXECUTIONLOG}
 
 printf "\n########## CONFIGURE PHP ###\n" >> ${EXECUTIONLOG}
 
@@ -657,8 +653,6 @@ cp /etc/apache2/sites-available/default-ssl.conf ${TROUBLESHOOTINGFILES}/etc-apa
 cp /etc/mysql/mysql.cnf ${TROUBLESHOOTINGFILES}/etc-mysql-mysql.cnf
 
 cp /etc/php5/fpm/php.ini ${TROUBLESHOOTINGFILES}/etc-php5-fpm-php.ini
-
-cp /etc/apache2/mods-available/fastcgi.conf ${TROUBLESHOOTINGFILES}/etc-apache2-mods-available-fastcgi.conf
 
 cp /etc/php5/fpm/pool.d/${DOMAIN}.conf ${TROUBLESHOOTINGFILES}/etc-php5-fpm-pool.d-${DOMAIN}.conf
 
