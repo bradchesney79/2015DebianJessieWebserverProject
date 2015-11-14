@@ -219,7 +219,14 @@ printf "\n########## INSTALL THE FIRST BATCHES OF PACKAGES ###\n" >> ${EXECUTION
 printf "\n" >> ${EXECUTIONLOG}
 printf "Install the first batch of packages for Apache & PHP\n\n" >> ${EXECUTIONLOG}
 
-apt-get -qy install sudo tcl perl python3 apache2 tmux iptables-persistent ssh openssl openssl-blacklist libnet-ssleay-perl fail2ban git debconf-utils imagemagick expect >> ${EXECUTIONLOG}
+
+EXPECT=`which expect` >> ${EXECUTIONLOG}
+
+${EXPECT} <<EOD
+spawn apt-get -qy install sudo tcl perl python3 apache2 tmux iptables-persistent ssh openssl openssl-blacklist libnet-ssleay-perl fail2ban git debconf-utils imagemagick expect >> ${EXECUTIONLOG}
+expect "none):"
+send "\r"
+EOD
 
 printf "\n########## CLEAN UP ###\n" >> ${EXECUTIONLOG}
 
@@ -321,8 +328,6 @@ chown -R www-data:www-data $WEBROOT/sockets >> ${EXECUTIONLOG}
 find $WEBROOT -type d -exec chmod -R 755 {} \; >> ${EXECUTIONLOG}
 
 printf "\n########## INSTALL MYSQL ###\n" >> ${EXECUTIONLOG}
-
-EXPECT=`which expect` >> ${EXECUTIONLOG}
 
 ${EXPECT} <<EOD
 spawn apt-get -qy install mysql-server
@@ -691,4 +696,4 @@ printf "\n#                                                #" >> ${EXECUTIONLOG}
 printf "\n#                                                #" >> ${EXECUTIONLOG}
 printf "\n##################################################\n\n" >> ${EXECUTIONLOG}
 
-
+exit 0
