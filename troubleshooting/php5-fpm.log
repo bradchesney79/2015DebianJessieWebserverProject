@@ -1,10 +1,10 @@
-[11-Nov-2015 02:39:05] NOTICE: fpm is running, pid 12520
-[11-Nov-2015 02:39:05] NOTICE: ready to handle connections
-[11-Nov-2015 02:39:05] NOTICE: systemd monitor interval set to 10000ms
-[11-Nov-2015 02:39:08] NOTICE: Terminating ...
-[11-Nov-2015 02:39:08] NOTICE: exiting, bye-bye!
-[11-Nov-2015 02:39:08] NOTICE: configuration file /etc/php5/fpm/php-fpm.conf test is successful
+[14-Nov-2015 14:18:45] NOTICE: fpm is running, pid 17685
+[14-Nov-2015 14:18:45] NOTICE: ready to handle connections
+[14-Nov-2015 14:18:45] NOTICE: systemd monitor interval set to 10000ms
+[14-Nov-2015 14:18:51] NOTICE: Terminating ...
+[14-Nov-2015 14:18:51] NOTICE: exiting, bye-bye!
+[14-Nov-2015 14:18:51] NOTICE: configuration file /etc/php5/fpm/php-fpm.conf test is successful
 
-[11-Nov-2015 02:39:08] NOTICE: fpm is running, pid 12934
-[11-Nov-2015 02:39:08] NOTICE: ready to handle connections
-[11-Nov-2015 02:39:08] NOTICE: systemd monitor interval set to 10000ms
+[14-Nov-2015 14:18:51] NOTICE: fpm is running, pid 19700
+[14-Nov-2015 14:18:51] NOTICE: ready to handle connections
+[14-Nov-2015 14:18:51] NOTICE: systemd monitor interval set to 10000ms

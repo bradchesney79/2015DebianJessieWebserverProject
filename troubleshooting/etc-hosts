@@ -1,6 +1,6 @@
 127.0.0.1			localhost.localdomain localhost
 127.0.1.1			debian
-45.33.112.226		www.rustbeltrebellion.com www
+45.33.112.226				www.rustbeltrebellion.com www
 
 # The following lines are desirable for IPv6 capable hosts
 ::1				localhost ip6-localhost ip6-loopback
