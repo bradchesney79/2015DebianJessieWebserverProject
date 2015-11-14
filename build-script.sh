@@ -64,6 +64,8 @@ DBBACKUPUSERPASSWORD="thirddummypassword"
 ######################################################################
 ######################################################################
 
+#configure sendmail
+
 # have a website system user -- scripts to add new system users & human user acccounts
 
 # a script to add a new virtualhost
@@ -73,6 +75,8 @@ DBBACKUPUSERPASSWORD="thirddummypassword"
 # install global webdev resources like composer, node, fonts
 
 # improve troubleshooting resources
+
+# remedy broken GUI SFTP -- works fine CLI
 
 # update troubleshooting resources on github
 
@@ -179,10 +183,9 @@ printf "ff02::1\t\t\t\tip6-allnodes\n" >> /etc/hosts
 printf "ff02::2\t\t\t\tip6-allrouters\n" >> /etc/hosts
 printf "$IPV6\t$HOSTNAME.$DOMAIN $HOSTNAME" >> /etc/hosts
 
-printf "\n########## SET THE TIMEZONE & TIME ###\n" >> ${EXECUTIONLOG}
+printf "\n########## SET THE TIMEZONE & TIME ###\n\n" >> ${EXECUTIONLOG}
 
-printf "\n" >> ${EXECUTIONLOG}
-printf "Set the timezone to UTC \n\n" >> ${EXECUTIONLOG}
+printf "Set the timezone to UTC \n\n\n" >> ${EXECUTIONLOG}
 
 echo $TIMEZONE > /etc/timezone                     
 cp /usr/share/zoneinfo/${TIMEZONE} /etc/localtime # This sets the time
@@ -222,13 +225,13 @@ printf "Install the first batch of packages for Apache & PHP\n\n" >> ${EXECUTION
 
 EXPECT=`which expect` >> ${EXECUTIONLOG}
 
-${EXPECT} <<EOD
-spawn apt-get -qy install sudo tcl perl python3 apache2 tmux iptables-persistent ssh openssl openssl-blacklist libnet-ssleay-perl fail2ban git debconf-utils imagemagick expect >> ${EXECUTIONLOG}
-expect "none):"
-send "\r"
-EOD
+#${EXPECT} <<EOD
+#spawn apt-get -qy install sudo tcl perl python3 apache2 tmux iptables-persistent ssh openssl openssl-blacklist libnet-ssleay-perl fail2ban git debconf-utils imagemagick expect >> ${EXECUTIONLOG}
+#expect "none):"
+#send "\r"
+#EOD
 
-sleep 30
+pushd /root; mkdir bin; pushd bin; wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/build-script.sh; chmod +x build-script.sh; time ./build-script.sh; popd; popd
 
 printf "\n########## CLEAN UP ###\n" >> ${EXECUTIONLOG}
 
