@@ -572,6 +572,8 @@ printf "\n########## RESTART THE WEBSERVER SERVICES ###\n" >> ${EXECUTIONLOG}
 service apache2 restart >> ${EXECUTIONLOG}
 service php-fpm restart >> ${EXECUTIONLOG}
 
+echo "<?php phpinfo(); ?>" >> /var/www/http/index.php
+
 printf "\n########## CLEAN UP ###\n" >> ${EXECUTIONLOG}
 
 printf "\nLast autoremove of packages\n\n" >> ${EXECUTIONLOG}
