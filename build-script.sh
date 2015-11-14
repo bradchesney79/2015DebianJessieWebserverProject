@@ -377,8 +377,8 @@ find $WEBROOT -type d -exec chmod -R 755 {} \; >> ${EXECUTIONLOG}
 printf "\n########## INSTALL MYSQL ###\n" >> ${EXECUTIONLOG}
 
 ${EXPECT} <<EOD
-set timeout 120
-log_file -a /tmp/iptables-persistent.log
+set timeout 240
+log_file -a /tmp/mysql.log
 spawn apt-get -y install mysql-server
 expect {
   timeout { send_user "\nFailed to install MySQL.\n"; exit 1 }
