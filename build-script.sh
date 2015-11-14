@@ -235,11 +235,8 @@ apt-get -y autoremove >> ${EXECUTIONLOG}
 
 printf "\n########## UPDATE THE IPTABLES RULES ###\n" >> ${EXECUTIONLOG}
 
-if [ -a /etc/iptables/rules.v4 ]
-  then
-	echo "Creating the iptables directory in /etc"
-    mkdir /etc/iptables >> ${EXECUTIONLOG}
-fi
+echo "Creating the iptables directory in /etc"
+mkdir /etc/iptables >> ${EXECUTIONLOG}
 
 printf "\n/etc/iptables exists!!\n\n"
 
@@ -380,8 +377,13 @@ find $WEBROOT -type d -exec chmod -R 755 {} \; >> ${EXECUTIONLOG}
 printf "\n########## INSTALL MYSQL ###\n" >> ${EXECUTIONLOG}
 
 ${EXPECT} <<EOD
+set timeout 120
+log_file -a /tmp/iptables-persistent.log
 spawn apt-get -y install mysql-server
-expect "none):"
+expect {
+  timeout { send_user "\nFailed to install MySQL.\n"; exit 1 }
+  eof { send_user "\nFailure for MySQL setup\n"; exit 1 }
+  "none):"}
 send $DBPASSWORD
 EOD
 
