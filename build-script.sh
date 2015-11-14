@@ -749,9 +749,9 @@ printf "\n#                                                #" >> ${EXECUTIONLOG}
 printf "\n#                                                #" >> ${EXECUTIONLOG}
 printf "\n##################################################\n\n" >> ${EXECUTIONLOG}
 
-tar -czvf /root/bin/troubleshooting.tgz /root/bin/troubleshooting/${UNIXTIMESTAMP}/*  
+tar -czvf /root/bin/troubleshooting/troubleshooting.tgz /root/bin/troubleshooting/${UNIXTIMESTAMP}/*  
 mv /root/bin/troubleshooting/troubleshooting.tgz /root/bin/troubleshooting/${UNIXTIMESTAMP}/
 
-echo "Thinking inside my head that a few minutes of uptime is trivial at this point-- nobody is actually depending on/using the system being up at this exact moment-- a reboot might be a smart idea"
+printf "\nThinking inside my head that a few minutes of uptime is trivial at this point-- nobody is actually depending on the system being up or even using it at this exact moment-- a reboot might be a smart idea"
 
 exit 0
