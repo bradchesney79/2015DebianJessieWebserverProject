@@ -25,6 +25,8 @@ USER="administrator"
 PASSWORD="dummypassword"
 EMAIL="$USER@$DOMAIN"
 
+REALEMAIL="bradchesney79@gmail.com"
+
 WEBROOT="/var/www"
 LOGDIR="/var/www/logs"
 
@@ -354,6 +356,7 @@ printf "\n########## THIS AIDS RESOURCE SEGREGATION ###\n"
 printf "\n########## www-data HAS ACCESS TO ALL WEBSERVER FUN ###\n"
 
 useradd -d $WEBROOT -p $PASSWORD -c "Default Web Site User" $USER
+passwd -l $USER
 
 printf "\n########## ADD SSL CONFIGURATION INCLUDE ###\n"
 
@@ -628,7 +631,38 @@ printf "\n########## RESTART THE WEBSERVER SERVICES ###\n"
 service apache2 restart
 service php5-fpm restart
 
-echo "<?php phpinfo(); ?>" >> /var/www/http/index.php
+#echo "<?php phpinfo(); ?>" >> /var/www/http/index.php
+
+printf "\n########## SETUP MAIL ###\n"
+
+#### Needed an SPF record
+# from http://spfwizard.com
+
+# rustbeltrebellion.com.  IN TXT "v=spf1 mx a ip4:45.33.112.226/32 ?all"
+
+# in my DNS config the first text field was: rustbeltrebellion.com.
+# in the dropdown: TXT
+# in the last text field went: "v=spf1 mx a ip4:45.33.112.226/32 ?all"
+
+#apt-get -y install exim4-daemon-light bsd-mailx
+#### already installed
+
+#dpkg-reconfigure exim4-config
+#### RECONFIGURE VIA CONFIG FILES 
+#/etc/exim4
+
+#During the Exim configuration, choose Internet site and follow all the defaults, ensuring that you only listen on 127.0.0.1 and you are not relaying mail for any other domains.
+
+echo "root: $REALEMAIL" >> /etc/aliases
+echo "$USER: $REALEMAIL" >> /etc/aliases
+
+newaliases
+
+service exim4 restart
+
+printf "\n########## SEND TEST MAIL ###\n"
+
+echo "Email from $(hostname)" | mail root -s "$DATE $UNIXTIMESTAMP Email from $(hostname)"
 
 printf "\n########## CLEAN UP ###\n"
 
