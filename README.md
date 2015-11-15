@@ -1,5 +1,6 @@
 # 2015DebianJessieWebserverProject
-An initial setup script for a Debian LAMP Webserver
+A setup script for a Debian LAMP Webserver.
+Building with a security focus & geared towards higher performance than stock.
 
 
 Initially this will be in implemented with bash until I arrive at an end result I am happy with.
