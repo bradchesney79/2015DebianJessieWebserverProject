@@ -85,6 +85,9 @@ DBBACKUPUSERPASSWORD="thirddummypassword"
 
 # break into modular scripts
 
+# add kudos to http://reddit.com/user/cheaphomemadeacid
+#  2>&1 >> execution.log
+
 #based upon:
 # 
 # https://www.linode.com/docs/security/securing-your-server
@@ -99,85 +102,86 @@ DBBACKUPUSERPASSWORD="thirddummypassword"
 # http://wiki.apache.org/httpd/PHP-FPM
 # http://serverfault.com/a/672969/106593
 # http://float64.uk/blog/2014/08/20/php-fpm-sockets-apache-mod-proxy-fcgi-ubuntu/
+# https://chris-lamb.co.uk/posts/checklist-configuring-debian-system
 
 #exit; halt
-#pushd /root; mkdir bin; pushd bin; wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/build-script.sh; chmod +x build-script.sh; time ./build-script.sh; popd; popd
+#pushd /root; mkdir bin; pushd bin; wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/build-script.sh; chmod +x build-script.sh; time ./build-script.sh 2>&1 >> /var/log/auto-install.log; popd; popd
 
 #Takes ... on a Linode 1024
 #real    7m55.128s
 #real    9m49.525s
 
-printf "\n##################################################" >> ${EXECUTIONLOG}
-printf "\n#                                                #" >> ${EXECUTIONLOG}
-printf "\n#                                                #" >> ${EXECUTIONLOG}
-printf "\n# SETUP SCRIPT START                             #" >> ${EXECUTIONLOG}
-printf "\n#                                                #" >> ${EXECUTIONLOG}
-printf "\n#                                                #" >> ${EXECUTIONLOG}
-printf "\n##################################################\n\n" >> ${EXECUTIONLOG}
+printf "\n##################################################"
+printf "\n#                                                #"
+printf "\n#                                                #"
+printf "\n# SETUP SCRIPT START                             #"
+printf "\n#                                                #"
+printf "\n#                                                #"
+printf "\n##################################################\n\n"
 
-printf "\n########## SCRIPT EXECUTION PARTICULARS ##########\n\n" >> ${EXECUTIONLOG}
+printf "\n########## SCRIPT EXECUTION PARTICULARS ##########\n\n"
 
-printf "\nEXECUTOR - $EXECUTIONLOGLOCATION" >> ${EXECUTIONLOG}
-printf "\nSCRIPTLOCATION - $SCRIPTLOCATION" >> ${EXECUTIONLOG}
-printf "\nEXECUTIONLOG - $EXECUTIONLOG" >> ${EXECUTIONLOG}
-printf "\nTROUBLESHOOTINGFILES - $TROUBLESHOOTINGFILES" >> ${EXECUTIONLOG}
-printf "\n$DATE - $UNIXTIMESTAMP\n\n" >> ${EXECUTIONLOG}
+printf "\nEXECUTOR - $EXECUTIONLOGLOCATION"
+printf "\nSCRIPTLOCATION - $SCRIPTLOCATION"
+printf "\nEXECUTIONLOG - $EXECUTIONLOG"
+printf "\nTROUBLESHOOTINGFILES - $TROUBLESHOOTINGFILES"
+printf "\n$DATE - $UNIXTIMESTAMP\n\n"
 
 
-printf "\n########## RECORD THE VARIABLES FOR POSTERITY ####\n\n" >> ${EXECUTIONLOG}
+printf "\n########## RECORD THE VARIABLES FOR POSTERITY ####\n\n"
 
-printf "\nHOSTNAME - $HOSTNAME\n" >> ${EXECUTIONLOG}
-printf "\nDOMAIN - $DOMAIN\n" >> ${EXECUTIONLOG}
-printf "\nIPV4 - $IPV4\n" >> ${EXECUTIONLOG}
-printf "\nIPV6 - $IPV6\n" >> ${EXECUTIONLOG}
-printf "\nTIMEZONE - $TIMEZONE\n\n" >> ${EXECUTIONLOG}
+printf "\nHOSTNAME - $HOSTNAME\n"
+printf "\nDOMAIN - $DOMAIN\n"
+printf "\nIPV4 - $IPV4\n"
+printf "\nIPV6 - $IPV6\n"
+printf "\nTIMEZONE - $TIMEZONE\n\n"
 
 ##### PERSON RESPONSIBLE FOR DEFAULT DOMAIN #####
 
-printf "\nUSER - $USER\n\n" >> ${EXECUTIONLOG}
-printf "\nPASSWORD - $PASSWORD\n" >> ${EXECUTIONLOG}
-printf "\nEMAIL - $EMAIL=\n\n" >> ${EXECUTIONLOG}
+printf "\nUSER - $USER\n\n"
+printf "\nPASSWORD - $PASSWORD\n"
+printf "\nEMAIL - $EMAIL=\n\n"
 
-printf "\nWEBROOT - $WEBROOT\n" >> ${EXECUTIONLOG}
-printf "\nLOGDIR - $LOGDIR\n\n" >> ${EXECUTIONLOG}
+printf "\nWEBROOT - $WEBROOT\n"
+printf "\nLOGDIR - $LOGDIR\n\n"
 
 
 ##### SSL KEY PARTICULARS #####
 
-printf "\nKEYSIZE - $KEYSIZE\n" >> ${EXECUTIONLOG}
-printf "\nALGORITHM - $ALGORITHM\n\n" >> ${EXECUTIONLOG}
+printf "\nKEYSIZE - $KEYSIZE\n"
+printf "\nALGORITHM - $ALGORITHM\n\n"
 
-printf "\nCOUNTRY - $COUNTRY\n" >> ${EXECUTIONLOG}
-printf "\nSTATE - $STATE\n" >> ${EXECUTIONLOG}
-printf "\nLOCALITY - $LOCALITY\n" >> ${EXECUTIONLOG}
-printf "\nORGANIZATION - $ORGANIZATION\n" >> ${EXECUTIONLOG}
-printf "\nORGANIZATIONALUNIT - $ORGANIZATIONALUNIT\n" >> ${EXECUTIONLOG}
-printf "\nEMAIL - $EMAIL\n\n" >> ${EXECUTIONLOG}
+printf "\nCOUNTRY - $COUNTRY\n"
+printf "\nSTATE - $STATE\n"
+printf "\nLOCALITY - $LOCALITY\n"
+printf "\nORGANIZATION - $ORGANIZATION\n"
+printf "\nORGANIZATIONALUNIT - $ORGANIZATIONALUNIT\n"
+printf "\nEMAIL - $EMAIL\n\n"
 
-printf "\nPASSWORD - $PASSWORD\n\n" >> ${EXECUTIONLOG}
+printf "\nPASSWORD - $PASSWORD\n\n"
 
-printf "\nSSLPROVIDER - $SSLPROVIDER\n\n" >> ${EXECUTIONLOG}
+printf "\nSSLPROVIDER - $SSLPROVIDER\n\n"
 
 ##### DATABASE INFO #####
 
-printf "\nDBROOTUSER - $DBROOTUSER\n" >> ${EXECUTIONLOG}
-printf "\nDBPASSWORD - $DBPASSWORD\n\n" >> ${EXECUTIONLOG}
+printf "\nDBROOTUSER - $DBROOTUSER\n"
+printf "\nDBPASSWORD - $DBPASSWORD\n\n"
 
-printf "\nDEFAULTSITEDBUSER - $DEFAULTSITEDBUSER\n" >> ${EXECUTIONLOG}
-printf "\nDEFAULTSITEDBPASSWORD - $DEFAULTSITEDBPASSWORD\n\n" >> ${EXECUTIONLOG}
+printf "\nDEFAULTSITEDBUSER - $DEFAULTSITEDBUSER\n"
+printf "\nDEFAULTSITEDBPASSWORD - $DEFAULTSITEDBPASSWORD\n\n"
 
-printf "\nDBBACKUPPASSWORD - $DBBACKUPUSERPASSWORD\n\n" >> ${EXECUTIONLOG}
+printf "\nDBBACKUPPASSWORD - $DBBACKUPUSERPASSWORD\n\n"
 
-printf "\n########## CONFIGURE THE HOSTNAME ###\n" >> ${EXECUTIONLOG}
+printf "\n########## CONFIGURE THE HOSTNAME ###\n"
 
 
-printf "\nSet the hostname\n\n" >> ${EXECUTIONLOG}
+printf "\nSet the hostname\n\n"
 
-hostnamectl set-hostname $HOSTNAME >> ${EXECUTIONLOG}
+hostnamectl set-hostname $HOSTNAME
 
-printf "\n########## UPDATE THE HOSTS FILE ###\n" >> ${EXECUTIONLOG}
+printf "\n########## UPDATE THE HOSTS FILE ###\n"
 
-printf "\nFully populate hosts file\n\n" >> ${EXECUTIONLOG}
+printf "\nFully populate hosts file\n\n"
 
 printf "127.0.0.1\t\t\tlocalhost.localdomain localhost\n" > /etc/hosts
 printf "127.0.1.1\t\t\tdebian\n" >> /etc/hosts
@@ -188,17 +192,17 @@ printf "ff02::1\t\t\t\tip6-allnodes\n" >> /etc/hosts
 printf "ff02::2\t\t\t\tip6-allrouters\n" >> /etc/hosts
 printf "$IPV6\t$HOSTNAME.$DOMAIN $HOSTNAME" >> /etc/hosts
 
-printf "\n########## SET THE TIMEZONE & TIME ###\n\n" >> ${EXECUTIONLOG}
+printf "\n########## SET THE TIMEZONE & TIME ###\n\n"
 
-printf "Set the timezone to UTC \n\n\n" >> ${EXECUTIONLOG}
+printf "Set the timezone to UTC \n\n\n"
 
 echo $TIMEZONE > /etc/timezone                     
 cp /usr/share/zoneinfo/${TIMEZONE} /etc/localtime # This sets the time
 
-printf "\n########## UPDATE APT SOURCES ###\n" >> ${EXECUTIONLOG}
+printf "\n########## UPDATE APT SOURCES ###\n"
 
-printf "\n" >> ${EXECUTIONLOG}
-printf "Update apt sources\n\n" >> ${EXECUTIONLOG}
+
+printf "\nUpdate apt sources\n\n"
 
 echo "deb http://ftp.us.debian.org/debian testing main contrib non-free" > /etc/apt/sources.list
 printf "\n" >> /etc/apt/sources.list
@@ -208,38 +212,38 @@ echo "deb http://security.debian.org/ jessie/updates main contrib non-free" >> /
 printf "\n" >> /etc/apt/sources.list
 echo "deb http://backports.debian.org/debian-backports squeeze-backports main" >> /etc/apt/sources.list
 
-printf "\n########## UPDATE THE SYSTEM ###\n" >> ${EXECUTIONLOG}
+printf "\n########## UPDATE THE SYSTEM ###\n"
 
-printf "\n" >> ${EXECUTIONLOG}
-printf "Update the system\n\n" >> ${EXECUTIONLOG}
+
+printf "\nUpdate the system\n\n"
 printf "Update the system\n\n"
 
-apt-get -y update >> ${EXECUTIONLOG}
+apt-get -y update
 
-printf "\n" >> ${EXECUTIONLOG}
-printf "Upgrade the system\n\n" >> ${EXECUTIONLOG}
+
+printf "\nUpgrade the system\n\n"
 printf "Upgrade the system\n\n"
 
-apt-get -y dist-upgrade >> ${EXECUTIONLOG}
+apt-get -y dist-upgrade
 apt-get -y upgrade
 
-printf "\n########## INSTALL THE FIRST BATCHES OF PACKAGES ###\n" >> ${EXECUTIONLOG}
+printf "\n########## INSTALL THE FIRST BATCHES OF PACKAGES ###\n"
 
-printf "\n" >> ${EXECUTIONLOG}
-printf "Install the first batch of packages for Apache & PHP\n\n" >> ${EXECUTIONLOG}
 
-apt-get -y install sudo tcl perl python3 apache2 tmux ssh openssl openssl-blacklist libnet-ssleay-perl fail2ban git debconf-utils imagemagick expect >> ${EXECUTIONLOG}
+printf "\nInstall the first batch of packages for Apache & PHP\n\n"
 
-printf "\n########## CLEAN UP ###\n" >> ${EXECUTIONLOG}
+apt-get -y install sudo tcl perl python3 apache2 tmux ssh openssl openssl-blacklist libnet-ssleay-perl fail2ban git debconf-utils imagemagick expect
 
-printf "\nFirst autoremove of packages\n\n" >> ${EXECUTIONLOG}
+printf "\n########## CLEAN UP ###\n"
 
-apt-get -y autoremove >> ${EXECUTIONLOG}
+printf "\nFirst autoremove of packages\n\n"
 
-printf "\n########## UPDATE THE IPTABLES RULES ###\n" >> ${EXECUTIONLOG}
+apt-get -y autoremove
+
+printf "\n########## UPDATE THE IPTABLES RULES ###\n"
 
 echo "Creating the iptables directory in /etc"
-mkdir /etc/iptables >> ${EXECUTIONLOG}
+mkdir /etc/iptables
 
 printf "\n/etc/iptables exists!!\n\n"
 
@@ -250,7 +254,7 @@ printf "\n/PROOF!\n\n"
 touch /etc/iptables/rules.v4
 touch /etc/iptables/rules.v6
 
-printf "\nBegin updating the IP tables rules\n\n" >> ${EXECUTIONLOG}
+printf "\nBegin updating the IP tables rules\n\n"
 
 #apt-get -y install iptables-persistent
 
@@ -277,13 +281,11 @@ expect {
 send "\r"
 EOD
 
-cat /tmp/iptables-persistent.log >> ${EXECUTIONLOG}
-
 cat /tmp/iptables-persistent.log
 
 #FIXME rm /tmp/iptables-persistent.log
 
-printf "\nUpdate the IP tables rules\n\n" >> ${EXECUTIONLOG}
+printf "\nUpdate the IP tables rules\n\n"
 
 echo "*filter
 #
@@ -315,13 +317,13 @@ COMMIT" > /root/bin/iptables.load
 
 cat /root/bin/iptables.load > /etc/iptables/rules.v4
 
-printf "\n########## APPLY THE IPTABLES RULES ###\n" >> ${EXECUTIONLOG}
+printf "\n########## APPLY THE IPTABLES RULES ###\n"
 
 printf "\nApply the IP tables rules\n\n"
 
-iptables-restore < /etc/iptables/rules.v4 >> ${EXECUTIONLOG}
+iptables-restore < /etc/iptables/rules.v4
 
-printf "\nMake the IP tables rules persistent\n\n" >> ${EXECUTIONLOG}
+printf "\nMake the IP tables rules persistent\n\n"
 
 echo "#!/bin/bash
 
@@ -334,31 +336,31 @@ chmod 700 /root/bin/iptables.sh
 echo "@reboot root /root/bin/iptables.sh" >> /etc/crontab 
 
 
-#echo iptables-persistent iptables-persistent/autosave_v4 boolean true | debconf-set-selections >> ${EXECUTIONLOG}
-#echo iptables-persistent iptables-persistent/autosave_v6 boolean true | debconf-set-selections >> ${EXECUTIONLOG}
+#echo iptables-persistent iptables-persistent/autosave_v4 boolean true | debconf-set-selections
+#echo iptables-persistent iptables-persistent/autosave_v6 boolean true | debconf-set-selections
 
 #iptables-save > /etc/iptables/rules.v4
 #ip6tables-save > /etc/iptables/rules.v6
 
-printf "\n########## USING fail2ban DEFAULT CONFIG ###\n" >> ${EXECUTIONLOG}
+printf "\n########## USING fail2ban DEFAULT CONFIG ###\n"
 
 # See /etc/fail2ban/jail.conf for additional options
 
 
-printf "\n########## CONFIGURE APACHE ###\n" >> ${EXECUTIONLOG}
+printf "\n########## CONFIGURE APACHE ###\n"
 
-printf "\n########## CREATE A USER FOR THE DEFAULT SITE ###\n" >> ${EXECUTIONLOG}
-printf "\n########## THIS AIDS RESOURCE SEGREGATION ###\n" >> ${EXECUTIONLOG}
-printf "\n########## www-data HAS ACCESS TO ALL WEBSERVER FUN ###\n" >> ${EXECUTIONLOG}
+printf "\n########## CREATE A USER FOR THE DEFAULT SITE ###\n"
+printf "\n########## THIS AIDS RESOURCE SEGREGATION ###\n"
+printf "\n########## www-data HAS ACCESS TO ALL WEBSERVER FUN ###\n"
 
-useradd -d $WEBROOT -p $PASSWORD -c "Default Web Site User" $USER >> ${EXECUTIONLOG}
+useradd -d $WEBROOT -p $PASSWORD -c "Default Web Site User" $USER
 
-printf "\n########## ADD SSL CONFIGURATION INCLUDE ###\n" >> ${EXECUTIONLOG}
+printf "\n########## ADD SSL CONFIGURATION INCLUDE ###\n"
 
-printf "\n" >> ${EXECUTIONLOG}
-printf "Write Apache SSL include file\n\n" >> ${EXECUTIONLOG}
 
-mkdir -pv /etc/apache2/includes >> ${EXECUTIONLOG}
+printf "\nWrite Apache SSL include file\n\n"
+
+mkdir -pv /etc/apache2/includes
 
 
 printf "\n        #   SSL Engine Switch:\n" > /etc/apache2/includes/vhost-ssl
@@ -368,34 +370,34 @@ printf "        SSLProtocol all -SSLv2 -SSLv3\n" >> /etc/apache2/includes/vhost-
 printf "        SSLHonorCipherOrder On\n" >> /etc/apache2/includes/vhost-ssl
 printf "        SSLCipherSuite ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS\n" >> /etc/apache2/includes/vhost-ssl
 
-chown www-data:www-data /etc/apache2/includes/vhost-ssl >> ${EXECUTIONLOG}
+chown www-data:www-data /etc/apache2/includes/vhost-ssl
 
-printf "\n########## CONFIGURE THE DEFAULT SITE ###\n" >> ${EXECUTIONLOG}
+printf "\n########## CONFIGURE THE DEFAULT SITE ###\n"
 
-printf "\n########## PREPARE DIRECTORY STRUCTURE FOR DEFAULT SITE ###\n" >> ${EXECUTIONLOG}
+printf "\n########## PREPARE DIRECTORY STRUCTURE FOR DEFAULT SITE ###\n"
 
-printf "\n" >> ${EXECUTIONLOG}
-printf "Create the Default Site directory structure\n\n" >> ${EXECUTIONLOG}
 
-rm -rf /var/www/html>> ${EXECUTIONLOG}
+printf "\nCreate the Default Site directory structure\n\n"
 
-mkdir $WEBROOT/http >> ${EXECUTIONLOG}
-mkdir $WEBROOT/https >> ${EXECUTIONLOG}
-mkdir $WEBROOT/fonts >> ${EXECUTIONLOG}
-mkdir $WEBROOT/certs >> ${EXECUTIONLOG}
-mkdir $WEBROOT/certs/$YEAR >> ${EXECUTIONLOG}
-mkdir $WEBROOT/certs/$YEAR/$SSLPROVIDER >> ${EXECUTIONLOG}
-mkdir $LOGDIR >> ${EXECUTIONLOG}
-mkdir $WEBROOT/sockets >> ${EXECUTIONLOG}
-mkdir $WEBROOT/tmp >> ${EXECUTIONLOG}
+rm -rf /var/www/html
 
-chown -R $USER:$USER $WEBROOT >> ${EXECUTIONLOG}
-chmod -R 744 $WEBROOT >> ${EXECUTIONLOG}
+mkdir $WEBROOT/http
+mkdir $WEBROOT/https
+mkdir $WEBROOT/fonts
+mkdir $WEBROOT/certs
+mkdir $WEBROOT/certs/$YEAR
+mkdir $WEBROOT/certs/$YEAR/$SSLPROVIDER
+mkdir $LOGDIR
+mkdir $WEBROOT/sockets
+mkdir $WEBROOT/tmp
 
-chown -R www-data:www-data $WEBROOT/sockets >> ${EXECUTIONLOG}
-find $WEBROOT -type d -exec chmod -R 755 {} \; >> ${EXECUTIONLOG}
+chown -R $USER:$USER $WEBROOT
+chmod -R 744 $WEBROOT
 
-printf "\n########## INSTALL MYSQL ###\n" >> ${EXECUTIONLOG}
+chown -R www-data:www-data $WEBROOT/sockets
+find $WEBROOT -type d -exec chmod -R 755 {} \;
+
+printf "\n########## INSTALL MYSQL ###\n"
 
 echo "mysql-server mysql-server/root_password select $DBPASSWORD" | debconf-set-selections
 echo "mysql-server mysql-server/root_password_again select $DBPASSWORD" | debconf-set-selections
@@ -420,24 +422,24 @@ SQL6="GRANT SELECT, SHOW VIEW, RELOAD, REPLICATION CLIENT, EVENT, TRIGGER ON *.*
 
 SQL7="FLUSH PRIVILEGES;"
 
-mysql -u "root" -p"$DBPASSWORD" -e "$SQL0" >> ${EXECUTIONLOG}
-mysql -u "root" -p"$DBPASSWORD" -e "$SQL1" >> ${EXECUTIONLOG}
-mysql -u "root" -p"$DBPASSWORD" -e "$SQL2" >> ${EXECUTIONLOG}
-mysql -u "root" -p"$DBPASSWORD" -e "$SQL3" >> ${EXECUTIONLOG}
-mysql -u "root" -p"$DBPASSWORD" -e "$SQL4" >> ${EXECUTIONLOG}
-mysql -u "root" -p"$DBPASSWORD" -e "$SQL5" >> ${EXECUTIONLOG}
-mysql -u "root" -p"$DBPASSWORD" -e "$SQL6" >> ${EXECUTIONLOG}
-mysql -u "root" -p"$DBPASSWORD" -e "$SQL7" >> ${EXECUTIONLOG}
+mysql -u "root" -p"$DBPASSWORD" -e "$SQL0"
+mysql -u "root" -p"$DBPASSWORD" -e "$SQL1"
+mysql -u "root" -p"$DBPASSWORD" -e "$SQL2"
+mysql -u "root" -p"$DBPASSWORD" -e "$SQL3"
+mysql -u "root" -p"$DBPASSWORD" -e "$SQL4"
+mysql -u "root" -p"$DBPASSWORD" -e "$SQL5"
+mysql -u "root" -p"$DBPASSWORD" -e "$SQL6"
+mysql -u "root" -p"$DBPASSWORD" -e "$SQL7"
 
-printf "\n########## CONFIGURE PHP ###\n" >> ${EXECUTIONLOG}
+printf "\n########## CONFIGURE PHP ###\n"
 
-apt-get -y install php5-fpm libapache2-mod-php5 php-pear php5-curl php5-mysql php5-gd php5-gmp php5-mcrypt php5-memcached php5-imagick php5-intl php5-xdebug >> ${EXECUTIONLOG}
+apt-get -y install php5-fpm libapache2-mod-php5 php-pear php5-curl php5-mysql php5-gd php5-gmp php5-mcrypt php5-memcached php5-imagick php5-intl php5-xdebug
 
-cp /etc/php5/fpm/php.ini /etc/php5/fpm/php.ini.original  >> ${EXECUTIONLOG}
+cp /etc/php5/fpm/php.ini /etc/php5/fpm/php.ini.original
 
-printf "\n########## MODIFY DEFAULT VHOST CONFIGURATION FILES ###\n" >> ${EXECUTIONLOG}
+printf "\n########## MODIFY DEFAULT VHOST CONFIGURATION FILES ###\n"
 
-mv /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/000-default.conf.original >> ${EXECUTIONLOG}
+mv /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/000-default.conf.original
 
 
 printf "<VirtualHost *:80>\n" > /etc/apache2/sites-available/default.conf
@@ -458,7 +460,7 @@ printf "  </Proxy>\n\n" >> /etc/apache2/sites-available/default.conf
 
 printf "</VirtualHost>\n" >> /etc/apache2/sites-available/default.conf
 
-cp /etc/apache2/sites-available/default-ssl.conf /etc/apache2/sites-available/default-ssl.conf.original >> ${EXECUTIONLOG}
+cp /etc/apache2/sites-available/default-ssl.conf /etc/apache2/sites-available/default-ssl.conf.original
 
 
 printf "<IfModule mod_ssl.c>\n" > /etc/apache2/sites-available/default-ssl.conf
@@ -526,85 +528,85 @@ printf "        BrowserMatch \"MSIE [17-9]\" ssl-unclean-shutdown\n\n" >> /etc/a
 printf "    </VirtualHost>\n" >> /etc/apache2/sites-available/default-ssl.conf
 printf "</IfModule>\n" >> /etc/apache2/sites-available/default-ssl.conf
 
-printf "\n########## ADD STARTSSSL CLASS2 CERTIFICATE FILES ###\n" >> ${EXECUTIONLOG}
+printf "\n########## ADD STARTSSSL CLASS2 CERTIFICATE FILES ###\n"
 
-wget -O $WEBROOT/certs/$YEAR/$SSLPROVIDER/sub.class2.server.sha2.ca.pem https://www.startssl.com/certs/class2/sha2/pem/sub.class2.server.sha2.ca.pem >> ${EXECUTIONLOG}
-wget -O $WEBROOT/certs/$YEAR/$SSLPROVIDER/ca.pem https://www.startssl.com/certs/ca.pem >> ${EXECUTIONLOG}
+wget -O $WEBROOT/certs/$YEAR/$SSLPROVIDER/sub.class2.server.sha2.ca.pem https://www.startssl.com/certs/class2/sha2/pem/sub.class2.server.sha2.ca.pem
+wget -O $WEBROOT/certs/$YEAR/$SSLPROVIDER/ca.pem https://www.startssl.com/certs/ca.pem
 
-printf "\n########## GENERATE SSL FOR DEFAULT SITE ###\n" >> ${EXECUTIONLOG}
-printf "\n" >> ${EXECUTIONLOG}
-printf "Configure Apache\n\n" >> ${EXECUTIONLOG}
+printf "\n########## GENERATE SSL FOR DEFAULT SITE ###\n"
 
-printf "Generating SSL\n\n" >> ${EXECUTIONLOG}
+printf "\nConfigure Apache\n\n"
 
-printf "openssl req -nodes $ALGORITHM -newkey rsa:$KEYSIZE -keyout $WEBROOT/certs/$YEAR/$SSLPROVIDER/ssl.key -out $WEBROOT/certs/$YEAR/$SSLPROVIDER/ssl.csr -subj \"/C=$COUNTRY/ST=$STATE/L=$LOCALITY/O=$ORGANIZATION/OU=$ORGANIZATIONALUNIT/CN=$DOMAIN\"\n\n" >> ${EXECUTIONLOG}
+printf "Generating SSL\n\n"
 
-openssl req -nodes $ALGORITHM -newkey rsa:$KEYSIZE -keyout $WEBROOT/certs/$YEAR/$SSLPROVIDER/ssl.key -out $WEBROOT/certs/$YEAR/$SSLPROVIDER/ssl.csr -subj "/C=$COUNTRY/ST=$STATE/L=$LOCALITY/O=$ORGANIZATION/OU=$ORGANIZATIONALUNIT/CN=$DOMAIN" >> ${EXECUTIONLOG}
+printf "openssl req -nodes $ALGORITHM -newkey rsa:$KEYSIZE -keyout $WEBROOT/certs/$YEAR/$SSLPROVIDER/ssl.key -out $WEBROOT/certs/$YEAR/$SSLPROVIDER/ssl.csr -subj \"/C=$COUNTRY/ST=$STATE/L=$LOCALITY/O=$ORGANIZATION/OU=$ORGANIZATIONALUNIT/CN=$DOMAIN\"\n\n"
+
+openssl req -nodes $ALGORITHM -newkey rsa:$KEYSIZE -keyout $WEBROOT/certs/$YEAR/$SSLPROVIDER/ssl.key -out $WEBROOT/certs/$YEAR/$SSLPROVIDER/ssl.csr -subj "/C=$COUNTRY/ST=$STATE/L=$LOCALITY/O=$ORGANIZATION/OU=$ORGANIZATIONALUNIT/CN=$DOMAIN"
 
 #####!!!!! So, skipping swapping out mpm_prefork and disabling the ssl host allows the webserver to start
 #####!!!!! Using mpm_worker causes an invalid config based upon mpm_worker being threaded and php5-fpm not being threadsafe
 
-printf "\n########## DISABLE THE ACTIONS APACHE MODULE ###\n" >> ${EXECUTIONLOG}
-a2dismod -f actions >> ${EXECUTIONLOG}
+printf "\n########## DISABLE THE ACTIONS APACHE MODULE ###\n"
+a2dismod -f actions
 
-printf "\n########## ENABLE THE PROXY FCGI APACHE MODULE ###\n" >> ${EXECUTIONLOG}
-a2enmod proxy_fcgi ssl >> ${EXECUTIONLOG}
+printf "\n########## ENABLE THE PROXY FCGI APACHE MODULE ###\n"
+a2enmod proxy_fcgi ssl
 
-printf "\n########## REMOVE EXISTING ENABLED SITES ###\n" >> ${EXECUTIONLOG}
-rm /etc/apache2/sites-enabled/* >> ${EXECUTIONLOG}
+printf "\n########## REMOVE EXISTING ENABLED SITES ###\n"
+rm /etc/apache2/sites-enabled/*
 
-printf "\n########## ENABLE THE DEFAULT SITES ###\n" >> ${EXECUTIONLOG}
-a2ensite default.conf >> ${EXECUTIONLOG}
-#a2ensite default-ssl.conf >> ${EXECUTIONLOG}
+printf "\n########## ENABLE THE DEFAULT SITES ###\n"
+a2ensite default.conf
+#a2ensite default-ssl.conf
 
-printf "\n########## SETUP THE DEFAULT SITE FASTCGI ###\n" >> ${EXECUTIONLOG}
+printf "\n########## SETUP THE DEFAULT SITE FASTCGI ###\n"
 
-printf "\n########## CONFIG PHP-FPM ###\n" >> ${EXECUTIONLOG}
+printf "\n########## CONFIG PHP-FPM ###\n"
 
-mv /etc/php5/fpm/pool.d/www.conf /etc/php5/fpm/pool.d/www.conf.original >> ${EXECUTIONLOG}
-cp /etc/php5/fpm/pool.d/www.conf.original /etc/php5/fpm/pool.d/${DOMAIN}.conf >> ${EXECUTIONLOG}
-cp /etc/php5/fpm/pool.d/www.conf.original /etc/php5/fpm/pool.d/${DOMAIN}-ssl.conf >> ${EXECUTIONLOG}
+mv /etc/php5/fpm/pool.d/www.conf /etc/php5/fpm/pool.d/www.conf.original
+cp /etc/php5/fpm/pool.d/www.conf.original /etc/php5/fpm/pool.d/${DOMAIN}.conf
+cp /etc/php5/fpm/pool.d/www.conf.original /etc/php5/fpm/pool.d/${DOMAIN}-ssl.conf
 
-printf "\n########## DEFAULT HTTP POOL ###\n" >> ${EXECUTIONLOG}
+printf "\n########## DEFAULT HTTP POOL ###\n"
 
-sed -i "s/\[www\]/\[$DOMAIN\]/" /etc/php5/fpm/pool.d/${DOMAIN}.conf >> ${EXECUTIONLOG}
-sed -i "s|listen =.*|listen = $WEBROOT/sockets/$DOMAIN.sock|" /etc/php5/fpm/pool.d/${DOMAIN}.conf >> ${EXECUTIONLOG}
+sed -i "s/\[www\]/\[$DOMAIN\]/" /etc/php5/fpm/pool.d/${DOMAIN}.conf
+sed -i "s|listen =.*|listen = $WEBROOT/sockets/$DOMAIN.sock|" /etc/php5/fpm/pool.d/${DOMAIN}.conf
 
-sed -i "s/user = www-data/user = $USER/" /etc/php5/fpm/pool.d/${DOMAIN}.conf >> ${EXECUTIONLOG}
-sed -i "s/group = www-data/group = $USER/" /etc/php5/fpm/pool.d/${DOMAIN}.conf >> ${EXECUTIONLOG}
+sed -i "s/user = www-data/user = $USER/" /etc/php5/fpm/pool.d/${DOMAIN}.conf
+sed -i "s/group = www-data/group = $USER/" /etc/php5/fpm/pool.d/${DOMAIN}.conf
 
-sed -i "s/;listen.mode = 0660/listen.mode = 0660/" /etc/php5/fpm/pool.d/${DOMAIN}.conf >> ${EXECUTIONLOG}
+sed -i "s/;listen.mode = 0660/listen.mode = 0660/" /etc/php5/fpm/pool.d/${DOMAIN}.conf
 
-printf "\n########## DEFAULT HTTPS POOL ###\n" >> ${EXECUTIONLOG}
+printf "\n########## DEFAULT HTTPS POOL ###\n"
 
-sed -i "s/\[www\]/\[$DOMAIN-SSL\]/" /etc/php5/fpm/pool.d/${DOMAIN}-ssl.conf >> ${EXECUTIONLOG}
-sed -i "s|listen =.*|listen = $WEBROOT/sockets/$DOMAIN-SSL.sock|" /etc/php5/fpm/pool.d/${DOMAIN}-ssl.conf >> ${EXECUTIONLOG}
+sed -i "s/\[www\]/\[$DOMAIN-SSL\]/" /etc/php5/fpm/pool.d/${DOMAIN}-ssl.conf
+sed -i "s|listen =.*|listen = $WEBROOT/sockets/$DOMAIN-SSL.sock|" /etc/php5/fpm/pool.d/${DOMAIN}-ssl.conf
 
-sed -i "s/user = www-data/user = $USER/" /etc/php5/fpm/pool.d/${DOMAIN}-ssl.conf >> ${EXECUTIONLOG}
-sed -i "s/group = www-data/group = $USER/" /etc/php5/fpm/pool.d/${DOMAIN}-ssl.conf >> ${EXECUTIONLOG}
+sed -i "s/user = www-data/user = $USER/" /etc/php5/fpm/pool.d/${DOMAIN}-ssl.conf
+sed -i "s/group = www-data/group = $USER/" /etc/php5/fpm/pool.d/${DOMAIN}-ssl.conf
 
-sed -i "s/;listen.mode = 0660/listen.mode = 0660/" /etc/php5/fpm/pool.d/${DOMAIN}-ssl.conf >> ${EXECUTIONLOG}
+sed -i "s/;listen.mode = 0660/listen.mode = 0660/" /etc/php5/fpm/pool.d/${DOMAIN}-ssl.conf
 
-printf "\n########## CONFIGURE PHP ###\n" >> ${EXECUTIONLOG}
+printf "\n########## CONFIGURE PHP ###\n"
 
 cp /etc/php5/fpm/php.ini /etc/php5/fpm/php.ini.original
 
 
-sed -i "s/;*short_open_tag.*/short_open_tag = Off/" /etc/php5/fpm/php.ini >> ${EXECUTIONLOG}
+sed -i "s/;*short_open_tag.*/short_open_tag = Off/" /etc/php5/fpm/php.ini
 
-sed -i "s/;*post_max_size.*/post_max_size = 12M/" /etc/php5/fpm/php.ini >> ${EXECUTIONLOG}
-
-
-sed -i "s/;*upload_max_filesize.*/upload_max_filesize = 12M/" /etc/php5/fpm/php.ini >> ${EXECUTIONLOG}
+sed -i "s/;*post_max_size.*/post_max_size = 12M/" /etc/php5/fpm/php.ini
 
 
-sed -i "s/;*session.cookie_secure.*/session.cookie_secure = 1/" /etc/php5/fpm/php.ini >> ${EXECUTIONLOG}
+sed -i "s/;*upload_max_filesize.*/upload_max_filesize = 12M/" /etc/php5/fpm/php.ini
 
 
-sed -i "s/;*session.cookie_httponly.*/session.cookie_httponly = 1/" /etc/php5/fpm/php.ini >> ${EXECUTIONLOG}
+sed -i "s/;*session.cookie_secure.*/session.cookie_secure = 1/" /etc/php5/fpm/php.ini
 
 
-sed -i "s/;*disable_functions.*/disable_functions = apache_child_terminate, apache_setenv, define_syslog_variables, escapeshellarg, escapeshellcmd, eval, exec, fp, fput, ftp_connect, ftp_exec, ftp_get, ftp_login, ftp_nb_fput, ftp_put, ftp_raw, ftp_rawlist, highlight_file, ini_alter, ini_get_all, ini_restore, inject_code, mysql_pconnect, openlog, passthru, pcntl_alarm, pcntl_exec, pcntl_fork, pcntl_get_last_error, pcntl_getpriority, pcntl_setpriority, pcntl_signal, pcntl_signal_dispatch, pcntl_sigprocmask, pcntl_sigtimedwait, pcntl_sigwaitinfo, pcntl_strerror, pcntl_wait, pcntl_waitpid, pcntl_wexitstatus, pcntl_wifexited, pcntl_wifsignaled, pcntl_wifstopped, pcntl_wstopsig, pcntl_wtermsig, phpAds_XmlRpc, phpAds_remoteInfo, phpAds_xmlrpcDecode, phpAds_xmlrpcEncode, php_uname, popen, posix_getpwuid, posix_kill, posix_mkfifo, posix_setpgid, posix_setsid, posix_setuid, posix_uname, proc_close, proc_get_status, proc_nice, proc_open, proc_terminate, shell_exec, syslog, system, xmlrpc_entity_decode/" /etc/php5/fpm/php.ini >> ${EXECUTIONLOG}
+sed -i "s/;*session.cookie_httponly.*/session.cookie_httponly = 1/" /etc/php5/fpm/php.ini
+
+
+sed -i "s/;*disable_functions.*/disable_functions = apache_child_terminate, apache_setenv, define_syslog_variables, escapeshellarg, escapeshellcmd, eval, exec, fp, fput, ftp_connect, ftp_exec, ftp_get, ftp_login, ftp_nb_fput, ftp_put, ftp_raw, ftp_rawlist, highlight_file, ini_alter, ini_get_all, ini_restore, inject_code, mysql_pconnect, openlog, passthru, pcntl_alarm, pcntl_exec, pcntl_fork, pcntl_get_last_error, pcntl_getpriority, pcntl_setpriority, pcntl_signal, pcntl_signal_dispatch, pcntl_sigprocmask, pcntl_sigtimedwait, pcntl_sigwaitinfo, pcntl_strerror, pcntl_wait, pcntl_waitpid, pcntl_wexitstatus, pcntl_wifexited, pcntl_wifsignaled, pcntl_wifstopped, pcntl_wstopsig, pcntl_wtermsig, phpAds_XmlRpc, phpAds_remoteInfo, phpAds_xmlrpcDecode, phpAds_xmlrpcEncode, php_uname, popen, posix_getpwuid, posix_kill, posix_mkfifo, posix_setpgid, posix_setsid, posix_setuid, posix_uname, proc_close, proc_get_status, proc_nice, proc_open, proc_terminate, shell_exec, syslog, system, xmlrpc_entity_decode/" /etc/php5/fpm/php.ini
 
 #List from previous notes
 
@@ -618,44 +620,44 @@ sed -i "s/;*disable_functions.*/disable_functions = apache_child_terminate, apac
 
 #disable_functions = apache_child_terminate, apache_setenv, define_syslog_variables, escapeshellarg, escapeshellcmd, eval, exec, fp, fput, ftp_connect, ftp_exec, ftp_get, ftp_login, ftp_nb_fput, ftp_put, ftp_raw, ftp_rawlist, highlight_file, ini_alter, ini_get_all, ini_restore, inject_code, mysql_pconnect, openlog, passthru, pcntl_alarm, pcntl_exec, pcntl_fork, pcntl_get_last_error, pcntl_getpriority, pcntl_setpriority, pcntl_signal, pcntl_signal_dispatch, pcntl_sigprocmask, pcntl_sigtimedwait, pcntl_sigwaitinfo, pcntl_strerror, pcntl_wait, pcntl_waitpid, pcntl_wexitstatus, pcntl_wifexited, pcntl_wifsignaled, pcntl_wifstopped, pcntl_wstopsig, pcntl_wtermsig, phpAds_XmlRpc, phpAds_remoteInfo, phpAds_xmlrpcDecode, phpAds_xmlrpcEncode, php_uname, popen, posix_getpwuid, posix_kill, posix_mkfifo, posix_setpgid, posix_setsid, posix_setuid, posix_uname, proc_close, proc_get_status, proc_nice, proc_open, proc_terminate, shell_exec, syslog, system, xmlrpc_entity_decode
 
-printf "\n########## INSTALL WEBDEVELOPER RESOURCES ###\n" >> ${EXECUTIONLOG}
+printf "\n########## INSTALL WEBDEVELOPER RESOURCES ###\n"
 
 
-printf "\n########## RESTART THE WEBSERVER SERVICES ###\n" >> ${EXECUTIONLOG}
+printf "\n########## RESTART THE WEBSERVER SERVICES ###\n"
 
-service apache2 restart >> ${EXECUTIONLOG}
-service php5-fpm restart >> ${EXECUTIONLOG}
+service apache2 restart
+service php5-fpm restart
 
 echo "<?php phpinfo(); ?>" >> /var/www/http/index.php
 
-printf "\n########## CLEAN UP ###\n" >> ${EXECUTIONLOG}
+printf "\n########## CLEAN UP ###\n"
 
-printf "\nLast autoremove of packages\n\n" >> ${EXECUTIONLOG}
+printf "\nLast autoremove of packages\n\n"
 
-apt-get -y autoremove >> ${EXECUTIONLOG}
+apt-get -y autoremove
 
-printf "\n##################################################" >> ${EXECUTIONLOG}
-printf "\n#                                                #" >> ${EXECUTIONLOG}
-printf "\n#                                                #" >> ${EXECUTIONLOG}
-printf "\n# SETUP SCRIPT END                               #" >> ${EXECUTIONLOG}
-printf "\n#                                                #" >> ${EXECUTIONLOG}
-printf "\n#                                                #" >> ${EXECUTIONLOG}
-printf "\n##################################################\n\n" >> ${EXECUTIONLOG}
+printf "\n##################################################"
+printf "\n#                                                #"
+printf "\n#                                                #"
+printf "\n# SETUP SCRIPT END                               #"
+printf "\n#                                                #"
+printf "\n#                                                #"
+printf "\n##################################################\n\n"
 
-printf "\n##################################################" >> ${EXECUTIONLOG}
-printf "\n#                                                #" >> ${EXECUTIONLOG}
-printf "\n#                                                #" >> ${EXECUTIONLOG}
-printf "\n# INITIAL TROUBLESHOOTING SCRIPT START           #" >> ${EXECUTIONLOG}
-printf "\n#                                                #" >> ${EXECUTIONLOG}
-printf "\n#                                                #" >> ${EXECUTIONLOG}
-printf "\n##################################################\n\n" >> ${EXECUTIONLOG}
+printf "\n##################################################"
+printf "\n#                                                #"
+printf "\n#                                                #"
+printf "\n# INITIAL TROUBLESHOOTING SCRIPT START           #"
+printf "\n#                                                #"
+printf "\n#                                                #"
+printf "\n##################################################\n\n"
 
-printf "\n########## CREATE A PLACE TO STORE THE OUTPUT FOR SHARING TROUBLESHOOTING DATA###\n" >> ${EXECUTIONLOG}
+printf "\n########## CREATE A PLACE TO STORE THE OUTPUT FOR SHARING TROUBLESHOOTING DATA###\n"
 
 printf "Location of troubleshooting files: $TROUBLESHOOTINGFILES\n\n"
 mkdir -pv ${TROUBLESHOOTINGFILES}
 
-printf "Start collecting config files\n\n" >> ${EXECUTIONLOG}
+printf "Start collecting config files\n\n"
 
 cp /etc/hosts ${TROUBLESHOOTINGFILES}/etc-hosts
 
@@ -677,19 +679,19 @@ cp /etc/php5/fpm/pool.d/${DOMAIN}.conf ${TROUBLESHOOTINGFILES}/etc-php5-fpm-pool
 
 cp /etc/php5/fpm/pool.d/${DOMAIN}-ssl.conf ${TROUBLESHOOTINGFILES}/etc-php5-fpm-pool.d-${DOMAIN}-ssl.conf
 
-printf "Start collecting log files\n\n" >> ${EXECUTIONLOG}
+printf "Start collecting log files\n\n"
 
-printf "Apache log files\n" >> ${EXECUTIONLOG}
+printf "Apache log files\n"
 tail ${LOGDIR}/error.log >> ${TROUBLESHOOTINGFILES}/apache-error.log
 tail ${LOGDIR}/access.log >> ${TROUBLESHOOTINGFILES}/apache-access.log
 
-printf "FPM log files\n" >> ${EXECUTIONLOG}
+printf "FPM log files\n"
 tail /var/log/php5-fpm.log >> ${TROUBLESHOOTINGFILES}/php5-fpm.log
 
-printf "Whole shebang log files\n\n" >> ${EXECUTIONLOG}
+printf "Whole shebang log files\n\n"
 cp ${EXECUTIONLOG} ${TROUBLESHOOTINGFILES}/execution.log
 
-printf "Create troubleshooting report for pastebin\n\n" >> ${EXECUTIONLOG}
+printf "Create troubleshooting report for pastebin\n\n"
 
 
 #USEFUL FOR CUT/PASTE
@@ -760,13 +762,13 @@ cat ${TROUBLESHOOTINGFILES}/php5-fpm.log >> ${TROUBLESHOOTINGFILES}/troubleshoot
 printf "\n\n\n########## UNABRIDGED SETUP LOG ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
 cat ${EXECUTIONLOG} >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
 
-printf "\n##################################################" >> ${EXECUTIONLOG}
-printf "\n#                                                #" >> ${EXECUTIONLOG}
-printf "\n#                                                #" >> ${EXECUTIONLOG}
-printf "\n# INITIAL TROUBLESHOOTING SCRIPT END             #" >> ${EXECUTIONLOG}
-printf "\n#                                                #" >> ${EXECUTIONLOG}
-printf "\n#                                                #" >> ${EXECUTIONLOG}
-printf "\n##################################################\n\n" >> ${EXECUTIONLOG}
+printf "\n##################################################"
+printf "\n#                                                #"
+printf "\n#                                                #"
+printf "\n# INITIAL TROUBLESHOOTING SCRIPT END             #"
+printf "\n#                                                #"
+printf "\n#                                                #"
+printf "\n##################################################\n\n"
 
 tar -czvf /root/bin/troubleshooting/troubleshooting.tgz /root/bin/troubleshooting/${UNIXTIMESTAMP}/*  
 mv /root/bin/troubleshooting/troubleshooting.tgz /root/bin/troubleshooting/${UNIXTIMESTAMP}/
