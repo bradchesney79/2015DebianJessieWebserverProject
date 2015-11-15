@@ -64,13 +64,14 @@ DBBACKUPUSERPASSWORD="thirddummypassword"
 ######################################################################
 ######################################################################
 
-#configure sendmail
+# configure sendmail
 
 # have a website system user -- scripts to add new system users & human user acccounts
 
 # a script to add a new virtualhost
 
-# make security changes to apache
+# make security improvement changes to apache
+# (like hiding version & whatnot, much guided by securityheaders.com)
 
 # install global webdev resources like composer, node, fonts
 
@@ -81,6 +82,8 @@ DBBACKUPUSERPASSWORD="thirddummypassword"
 # update troubleshooting resources on github
 
 # improve readability
+
+# break into modular scripts
 
 #based upon:
 # 
@@ -100,9 +103,9 @@ DBBACKUPUSERPASSWORD="thirddummypassword"
 #exit; halt
 #pushd /root; mkdir bin; pushd bin; wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/build-script.sh; chmod +x build-script.sh; time ./build-script.sh; popd; popd
 
-#Takes ~11.5 mins on a Linode 1024
+#Takes ... on a Linode 1024
 #real    7m55.128s
-
+#real    9m49.525s
 
 printf "\n##################################################" >> ${EXECUTIONLOG}
 printf "\n#                                                #" >> ${EXECUTIONLOG}

@@ -1,4 +1,4 @@
-########## TROUBLESHOOTING REPORT 2015-11-14 1447510306 ###########
+########## TROUBLESHOOTING REPORT 2015-11-15 1447546014 ###########
 
 
 ########## HOSTNAME ###########
@@ -10,17 +10,22 @@ www
 
 Chain INPUT (policy ACCEPT)
 target     prot opt source               destination         
-f2b-sshd   tcp  --  anywhere             anywhere             multiport dports ssh
+ACCEPT     all  --  anywhere             anywhere            
+REJECT     all  --  anywhere             loopback/8           reject-with icmp-port-unreachable
+ACCEPT     all  --  anywhere             anywhere             state RELATED,ESTABLISHED
+ACCEPT     tcp  --  anywhere             anywhere             tcp dpt:http
+ACCEPT     tcp  --  anywhere             anywhere             tcp dpt:https
+ACCEPT     tcp  --  anywhere             anywhere             state NEW tcp dpt:ssh
+ACCEPT     icmp --  anywhere             anywhere             icmp echo-request
+DROP       all  --  anywhere             anywhere            
 
 Chain FORWARD (policy ACCEPT)
 target     prot opt source               destination         
+DROP       all  --  anywhere             anywhere            
 
 Chain OUTPUT (policy ACCEPT)
 target     prot opt source               destination         
-
-Chain f2b-sshd (1 references)
-target     prot opt source               destination         
-RETURN     all  --  anywhere             anywhere            
+ACCEPT     all  --  anywhere             anywhere            
 
 
 ########## PACKAGES INSTALLED ###########
@@ -140,6 +145,7 @@ ii  ispell                            3.4.00-4                     amd64        
 ii  krb5-locales                      1.13.2+dfsg-4                all          Internationalization support for MIT Kerberos
 ii  less                              458-3                        amd64        pager program similar to more
 ii  libacl1:amd64                     2.2.52-2                     amd64        Access control list shared library
+ii  libaio1:amd64                     0.3.110-2                    amd64        Linux kernel AIO access library - shared library
 ii  libalgorithm-c3-perl              0.09-1                       all          Perl module for merging hierarchies using the C3 algorithm
 ii  libapache2-mod-php5               5.6.14+dfsg-1+b1             amd64        server-side, HTML-embedded scripting language (Apache 2 module)
 ii  libapparmor1:amd64                2.10-2+b1                    amd64        changehat AppArmor library
@@ -199,6 +205,8 @@ ii  libdata-perl-perl                 0.002009-1                   all          
 ii  libdata-section-perl              0.200006-1                   all          module to read chunks of data from a module's DATA section
 ii  libdatrie1:amd64                  0.2.10-1                     amd64        Double-array trie library
 ii  libdb5.3:amd64                    5.3.28-11                    amd64        Berkeley v5.3 Database Libraries [runtime]
+ii  libdbd-mysql-perl                 4.028-2+b1                   amd64        Perl5 database interface to the MySQL database
+ii  libdbi-perl                       1.634-1                      amd64        Perl Database Interface (DBI)
 ii  libdbus-1-3:amd64                 1.10.2-1                     amd64        simple interprocess messaging system (library)
 ii  libdebconfclient0:amd64           0.195                        amd64        Debian Configuration Management System (C-implementation library)
 ii  libdevel-caller-perl              2.06-1+b2                    amd64        module providing enhanced caller() support
@@ -263,6 +271,7 @@ ii  libhtml-form-perl                 6.03-1                       all          
 ii  libhtml-format-perl               2.11-2                       all          module for transforming HTML into various formats
 ii  libhtml-parser-perl               3.71-2                       amd64        collection of modules that parse HTML text documents
 ii  libhtml-tagset-perl               3.20-2                       all          Data tables pertaining to HTML
+ii  libhtml-template-perl             2.95-2                       all          module for using HTML templates with Perl
 ii  libhtml-tree-perl                 5.03-2                       all          Perl module to represent and create HTML syntax trees
 ii  libhttp-cookies-perl              6.01-1                       all          HTTP cookie jars
 ii  libhttp-daemon-perl               6.01-1                       all          simple http server class
@@ -435,6 +444,7 @@ ii  libswitch-perl                    2.17-2                       all          
 ii  libsystemd0:amd64                 227-2                        amd64        systemd utility library
 ii  libtasn1-6:amd64                  4.7-2                        amd64        Manage ASN.1 structures (runtime)
 ii  libtcl8.6:amd64                   8.6.4+dfsg-2                 amd64        Tcl (the Tool Command Language) v8.6 - run-time library files
+ii  libterm-readkey-perl              2.33-1                       amd64        perl module for simple terminal control
 ii  libterm-ui-perl                   0.46-1                       all          Term::ReadLine UI made easy
 ii  libtext-charwidth-perl            0.04-7+b3                    amd64        get display widths of characters on the terminal
 ii  libtext-iconv-perl                1.7-5+b2                     amd64        converts between character sets in Perl
@@ -526,7 +536,12 @@ ii  mlocate                           0.26-1                       amd64        
 ii  mount                             2.27.1-1                     amd64        Tools for mounting and manipulating filesystems
 ii  mtr-tiny                          0.85-3                       amd64        Full screen ncurses traceroute tool
 ii  multiarch-support                 2.19-22                      amd64        Transitional package to ensure multiarch compatibility
+ii  mysql-client-5.6                  5.6.25-4                     amd64        MySQL database client binaries
+ii  mysql-client-core-5.6             5.6.25-4                     amd64        MySQL database core client binaries
 ii  mysql-common                      5.6.25-4                     all          MySQL database common files, e.g. /etc/mysql/my.cnf
+ii  mysql-server                      5.6.25-4                     all          MySQL database server (metapackage depending on the latest version)
+ii  mysql-server-5.6                  5.6.25-4                     amd64        MySQL database server binaries and system database setup
+ii  mysql-server-core-5.6             5.6.25-4                     amd64        MySQL database server binaries
 ii  nano                              2.4.2-1                      amd64        small, friendly text editor inspired by Pico
 ii  ncurses-base                      6.0+20151024-2               all          basic terminal type definitions
 ii  ncurses-bin                       6.0+20151024-2               amd64        terminal-related programs and man pages
@@ -652,6 +667,10 @@ ii  xz-utils                          5.1.1alpha+20120614-2.1      amd64        
 ii  zlib1g:amd64                      1:1.2.8.dfsg-2+b1            amd64        compression library - runtime
 
 
+########## APACHECTL INFO ###########
+
+
+
 ########## PHP MODULE LOADED ###########
 
 Server MPM:     prefork
@@ -689,6 +708,33 @@ deb http://backports.debian.org/debian-backports squeeze-backports main
 
 ########## IPTABLES-RULES.V4 ###########
 
+*filter
+#
+# Loaded by /root/bin/iptables.sh via crontab at reboot
+#
+#  Allow all loopback (lo0) traffic and drop all traffic to 127/8 that doesn't use lo0
+-A INPUT -i lo -j ACCEPT
+-A INPUT -d 127.0.0.0/8 -j REJECT
+#  Accept all established inbound connections
+-A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+#  Allow all outbound traffic - you can modify this to only allow certain traffic
+-A OUTPUT -j ACCEPT
+#  Allow HTTP and HTTPS connections from anywhere (the normal ports for websites and SSL).
+-A INPUT -p tcp --dport 80 -j ACCEPT
+-A INPUT -p tcp --dport 443 -j ACCEPT
+#  Allow SSH connections
+#
+#  The -dport number should be the same port number you set in sshd_config
+#
+-A INPUT -p tcp -m state --state NEW --dport 22 -j ACCEPT
+#  Allow ping
+-A INPUT -p icmp --icmp-type echo-request -j ACCEPT
+#  Log iptables denied calls
+#-A INPUT -m limit --limit 5/min -j LOG --log-prefix "iptables denied: " --log-level 7
+#  Drop all other inbound - default deny unless explicitly allowed policy
+-A INPUT -j DROP
+-A FORWARD -j DROP
+COMMIT
 
 
 
@@ -800,6 +846,27 @@ deb http://backports.debian.org/debian-backports squeeze-backports main
 </IfModule>
 ########## MYSQL.CNF ###########
 
+#
+# The MySQL database server configuration file.
+#
+# You can copy this to one of:
+# - "/etc/mysql/my.cnf" to set global options,
+# - "~/.my.cnf" to set user-specific options.
+# 
+# One can use all long options that the program supports.
+# Run program with --help to get a list of available options and with
+# --print-defaults to see which it would actually understand and use.
+#
+# For explanations see
+# http://dev.mysql.com/doc/mysql/en/server-system-variables.html
+
+#
+# * IMPORTANT: Additional settings that can override those from this file!
+#   The files must end with '.cnf', otherwise they'll be ignored.
+#
+
+!includedir /etc/mysql/conf.d/
+!includedir /etc/mysql/mysql.conf.d/
 
 
 
@@ -3595,16 +3662,16 @@ chdir = /
 
 ########## PHP-FPM LOG ###########
 
-[14-Nov-2015 14:18:45] NOTICE: fpm is running, pid 17685
-[14-Nov-2015 14:18:45] NOTICE: ready to handle connections
-[14-Nov-2015 14:18:45] NOTICE: systemd monitor interval set to 10000ms
-[14-Nov-2015 14:18:51] NOTICE: Terminating ...
-[14-Nov-2015 14:18:51] NOTICE: exiting, bye-bye!
-[14-Nov-2015 14:18:51] NOTICE: configuration file /etc/php5/fpm/php-fpm.conf test is successful
+[15-Nov-2015 00:16:36] NOTICE: fpm is running, pid 21567
+[15-Nov-2015 00:16:36] NOTICE: ready to handle connections
+[15-Nov-2015 00:16:36] NOTICE: systemd monitor interval set to 10000ms
+[15-Nov-2015 00:16:42] NOTICE: Terminating ...
+[15-Nov-2015 00:16:42] NOTICE: exiting, bye-bye!
+[15-Nov-2015 00:16:42] NOTICE: configuration file /etc/php5/fpm/php-fpm.conf test is successful
 
-[14-Nov-2015 14:18:51] NOTICE: fpm is running, pid 19700
-[14-Nov-2015 14:18:51] NOTICE: ready to handle connections
-[14-Nov-2015 14:18:51] NOTICE: systemd monitor interval set to 10000ms
+[15-Nov-2015 00:16:42] NOTICE: fpm is running, pid 21774
+[15-Nov-2015 00:16:42] NOTICE: ready to handle connections
+[15-Nov-2015 00:16:42] NOTICE: systemd monitor interval set to 10000ms
 
 
 
@@ -3626,8 +3693,8 @@ chdir = /
 EXECUTOR - 
 SCRIPTLOCATION - /root/bin
 EXECUTIONLOG - /var/log/auto-install.log
-TROUBLESHOOTINGFILES - /root/bin/troubleshooting/1447510306
-2015-11-14 - 1447510306
+TROUBLESHOOTINGFILES - /root/bin/troubleshooting/1447546014
+2015-11-15 - 1447546014
 
 
 ########## RECORD THE VARIABLES FOR POSTERITY ####
@@ -3720,30 +3787,30 @@ Update apt sources
 Update the system
 
 Get:1 http://security.debian.org jessie/updates InRelease [63.1 kB]
-Get:2 http://ftp.debian.org jessie-updates InRelease [135 kB]
-Get:3 http://backports.debian.org squeeze-backports InRelease [130 kB]
-Get:4 http://security.debian.org jessie/updates/main amd64 Packages [148 kB]
-Get:5 http://security.debian.org jessie/updates/contrib amd64 Packages [2,512 B]
-Get:6 http://security.debian.org jessie/updates/non-free amd64 Packages [14 B]
-Get:7 http://security.debian.org jessie/updates/contrib Translation-en [1,211 B]
-Get:8 http://security.debian.org jessie/updates/main Translation-en [82.5 kB]
-Get:9 http://security.debian.org jessie/updates/non-free Translation-en [14 B]
-Get:10 http://ftp.us.debian.org testing InRelease [193 kB]
-Get:11 http://ftp.debian.org jessie-updates/contrib amd64 Packages [32 B]
-Get:12 http://ftp.debian.org jessie-updates/non-free amd64 Packages [32 B]
-Get:13 http://backports.debian.org squeeze-backports/main amd64 Packages [356 kB]
-Get:14 http://ftp.debian.org jessie-updates/contrib Translation-en [14 B]
-Get:15 http://ftp.debian.org jessie-updates/main Translation-en [2,506 B]
-Get:16 http://ftp.us.debian.org testing/contrib Translation-en [44.1 kB]
-Get:17 http://ftp.debian.org jessie-updates/non-free Translation-en [14 B]
-Get:18 http://backports.debian.org squeeze-backports/main Translation-en [242 kB]
-Get:19 http://ftp.us.debian.org testing/main Translation-en [4,885 kB]
-Get:20 http://ftp.debian.org jessie-updates/main amd64 Packages [3,452 B]
-Get:21 http://ftp.us.debian.org testing/non-free Translation-en [77.3 kB]
-Get:22 http://ftp.us.debian.org testing/main amd64 Packages [7,337 kB]
+Get:2 http://ftp.us.debian.org testing InRelease [193 kB]
+Get:3 http://ftp.debian.org jessie-updates InRelease [135 kB]
+Get:4 http://backports.debian.org squeeze-backports InRelease [130 kB]
+Get:5 http://security.debian.org jessie/updates/main amd64 Packages [148 kB]
+Get:6 http://security.debian.org jessie/updates/contrib amd64 Packages [2,512 B]
+Get:7 http://security.debian.org jessie/updates/non-free amd64 Packages [14 B]
+Get:8 http://security.debian.org jessie/updates/contrib Translation-en [1,211 B]
+Get:9 http://ftp.us.debian.org testing/contrib Translation-en [44.1 kB]
+Get:10 http://security.debian.org jessie/updates/main Translation-en [82.5 kB]
+Get:11 http://ftp.us.debian.org testing/main Translation-en [4,884 kB]
+Get:12 http://security.debian.org jessie/updates/non-free Translation-en [14 B]
+Get:13 http://ftp.debian.org jessie-updates/contrib amd64 Packages [32 B]
+Get:14 http://ftp.us.debian.org testing/non-free Translation-en [77.3 kB]
+Get:15 http://ftp.debian.org jessie-updates/non-free amd64 Packages [32 B]
+Get:16 http://ftp.debian.org jessie-updates/contrib Translation-en [14 B]
+Get:17 http://backports.debian.org squeeze-backports/main amd64 Packages [356 kB]
+Get:18 http://ftp.us.debian.org testing/main amd64 Packages [7,336 kB]
+Get:19 http://ftp.debian.org jessie-updates/main Translation-en [2,506 B]
+Get:20 http://backports.debian.org squeeze-backports/main Translation-en [242 kB]
+Get:21 http://ftp.debian.org jessie-updates/non-free Translation-en [14 B]
+Get:22 http://ftp.debian.org jessie-updates/main amd64 Packages [3,452 B]
 Get:23 http://ftp.us.debian.org testing/contrib amd64 Packages [56.6 kB]
 Get:24 http://ftp.us.debian.org testing/non-free amd64 Packages [84.8 kB]
-Fetched 13.8 MB in 6s (2,209 kB/s)
+Fetched 13.8 MB in 6s (2,245 kB/s)
 Reading package lists...
 
 Upgrade the system
@@ -4248,7 +4315,7 @@ lsb (9.20150826) unstable; urgency=low
 
 apt-listchanges: Mailing root: apt-listchanges: news for www
 Preconfiguring packages ...
-Fetched 124 MB in 34s (3,631 kB/s)
+Fetched 124 MB in 1min 27s (1,412 kB/s)
 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 24184 files and directories currently installed.)
 Preparing to unpack .../base-files_9.5_amd64.deb ...
 Unpacking base-files (9.5) over (8+deb8u1) ...
@@ -4504,8 +4571,8 @@ Unpacking tzdata (2015g-1) over (2015e-0+deb8u1) ...
 Setting up tzdata (2015g-1) ...
 
 Current default time zone: 'Etc/UTC'
-Local time is now:      Sat Nov 14 14:14:01 UTC 2015.
-Universal Time is now:  Sat Nov 14 14:14:01 UTC 2015.
+Local time is now:      Sun Nov 15 00:11:36 UTC 2015.
+Universal Time is now:  Sun Nov 15 00:11:36 UTC 2015.
 Run 'dpkg-reconfigure tzdata' if you wish to change it.
 
 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 24286 files and directories currently installed.)
@@ -5858,7 +5925,7 @@ Get:132 http://ftp.us.debian.org/debian/ testing/main x11-utils amd64 7.7+3 [193
 Get:133 http://ftp.us.debian.org/debian/ testing/main xbitmaps all 1.1.1-2 [32.1 kB]
 Get:134 http://ftp.us.debian.org/debian/ testing/main xterm amd64 320-1 [626 kB]
 Preconfiguring packages ...
-Fetched 58.4 MB in 1min 16s (759 kB/s)
+Fetched 58.4 MB in 51s (1,138 kB/s)
 Selecting previously unselected package libapr1:amd64.
 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 26612 files and directories currently installed.)
 Preparing to unpack .../libapr1_1.5.2-3_amd64.deb ...
@@ -6517,20 +6584,20 @@ Reading package lists...
 Building dependency tree...
 Reading state information...
 The following extra packages will be installed:
-  libcurl3 libgd3 libmcrypt4 libmemcached11 libmemcachedutil2 libmysqlclient18
-  libonig2 libqdbm14 libvpx2 mysql-common php5-cli php5-common php5-json
-  php5-readline ttf-dejavu-core
+  libcurl3 libgd3 libmcrypt4 libmemcached11 libmemcachedutil2 libonig2
+  libqdbm14 libvpx2 php5-cli php5-common php5-json php5-readline
+  ttf-dejavu-core
 Suggested packages:
   libgd-tools libmcrypt-dev mcrypt php5-dev php5-user-cache
 The following NEW packages will be installed:
   libapache2-mod-php5 libcurl3 libgd3 libmcrypt4 libmemcached11
-  libmemcachedutil2 libmysqlclient18 libonig2 libqdbm14 libvpx2 mysql-common
-  php-pear php5-cli php5-common php5-curl php5-fpm php5-gd php5-gmp
-  php5-imagick php5-intl php5-json php5-mcrypt php5-memcached php5-mysql
-  php5-readline php5-xdebug ttf-dejavu-core
-0 upgraded, 27 newly installed, 0 to remove and 0 not upgraded.
-Need to get 10.5 MB/10.7 MB of archives.
-After this operation, 43.5 MB of additional disk space will be used.
+  libmemcachedutil2 libonig2 libqdbm14 libvpx2 php-pear php5-cli php5-common
+  php5-curl php5-fpm php5-gd php5-gmp php5-imagick php5-intl php5-json
+  php5-mcrypt php5-memcached php5-mysql php5-readline php5-xdebug
+  ttf-dejavu-core
+0 upgraded, 25 newly installed, 0 to remove and 0 not upgraded.
+Need to get 9,635 kB/9,907 kB of archives.
+After this operation, 39.3 MB of additional disk space will be used.
 Get:1 http://ftp.us.debian.org/debian/ testing/main libmemcached11 amd64 1.0.18-4 [95.2 kB]
 Get:2 http://ftp.us.debian.org/debian/ testing/main libmemcachedutil2 amd64 1.0.18-4 [22.3 kB]
 Get:3 http://ftp.us.debian.org/debian/ testing/main libonig2 amd64 5.9.6-1 [118 kB]
@@ -6542,24 +6609,22 @@ Get:8 http://ftp.us.debian.org/debian/ testing/main libapache2-mod-php5 amd64 5.
 Get:9 http://ftp.us.debian.org/debian/ testing/main libvpx2 amd64 1.4.0-4 [699 kB]
 Get:10 http://ftp.us.debian.org/debian/ testing/main libgd3 amd64 2.1.1-4 [148 kB]
 Get:11 http://ftp.us.debian.org/debian/ testing/main libmcrypt4 amd64 2.5.8-3.3 [71.2 kB]
-Get:12 http://ftp.us.debian.org/debian/ testing/main mysql-common all 5.6.25-4 [76.4 kB]
-Get:13 http://ftp.us.debian.org/debian/ testing/main libmysqlclient18 amd64 5.6.25-4 [748 kB]
-Get:14 http://ftp.us.debian.org/debian/ testing/main php-pear all 5.6.14+dfsg-1 [268 kB]
-Get:15 http://ftp.us.debian.org/debian/ testing/main php5-curl amd64 5.6.14+dfsg-1+b1 [27.7 kB]
-Get:16 http://ftp.us.debian.org/debian/ testing/main php5-fpm amd64 5.6.14+dfsg-1+b1 [2,194 kB]
-Get:17 http://ftp.us.debian.org/debian/ testing/main php5-gd amd64 5.6.14+dfsg-1+b1 [28.7 kB]
-Get:18 http://ftp.us.debian.org/debian/ testing/main php5-gmp amd64 5.6.14+dfsg-1+b1 [21.6 kB]
-Get:19 http://ftp.us.debian.org/debian/ testing/main php5-imagick amd64 3.3.0~rc2-1 [112 kB]
-Get:20 http://ftp.us.debian.org/debian/ testing/main php5-intl amd64 5.6.14+dfsg-1+b1 [111 kB]
-Get:21 http://ftp.us.debian.org/debian/ testing/main php5-mcrypt amd64 5.6.14+dfsg-1+b1 [15.2 kB]
-Get:22 http://ftp.us.debian.org/debian/ testing/main php5-memcached amd64 2.2.0-2 [56.4 kB]
-Get:23 http://ftp.us.debian.org/debian/ testing/main php5-mysql amd64 5.6.14+dfsg-1+b1 [64.5 kB]
-Get:24 http://ftp.us.debian.org/debian/ testing/main php5-readline amd64 5.6.14+dfsg-1+b1 [13.1 kB]
-Get:25 http://ftp.us.debian.org/debian/ testing/main php5-xdebug amd64 2.3.3-1 [298 kB]
-Get:26 http://ftp.us.debian.org/debian/ testing/main ttf-dejavu-core all 2.35-1 [31.8 kB]
-Fetched 10.5 MB in 16s (646 kB/s)
+Get:12 http://ftp.us.debian.org/debian/ testing/main php-pear all 5.6.14+dfsg-1 [268 kB]
+Get:13 http://ftp.us.debian.org/debian/ testing/main php5-curl amd64 5.6.14+dfsg-1+b1 [27.7 kB]
+Get:14 http://ftp.us.debian.org/debian/ testing/main php5-fpm amd64 5.6.14+dfsg-1+b1 [2,194 kB]
+Get:15 http://ftp.us.debian.org/debian/ testing/main php5-gd amd64 5.6.14+dfsg-1+b1 [28.7 kB]
+Get:16 http://ftp.us.debian.org/debian/ testing/main php5-gmp amd64 5.6.14+dfsg-1+b1 [21.6 kB]
+Get:17 http://ftp.us.debian.org/debian/ testing/main php5-imagick amd64 3.3.0~rc2-1 [112 kB]
+Get:18 http://ftp.us.debian.org/debian/ testing/main php5-intl amd64 5.6.14+dfsg-1+b1 [111 kB]
+Get:19 http://ftp.us.debian.org/debian/ testing/main php5-mcrypt amd64 5.6.14+dfsg-1+b1 [15.2 kB]
+Get:20 http://ftp.us.debian.org/debian/ testing/main php5-memcached amd64 2.2.0-2 [56.4 kB]
+Get:21 http://ftp.us.debian.org/debian/ testing/main php5-mysql amd64 5.6.14+dfsg-1+b1 [64.5 kB]
+Get:22 http://ftp.us.debian.org/debian/ testing/main php5-readline amd64 5.6.14+dfsg-1+b1 [13.1 kB]
+Get:23 http://ftp.us.debian.org/debian/ testing/main php5-xdebug amd64 2.3.3-1 [298 kB]
+Get:24 http://ftp.us.debian.org/debian/ testing/main ttf-dejavu-core all 2.35-1 [31.8 kB]
+Fetched 9,635 kB in 9s (1,057 kB/s)
 Selecting previously unselected package libmemcached11:amd64.
-(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 31889 files and directories currently installed.)
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 32382 files and directories currently installed.)
 Preparing to unpack .../libmemcached11_1.0.18-4_amd64.deb ...
 Unpacking libmemcached11:amd64 (1.0.18-4) ...
 Selecting previously unselected package libmemcachedutil2:amd64.
@@ -6595,12 +6660,6 @@ Unpacking libgd3:amd64 (2.1.1-4) ...
 Selecting previously unselected package libmcrypt4.
 Preparing to unpack .../libmcrypt4_2.5.8-3.3_amd64.deb ...
 Unpacking libmcrypt4 (2.5.8-3.3) ...
-Selecting previously unselected package mysql-common.
-Preparing to unpack .../mysql-common_5.6.25-4_all.deb ...
-Unpacking mysql-common (5.6.25-4) ...
-Selecting previously unselected package libmysqlclient18:amd64.
-Preparing to unpack .../libmysqlclient18_5.6.25-4_amd64.deb ...
-Unpacking libmysqlclient18:amd64 (5.6.25-4) ...
 Selecting previously unselected package php-pear.
 Preparing to unpack .../php-pear_5.6.14+dfsg-1_all.deb ...
 Unpacking php-pear (5.6.14+dfsg-1) ...
@@ -6678,9 +6737,6 @@ Setting up libcurl3:amd64 (7.45.0-1+b1) ...
 Setting up libvpx2:amd64 (1.4.0-4) ...
 Setting up libgd3:amd64 (2.1.1-4) ...
 Setting up libmcrypt4 (2.5.8-3.3) ...
-Setting up mysql-common (5.6.25-4) ...
-update-alternatives: using /etc/mysql/my.cnf.fallback to provide /etc/mysql/my.cnf (my.cnf) in auto mode
-Setting up libmysqlclient18:amd64 (5.6.25-4) ...
 Setting up php-pear (5.6.14+dfsg-1) ...
 Setting up php5-curl (5.6.14+dfsg-1+b1) ...
 

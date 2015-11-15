@@ -14,8 +14,8 @@
 EXECUTOR - 
 SCRIPTLOCATION - /root/bin
 EXECUTIONLOG - /var/log/auto-install.log
-TROUBLESHOOTINGFILES - /root/bin/troubleshooting/1447510306
-2015-11-14 - 1447510306
+TROUBLESHOOTINGFILES - /root/bin/troubleshooting/1447546014
+2015-11-15 - 1447546014
 
 
 ########## RECORD THE VARIABLES FOR POSTERITY ####
@@ -108,30 +108,30 @@ Update apt sources
 Update the system
 
 Get:1 http://security.debian.org jessie/updates InRelease [63.1 kB]
-Get:2 http://ftp.debian.org jessie-updates InRelease [135 kB]
-Get:3 http://backports.debian.org squeeze-backports InRelease [130 kB]
-Get:4 http://security.debian.org jessie/updates/main amd64 Packages [148 kB]
-Get:5 http://security.debian.org jessie/updates/contrib amd64 Packages [2,512 B]
-Get:6 http://security.debian.org jessie/updates/non-free amd64 Packages [14 B]
-Get:7 http://security.debian.org jessie/updates/contrib Translation-en [1,211 B]
-Get:8 http://security.debian.org jessie/updates/main Translation-en [82.5 kB]
-Get:9 http://security.debian.org jessie/updates/non-free Translation-en [14 B]
-Get:10 http://ftp.us.debian.org testing InRelease [193 kB]
-Get:11 http://ftp.debian.org jessie-updates/contrib amd64 Packages [32 B]
-Get:12 http://ftp.debian.org jessie-updates/non-free amd64 Packages [32 B]
-Get:13 http://backports.debian.org squeeze-backports/main amd64 Packages [356 kB]
-Get:14 http://ftp.debian.org jessie-updates/contrib Translation-en [14 B]
-Get:15 http://ftp.debian.org jessie-updates/main Translation-en [2,506 B]
-Get:16 http://ftp.us.debian.org testing/contrib Translation-en [44.1 kB]
-Get:17 http://ftp.debian.org jessie-updates/non-free Translation-en [14 B]
-Get:18 http://backports.debian.org squeeze-backports/main Translation-en [242 kB]
-Get:19 http://ftp.us.debian.org testing/main Translation-en [4,885 kB]
-Get:20 http://ftp.debian.org jessie-updates/main amd64 Packages [3,452 B]
-Get:21 http://ftp.us.debian.org testing/non-free Translation-en [77.3 kB]
-Get:22 http://ftp.us.debian.org testing/main amd64 Packages [7,337 kB]
+Get:2 http://ftp.us.debian.org testing InRelease [193 kB]
+Get:3 http://ftp.debian.org jessie-updates InRelease [135 kB]
+Get:4 http://backports.debian.org squeeze-backports InRelease [130 kB]
+Get:5 http://security.debian.org jessie/updates/main amd64 Packages [148 kB]
+Get:6 http://security.debian.org jessie/updates/contrib amd64 Packages [2,512 B]
+Get:7 http://security.debian.org jessie/updates/non-free amd64 Packages [14 B]
+Get:8 http://security.debian.org jessie/updates/contrib Translation-en [1,211 B]
+Get:9 http://ftp.us.debian.org testing/contrib Translation-en [44.1 kB]
+Get:10 http://security.debian.org jessie/updates/main Translation-en [82.5 kB]
+Get:11 http://ftp.us.debian.org testing/main Translation-en [4,884 kB]
+Get:12 http://security.debian.org jessie/updates/non-free Translation-en [14 B]
+Get:13 http://ftp.debian.org jessie-updates/contrib amd64 Packages [32 B]
+Get:14 http://ftp.us.debian.org testing/non-free Translation-en [77.3 kB]
+Get:15 http://ftp.debian.org jessie-updates/non-free amd64 Packages [32 B]
+Get:16 http://ftp.debian.org jessie-updates/contrib Translation-en [14 B]
+Get:17 http://backports.debian.org squeeze-backports/main amd64 Packages [356 kB]
+Get:18 http://ftp.us.debian.org testing/main amd64 Packages [7,336 kB]
+Get:19 http://ftp.debian.org jessie-updates/main Translation-en [2,506 B]
+Get:20 http://backports.debian.org squeeze-backports/main Translation-en [242 kB]
+Get:21 http://ftp.debian.org jessie-updates/non-free Translation-en [14 B]
+Get:22 http://ftp.debian.org jessie-updates/main amd64 Packages [3,452 B]
 Get:23 http://ftp.us.debian.org testing/contrib amd64 Packages [56.6 kB]
 Get:24 http://ftp.us.debian.org testing/non-free amd64 Packages [84.8 kB]
-Fetched 13.8 MB in 6s (2,209 kB/s)
+Fetched 13.8 MB in 6s (2,245 kB/s)
 Reading package lists...
 
 Upgrade the system
@@ -636,7 +636,7 @@ lsb (9.20150826) unstable; urgency=low
 
 apt-listchanges: Mailing root: apt-listchanges: news for www
 Preconfiguring packages ...
-Fetched 124 MB in 34s (3,631 kB/s)
+Fetched 124 MB in 1min 27s (1,412 kB/s)
 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 24184 files and directories currently installed.)
 Preparing to unpack .../base-files_9.5_amd64.deb ...
 Unpacking base-files (9.5) over (8+deb8u1) ...
@@ -892,8 +892,8 @@ Unpacking tzdata (2015g-1) over (2015e-0+deb8u1) ...
 Setting up tzdata (2015g-1) ...
 
 Current default time zone: 'Etc/UTC'
-Local time is now:      Sat Nov 14 14:14:01 UTC 2015.
-Universal Time is now:  Sat Nov 14 14:14:01 UTC 2015.
+Local time is now:      Sun Nov 15 00:11:36 UTC 2015.
+Universal Time is now:  Sun Nov 15 00:11:36 UTC 2015.
 Run 'dpkg-reconfigure tzdata' if you wish to change it.
 
 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 24286 files and directories currently installed.)
@@ -2246,7 +2246,7 @@ Get:132 http://ftp.us.debian.org/debian/ testing/main x11-utils amd64 7.7+3 [193
 Get:133 http://ftp.us.debian.org/debian/ testing/main xbitmaps all 1.1.1-2 [32.1 kB]
 Get:134 http://ftp.us.debian.org/debian/ testing/main xterm amd64 320-1 [626 kB]
 Preconfiguring packages ...
-Fetched 58.4 MB in 1min 16s (759 kB/s)
+Fetched 58.4 MB in 51s (1,138 kB/s)
 Selecting previously unselected package libapr1:amd64.
 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 26612 files and directories currently installed.)
 Preparing to unpack .../libapr1_1.5.2-3_amd64.deb ...
@@ -2905,20 +2905,20 @@ Reading package lists...
 Building dependency tree...
 Reading state information...
 The following extra packages will be installed:
-  libcurl3 libgd3 libmcrypt4 libmemcached11 libmemcachedutil2 libmysqlclient18
-  libonig2 libqdbm14 libvpx2 mysql-common php5-cli php5-common php5-json
-  php5-readline ttf-dejavu-core
+  libcurl3 libgd3 libmcrypt4 libmemcached11 libmemcachedutil2 libonig2
+  libqdbm14 libvpx2 php5-cli php5-common php5-json php5-readline
+  ttf-dejavu-core
 Suggested packages:
   libgd-tools libmcrypt-dev mcrypt php5-dev php5-user-cache
 The following NEW packages will be installed:
   libapache2-mod-php5 libcurl3 libgd3 libmcrypt4 libmemcached11
-  libmemcachedutil2 libmysqlclient18 libonig2 libqdbm14 libvpx2 mysql-common
-  php-pear php5-cli php5-common php5-curl php5-fpm php5-gd php5-gmp
-  php5-imagick php5-intl php5-json php5-mcrypt php5-memcached php5-mysql
-  php5-readline php5-xdebug ttf-dejavu-core
-0 upgraded, 27 newly installed, 0 to remove and 0 not upgraded.
-Need to get 10.5 MB/10.7 MB of archives.
-After this operation, 43.5 MB of additional disk space will be used.
+  libmemcachedutil2 libonig2 libqdbm14 libvpx2 php-pear php5-cli php5-common
+  php5-curl php5-fpm php5-gd php5-gmp php5-imagick php5-intl php5-json
+  php5-mcrypt php5-memcached php5-mysql php5-readline php5-xdebug
+  ttf-dejavu-core
+0 upgraded, 25 newly installed, 0 to remove and 0 not upgraded.
+Need to get 9,635 kB/9,907 kB of archives.
+After this operation, 39.3 MB of additional disk space will be used.
 Get:1 http://ftp.us.debian.org/debian/ testing/main libmemcached11 amd64 1.0.18-4 [95.2 kB]
 Get:2 http://ftp.us.debian.org/debian/ testing/main libmemcachedutil2 amd64 1.0.18-4 [22.3 kB]
 Get:3 http://ftp.us.debian.org/debian/ testing/main libonig2 amd64 5.9.6-1 [118 kB]
@@ -2930,24 +2930,22 @@ Get:8 http://ftp.us.debian.org/debian/ testing/main libapache2-mod-php5 amd64 5.
 Get:9 http://ftp.us.debian.org/debian/ testing/main libvpx2 amd64 1.4.0-4 [699 kB]
 Get:10 http://ftp.us.debian.org/debian/ testing/main libgd3 amd64 2.1.1-4 [148 kB]
 Get:11 http://ftp.us.debian.org/debian/ testing/main libmcrypt4 amd64 2.5.8-3.3 [71.2 kB]
-Get:12 http://ftp.us.debian.org/debian/ testing/main mysql-common all 5.6.25-4 [76.4 kB]
-Get:13 http://ftp.us.debian.org/debian/ testing/main libmysqlclient18 amd64 5.6.25-4 [748 kB]
-Get:14 http://ftp.us.debian.org/debian/ testing/main php-pear all 5.6.14+dfsg-1 [268 kB]
-Get:15 http://ftp.us.debian.org/debian/ testing/main php5-curl amd64 5.6.14+dfsg-1+b1 [27.7 kB]
-Get:16 http://ftp.us.debian.org/debian/ testing/main php5-fpm amd64 5.6.14+dfsg-1+b1 [2,194 kB]
-Get:17 http://ftp.us.debian.org/debian/ testing/main php5-gd amd64 5.6.14+dfsg-1+b1 [28.7 kB]
-Get:18 http://ftp.us.debian.org/debian/ testing/main php5-gmp amd64 5.6.14+dfsg-1+b1 [21.6 kB]
-Get:19 http://ftp.us.debian.org/debian/ testing/main php5-imagick amd64 3.3.0~rc2-1 [112 kB]
-Get:20 http://ftp.us.debian.org/debian/ testing/main php5-intl amd64 5.6.14+dfsg-1+b1 [111 kB]
-Get:21 http://ftp.us.debian.org/debian/ testing/main php5-mcrypt amd64 5.6.14+dfsg-1+b1 [15.2 kB]
-Get:22 http://ftp.us.debian.org/debian/ testing/main php5-memcached amd64 2.2.0-2 [56.4 kB]
-Get:23 http://ftp.us.debian.org/debian/ testing/main php5-mysql amd64 5.6.14+dfsg-1+b1 [64.5 kB]
-Get:24 http://ftp.us.debian.org/debian/ testing/main php5-readline amd64 5.6.14+dfsg-1+b1 [13.1 kB]
-Get:25 http://ftp.us.debian.org/debian/ testing/main php5-xdebug amd64 2.3.3-1 [298 kB]
-Get:26 http://ftp.us.debian.org/debian/ testing/main ttf-dejavu-core all 2.35-1 [31.8 kB]
-Fetched 10.5 MB in 16s (646 kB/s)
+Get:12 http://ftp.us.debian.org/debian/ testing/main php-pear all 5.6.14+dfsg-1 [268 kB]
+Get:13 http://ftp.us.debian.org/debian/ testing/main php5-curl amd64 5.6.14+dfsg-1+b1 [27.7 kB]
+Get:14 http://ftp.us.debian.org/debian/ testing/main php5-fpm amd64 5.6.14+dfsg-1+b1 [2,194 kB]
+Get:15 http://ftp.us.debian.org/debian/ testing/main php5-gd amd64 5.6.14+dfsg-1+b1 [28.7 kB]
+Get:16 http://ftp.us.debian.org/debian/ testing/main php5-gmp amd64 5.6.14+dfsg-1+b1 [21.6 kB]
+Get:17 http://ftp.us.debian.org/debian/ testing/main php5-imagick amd64 3.3.0~rc2-1 [112 kB]
+Get:18 http://ftp.us.debian.org/debian/ testing/main php5-intl amd64 5.6.14+dfsg-1+b1 [111 kB]
+Get:19 http://ftp.us.debian.org/debian/ testing/main php5-mcrypt amd64 5.6.14+dfsg-1+b1 [15.2 kB]
+Get:20 http://ftp.us.debian.org/debian/ testing/main php5-memcached amd64 2.2.0-2 [56.4 kB]
+Get:21 http://ftp.us.debian.org/debian/ testing/main php5-mysql amd64 5.6.14+dfsg-1+b1 [64.5 kB]
+Get:22 http://ftp.us.debian.org/debian/ testing/main php5-readline amd64 5.6.14+dfsg-1+b1 [13.1 kB]
+Get:23 http://ftp.us.debian.org/debian/ testing/main php5-xdebug amd64 2.3.3-1 [298 kB]
+Get:24 http://ftp.us.debian.org/debian/ testing/main ttf-dejavu-core all 2.35-1 [31.8 kB]
+Fetched 9,635 kB in 9s (1,057 kB/s)
 Selecting previously unselected package libmemcached11:amd64.
-(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 31889 files and directories currently installed.)
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 32382 files and directories currently installed.)
 Preparing to unpack .../libmemcached11_1.0.18-4_amd64.deb ...
 Unpacking libmemcached11:amd64 (1.0.18-4) ...
 Selecting previously unselected package libmemcachedutil2:amd64.
@@ -2983,12 +2981,6 @@ Unpacking libgd3:amd64 (2.1.1-4) ...
 Selecting previously unselected package libmcrypt4.
 Preparing to unpack .../libmcrypt4_2.5.8-3.3_amd64.deb ...
 Unpacking libmcrypt4 (2.5.8-3.3) ...
-Selecting previously unselected package mysql-common.
-Preparing to unpack .../mysql-common_5.6.25-4_all.deb ...
-Unpacking mysql-common (5.6.25-4) ...
-Selecting previously unselected package libmysqlclient18:amd64.
-Preparing to unpack .../libmysqlclient18_5.6.25-4_amd64.deb ...
-Unpacking libmysqlclient18:amd64 (5.6.25-4) ...
 Selecting previously unselected package php-pear.
 Preparing to unpack .../php-pear_5.6.14+dfsg-1_all.deb ...
 Unpacking php-pear (5.6.14+dfsg-1) ...
@@ -3066,9 +3058,6 @@ Setting up libcurl3:amd64 (7.45.0-1+b1) ...
 Setting up libvpx2:amd64 (1.4.0-4) ...
 Setting up libgd3:amd64 (2.1.1-4) ...
 Setting up libmcrypt4 (2.5.8-3.3) ...
-Setting up mysql-common (5.6.25-4) ...
-update-alternatives: using /etc/mysql/my.cnf.fallback to provide /etc/mysql/my.cnf (my.cnf) in auto mode
-Setting up libmysqlclient18:amd64 (5.6.25-4) ...
 Setting up php-pear (5.6.14+dfsg-1) ...
 Setting up php5-curl (5.6.14+dfsg-1+b1) ...
 
