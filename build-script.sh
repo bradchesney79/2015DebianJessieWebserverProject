@@ -282,44 +282,60 @@ cat /tmp/iptables-persistent.log
 
 printf "\nUpdate the IP tables rules\n\n" >> ${EXECUTIONLOG}
 
-echo "*filter" > /etc/iptables/rules.v4
-echo "#  Allow all loopback (lo0) traffic and drop all traffic to 127/8 that doesn't use lo0" >> /etc/iptables/rules.v4
-echo "-A INPUT -i lo -j ACCEPT" >> /etc/iptables/rules.v4
-echo "-A INPUT -d 127.0.0.0/8 -j REJECT" >> /etc/iptables/rules.v4
-echo "#  Accept all established inbound connections" >> /etc/iptables/rules.v4
-echo "-A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT" >> /etc/iptables/rules.v4
-echo "#  Allow all outbound traffic - you can modify this to only allow certain traffic" >> /etc/iptables/rules.v4
-echo "-A OUTPUT -j ACCEPT" >> /etc/iptables/rules.v4
-echo "#  Allow HTTP and HTTPS connections from anywhere (the normal ports for websites and SSL)." >> /etc/iptables/rules.v4
-echo "-A INPUT -p tcp --dport 80 -j ACCEPT" >> /etc/iptables/rules.v4
-echo "-A INPUT -p tcp --dport 443 -j ACCEPT" >> /etc/iptables/rules.v4
-echo "#  Allow SSH connections" >> /etc/iptables/rules.v4
-echo "#" >> /etc/iptables/rules.v4
-echo "#  The -dport number should be the same port number you set in sshd_config" >> /etc/iptables/rules.v4
-echo "#" >> /etc/iptables/rules.v4
-echo "-A INPUT -p tcp -m state --state NEW --dport 22 -j ACCEPT" >> /etc/iptables/rules.v4
-echo "#  Allow ping" >> /etc/iptables/rules.v4
-echo "-A INPUT -p icmp --icmp-type echo-request -j ACCEPT" >> /etc/iptables/rules.v4
-echo "#  Log iptables denied calls" >> /etc/iptables/rules.v4
-echo "#-A INPUT -m limit --limit 5/min -j LOG --log-prefix \"iptables denied: \" --log-level 7" >> /etc/iptables/rules.v4
-echo "#  Drop all other inbound - default deny unless explicitly allowed policy" >> /etc/iptables/rules.v4
-echo "-A INPUT -j DROP" >> /etc/iptables/rules.v4
-echo "-A FORWARD -j DROP" >> /etc/iptables/rules.v4
-echo "COMMIT" >> /etc/iptables/rules.v4
+echo "*filter
+#
+# Loaded by /root/bin/iptables.sh via crontab at reboot
+#
+#  Allow all loopback (lo0) traffic and drop all traffic to 127/8 that doesn't use lo0
+-A INPUT -i lo -j ACCEPT
+-A INPUT -d 127.0.0.0/8 -j REJECT
+#  Accept all established inbound connections
+-A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+#  Allow all outbound traffic - you can modify this to only allow certain traffic
+-A OUTPUT -j ACCEPT
+#  Allow HTTP and HTTPS connections from anywhere (the normal ports for websites and SSL).
+-A INPUT -p tcp --dport 80 -j ACCEPT
+-A INPUT -p tcp --dport 443 -j ACCEPT
+#  Allow SSH connections
+#
+#  The -dport number should be the same port number you set in sshd_config
+#
+-A INPUT -p tcp -m state --state NEW --dport 22 -j ACCEPT
+#  Allow ping
+-A INPUT -p icmp --icmp-type echo-request -j ACCEPT
+#  Log iptables denied calls
+#-A INPUT -m limit --limit 5/min -j LOG --log-prefix \"iptables denied: \" --log-level 7
+#  Drop all other inbound - default deny unless explicitly allowed policy
+-A INPUT -j DROP
+-A FORWARD -j DROP
+COMMIT" > /root/bin/iptables.load
 
-printf "\nMake the IP tables rules persistent\n\n" >> ${EXECUTIONLOG}
-
-#echo iptables-persistent iptables-persistent/autosave_v4 boolean true | debconf-set-selections >> ${EXECUTIONLOG}
-#echo iptables-persistent iptables-persistent/autosave_v6 boolean true | debconf-set-selections >> ${EXECUTIONLOG}
-
-iptables-save > /etc/iptables/rules.v4 >> ${EXECUTIONLOG}
-ip6tables-save > /etc/iptables/rules.v6 >> ${EXECUTIONLOG}
+cat /root/bin/iptables.load > /etc/iptables/rules.v4
 
 printf "\n########## APPLY THE IPTABLES RULES ###\n" >> ${EXECUTIONLOG}
 
 printf "\nApply the IP tables rules\n\n"
 
 iptables-restore < /etc/iptables/rules.v4 >> ${EXECUTIONLOG}
+
+printf "\nMake the IP tables rules persistent\n\n" >> ${EXECUTIONLOG}
+
+echo "#!/bin/bash
+
+cat /root/bin/iptables.load > /etc/iptables/rules.autosave_v4
+
+iptables-restore < /etc/iptables/rules.v4" > /root/bin/iptables.sh
+
+chmod 700 /root/bin/iptables.sh
+
+echo "@reboot root /root/bin/iptables.sh" >> /etc/crontab 
+
+
+#echo iptables-persistent iptables-persistent/autosave_v4 boolean true | debconf-set-selections >> ${EXECUTIONLOG}
+#echo iptables-persistent iptables-persistent/autosave_v6 boolean true | debconf-set-selections >> ${EXECUTIONLOG}
+
+#iptables-save > /etc/iptables/rules.v4
+#ip6tables-save > /etc/iptables/rules.v6
 
 printf "\n########## USING fail2ban DEFAULT CONFIG ###\n" >> ${EXECUTIONLOG}
 
