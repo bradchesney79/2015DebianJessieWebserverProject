@@ -356,6 +356,8 @@ printf "\n########## THIS AIDS RESOURCE SEGREGATION ###\n"
 printf "\n########## www-data HAS ACCESS TO ALL WEBSERVER FUN ###\n"
 
 useradd -d $WEBROOT -p $PASSWORD -c "Default Web Site User" $USER
+
+printf "\n########## LOCK THE NOT USER ACCOUNT THE WEBSITE RUNS AS ###\n"
 passwd -l $USER
 
 printf "\n########## ADD SSL CONFIGURATION INCLUDE ###\n"
@@ -643,6 +645,19 @@ printf "\n########## SETUP MAIL ###\n"
 # in my DNS config the first text field was: rustbeltrebellion.com.
 # in the dropdown: TXT
 # in the last text field went: "v=spf1 mx a ip4:45.33.112.226/32 ?all"
+
+#### Needed DMARC record
+# https://www.unlocktheinbox.com/dmarcwizard/
+
+# _dmarc.rustbeltrebellion.com. IN TXT "v=DMARC1; p=quarantine; sp=quarantine; rua=mailto:bradchesney79@gmail.com; ruf=mailto:bradchesney79@gmail.com; rf=afrf; pct=100; ri=604800"
+
+# in my DNS config the first text field was: _dmarc.rustbeltrebellion.com.
+# in the dropdown: TXT
+# in the last text field went: "v=DMARC1; p=quarantine; sp=quarantine; rua=mailto:bradchesney79@gmail.com; ruf=mailto:bradchesney79@gmail.com; rf=afrf; pct=100; ri=604800"
+
+#### What is DKIM?
+
+# Still needed to tell Google not to spam messages from:(*@$DOMAIN) via 'filters'
 
 #apt-get -y install exim4-daemon-light bsd-mailx
 #### already installed
