@@ -28,3 +28,7 @@ remedy broken GUI SFTP -- works fine CLI
 update troubleshooting resources on github
 
 break into modular scripts with Ansible
+
+THANKS:
+
+simplified logging - http://reddit.com/user/cheaphomemadeacid
