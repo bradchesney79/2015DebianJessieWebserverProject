@@ -1,5 +1,11 @@
 # 2015DebianJessieWebserverProject
-A setup script for a Debian LAMP Webserver
+An initial setup script for a Debian LAMP Webserver
+
+
+Initially this will be in implemented with bash until I arrive at an end result I am happy with.
+
+I will use the bash script as a roadmap to build an Ansible playbook.
+
 
 TODO:
 
@@ -20,6 +26,4 @@ remedy broken GUI SFTP -- works fine CLI
 
 update troubleshooting resources on github
 
-improve readability
-
-break into modular scripts
+break into modular scripts with Ansible
