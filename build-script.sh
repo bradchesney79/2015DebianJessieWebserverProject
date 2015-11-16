@@ -665,6 +665,7 @@ printf "\n########## SETUP MAIL ###\n"
 #dpkg-reconfigure exim4-config
 #### RECONFIGURE VIA CONFIG FILES 
 #/etc/exim4
+#/etc/exim4/exim4.conf.template
 
 #During the Exim configuration, choose Internet site and follow all the defaults, ensuring that you only listen on 127.0.0.1 and you are not relaying mail for any other domains.
 
