@@ -633,7 +633,7 @@ printf "\n########## RESTART THE WEBSERVER SERVICES ###\n"
 service apache2 restart
 service php5-fpm restart
 
-#echo "<?php phpinfo(); ?>" >> /var/www/http/index.php
+echo "<?php phpinfo(); ?>" >> /var/www/http/index.php
 
 printf "\n########## SETUP MAIL ###\n"
 
