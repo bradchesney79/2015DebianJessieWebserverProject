@@ -663,16 +663,22 @@ printf "\n########## SETUP MAIL ###\n"
 #### already installed
 
 #dpkg-reconfigure exim4-config
-#### RECONFIGURE VIA CONFIG FILES 
-#/etc/exim4
-#/etc/exim4/exim4.conf.template
-
 #During the Exim configuration, choose Internet site and follow all the defaults, ensuring that you only listen on 127.0.0.1 and you are not relaying mail for any other domains.
+
+printf "\n########## SET MAIL CONFIGS ###\n"
+
+sed -i "s/dc_eximconfig_configtype=.*/dc_eximconfig_configtype='internet'/" /etc/exim4/update-exim4.conf.conf
+sed -i "s/dc_other_hostnames=.*/dc_other_hostnames=''/" /etc/exim4/update-exim4.conf.conf
+sed -i "s/dc_localdelivery=.*/dc_localdelivery='maildir_home'/" /etc/exim4/update-exim4.conf.conf
+
+printf "\n########## REDIRECT SERVER MAIL TO A REAL WORLD ADDRESS ###\n"
 
 echo "root: $REALEMAIL" >> /etc/aliases
 echo "$USER: $REALEMAIL" >> /etc/aliases
 
 newaliases
+
+printf "\n########## RESTART THE EXIM4 SERVICE ###\n"
 
 service exim4 restart
 
