@@ -660,38 +660,63 @@ printf "\n########## SETUP MAIL ###\n"
 
 # Still needed to tell Google not to spam messages from:(*@$DOMAIN) via 'filters'
 
-#apt-get -y install exim4-daemon-light bsd-mailx
+#apt-get -y install exim4-daemon-light bsd-mailx mailutils
 #### already installed
+
+apt-get -y install mailutils
 
 #dpkg-reconfigure exim4-config
 #During the Exim configuration, choose Internet site and follow all the defaults, ensuring that you only listen on 127.0.0.1 and you are not relaying mail for any other domains.
 
 printf "\n########## SET MAIL CONFIGS ###\n"
 
-sed -i "s/dc_eximconfig_configtype=.*/dc_eximconfig_configtype='internet'/" /etc/exim4/update-exim4.conf.conf
-sed -i "s/dc_other_hostnames=.*/dc_other_hostnames=''/" /etc/exim4/update-exim4.conf.conf
+===========================================
 
+
+# /etc/exim4/update-exim4.conf.conf
 #
-sed -i "s/dc_local_interfaces=.*/dc_local_interfaces=''/" /etc/exim4/update-exim4.conf.conf
-
+# Edit this file and /etc/mailname by hand and execute update-exim4.conf
+# yourself or use 'dpkg-reconfigure exim4-config'
 #
-sed -i "s/dc_readhost=.*/dc_readhost=''/" /etc/exim4/update-exim4.conf.conf
-sed -i "s/dc_relay_domains=.*/dc_relay_domains=''/" /etc/exim4/update-exim4.conf.conf
-sed -i "s/dc_minimaldns=.*/dc_minimaldns='false'/" /etc/exim4/update-exim4.conf.conf
-sed -i "s/dc_relay_nets=.*/dc_relay_nets=''/" /etc/exim4/update-exim4.conf.conf
-sed -i "s/dc_smarthost=.*/dc_smarthost=''/" /etc/exim4/update-exim4.conf.conf
-sed -i "s/CFILEMODE=.*/CFILEMODE='644'/" /etc/exim4/update-exim4.conf.conf
-sed -i "s/dc_use_split_config=.*/dc_use_split_config='false'/" /etc/exim4/update-exim4.conf.conf
-sed -i "s/dc_hide_mailname=.*/dc_hide_mailname=''/" /etc/exim4/update-exim4.conf.conf
-sed -i "s/dc_mailname_in_oh=.*/dc_mailname_in_oh='true'/" /etc/exim4/update-exim4.conf.conf
+# Please note that this is _not_ a dpkg-conffile and that automatic changes
+# to this file might happen. The code handling this will honor your local
+# changes, so this is usually fine, but will break local schemes that mess
+# around with multiple versions of the file.
+#
+# update-exim4.conf uses this file to determine variable values to generate
+# exim configuration macros for the configuration file.
+#
+# Most settings found in here do have corresponding questions in the
+# Debconf configuration, but not all of them.
+#
+# This is a Debian specific file
 
-sed -i "s/dc_localdelivery=.*/dc_localdelivery='maildir_home'/" /etc/exim4/update-exim4.conf.conf
+dc_eximconfig_configtype='internet'
+dc_other_hostnames='localhost'
+dc_local_interfaces='127.0.0.1; ::1'
+dc_readhost=''
+dc_relay_domains=''
+dc_minimaldns='false'
+dc_relay_nets=''
+dc_smarthost=''
+CFILEMODE='644'
+dc_use_split_config='false'
+dc_hide_mailname=''
+dc_mailname_in_oh='true'
+dc_localdelivery='maildir_home'
+
+===============================================
+
+
+
 
 echo "$DOMAIN" > /etc/mailname
 
 printf "\n########## REDIRECT SERVER MAIL TO A REAL WORLD ADDRESS ###\n"
 
-echo "root: $REALEMAIL" >> /etc/aliases
+
+sed -i "s/root:.*/root: $REALEMAIL/" /etc/aliases
+#echo "root: $REALEMAIL" >> /etc/aliases
 echo "$USER: $REALEMAIL" >> /etc/aliases
 
 newaliases
@@ -703,6 +728,9 @@ service exim4 restart
 printf "\n########## SEND TEST MAIL ###\n"
 
 echo "Email from $(hostname)" | mail root -s "$DATE $UNIXTIMESTAMP Email from $(hostname)"
+
+works
+echo "This message" | mail -s"a message" root@bradchesney79.33mail.com
 
 printf "\n########## CLEAN UP ###\n"
 
