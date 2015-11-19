@@ -25,7 +25,8 @@ USER="administrator"
 PASSWORD="dummypassword"
 EMAIL="$USER@$DOMAIN"
 
-REALEMAIL="bradchesney79@gmail.com"
+#REALEMAIL="bradchesney79@gmail.com"
+REALEMAIL="dummyemail@bradchesney79.33mail.com"
 
 WEBROOT="/var/www"
 LOGDIR="/var/www/logs"
