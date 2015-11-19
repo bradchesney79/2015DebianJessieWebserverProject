@@ -668,57 +668,53 @@ apt-get -y install mailutils
 #dpkg-reconfigure exim4-config
 #During the Exim configuration, choose Internet site and follow all the defaults, ensuring that you only listen on 127.0.0.1 and you are not relaying mail for any other domains.
 
-printf "\n########## SET MAIL CONFIGS ###\n"
+printf "\n########## SET UPDATE-EXIM4.CONF MAIL CONFIGS ###\n"
 
-===========================================
+echo "# /etc/exim4/update-exim4.conf.conf" > /etc/exim4/update-exim4.conf.conf
+echo "#" >> /etc/exim4/update-exim4.conf.conf
+echo "# Edit this file and /etc/mailname by hand and execute update-exim4.conf" >> /etc/exim4/update-exim4.conf.conf
+echo "# yourself or use 'dpkg-reconfigure exim4-config'" >> /etc/exim4/update-exim4.conf.conf
+echo "#" >> /etc/exim4/update-exim4.conf.conf
+echo "# Please note that this is _not_ a dpkg-conffile and that automatic changes" >> /etc/exim4/update-exim4.conf.conf
+echo "# to this file might happen. The code handling this will honor your local" >> /etc/exim4/update-exim4.conf.conf
+echo "# changes, so this is usually fine, but will break local schemes that mess" >> /etc/exim4/update-exim4.conf.conf
+echo "# around with multiple versions of the file." >> /etc/exim4/update-exim4.conf.conf
+echo "#" >> /etc/exim4/update-exim4.conf.conf
+echo "# update-exim4.conf uses this file to determine variable values to generate" >> /etc/exim4/update-exim4.conf.conf
+echo "# exim configuration macros for the configuration file." >> /etc/exim4/update-exim4.conf.conf
+echo "#" >> /etc/exim4/update-exim4.conf.conf
+echo "# Most settings found in here do have corresponding questions in the" >> /etc/exim4/update-exim4.conf.conf
+echo "# Debconf configuration, but not all of them." >> /etc/exim4/update-exim4.conf.conf
+echo "#" >> /etc/exim4/update-exim4.conf.conf
+echo "# This is a Debian specific file" >> /etc/exim4/update-exim4.conf.conf
+printf "\n" >> /etc/exim4/update-exim4.conf.conf
+echo "dc_eximconfig_configtype='internet'" >> /etc/exim4/update-exim4.conf.conf
+echo "dc_other_hostnames='localhost'" >> /etc/exim4/update-exim4.conf.conf
+echo "dc_local_interfaces='127.0.0.1; ::1'" >> /etc/exim4/update-exim4.conf.conf
+echo "dc_readhost=''" >> /etc/exim4/update-exim4.conf.conf
+echo "dc_relay_domains=''" >> /etc/exim4/update-exim4.conf.conf
+echo "dc_minimaldns='false'" >> /etc/exim4/update-exim4.conf.conf
+echo "dc_relay_nets=''" >> /etc/exim4/update-exim4.conf.conf
+echo "dc_smarthost=''" >> /etc/exim4/update-exim4.conf.conf
+echo "CFILEMODE='644'" >> /etc/exim4/update-exim4.conf.conf
+echo "dc_use_split_config='false'" >> /etc/exim4/update-exim4.conf.conf
+echo "dc_hide_mailname=''" >> /etc/exim4/update-exim4.conf.conf
+echo "dc_mailname_in_oh='true'" >> /etc/exim4/update-exim4.conf.conf
+echo "dc_localdelivery='maildir_home'" >> /etc/exim4/update-exim4.conf.conf
 
-
-# /etc/exim4/update-exim4.conf.conf
-#
-# Edit this file and /etc/mailname by hand and execute update-exim4.conf
-# yourself or use 'dpkg-reconfigure exim4-config'
-#
-# Please note that this is _not_ a dpkg-conffile and that automatic changes
-# to this file might happen. The code handling this will honor your local
-# changes, so this is usually fine, but will break local schemes that mess
-# around with multiple versions of the file.
-#
-# update-exim4.conf uses this file to determine variable values to generate
-# exim configuration macros for the configuration file.
-#
-# Most settings found in here do have corresponding questions in the
-# Debconf configuration, but not all of them.
-#
-# This is a Debian specific file
-
-dc_eximconfig_configtype='internet'
-dc_other_hostnames='localhost'
-dc_local_interfaces='127.0.0.1; ::1'
-dc_readhost=''
-dc_relay_domains=''
-dc_minimaldns='false'
-dc_relay_nets=''
-dc_smarthost=''
-CFILEMODE='644'
-dc_use_split_config='false'
-dc_hide_mailname=''
-dc_mailname_in_oh='true'
-dc_localdelivery='maildir_home'
-
-===============================================
-
-
-
+printf "\n########## SET EXIM4 MAILNAME ###\n"
 
 echo "$DOMAIN" > /etc/mailname
 
 printf "\n########## REDIRECT SERVER MAIL TO A REAL WORLD ADDRESS ###\n"
 
-
 sed -i "s/root:.*/root: $REALEMAIL/" /etc/aliases
 #echo "root: $REALEMAIL" >> /etc/aliases
 echo "$USER: $REALEMAIL" >> /etc/aliases
 
+printf "\n########## APPLY CONFIGURATION CHANGES ###\n"
+
+update-exim4.conf
 newaliases
 
 printf "\n########## RESTART THE EXIM4 SERVICE ###\n"
@@ -727,10 +723,12 @@ service exim4 restart
 
 printf "\n########## SEND TEST MAIL ###\n"
 
-echo "Email from $(hostname)" | mail root -s "$DATE $UNIXTIMESTAMP Email from $(hostname)"
+echo "Email from $(hostname)" | mail "$REALEMAIL" -s "$DATE $UNIXTIMESTAMP Email from $(hostname)"
 
-works
-echo "This message" | mail -s"a message" root@bradchesney79.33mail.com
+echo "No DNS configuration mail testing:"
+echo "The trick is that you have to use 'disposable email' services that exist because in some cases it is not always the wisest decision to only do business with the best of the best. These services allow otherwise questionable mail to come in, melded into mail stamped  as legit from a sender with sufficient SPF & DKIM, and is sent along to your real mail box-- or at least that is how it works with 33mail.com"
+ech0 "Welcome to the seedy world of email laundering."
+#echo "This message" | mail -s"a message" root@bradchesney79.33mail.com
 
 printf "\n########## CLEAN UP ###\n"
 
