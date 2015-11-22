@@ -2,7 +2,6 @@
 
 ##### THE USER INFO, SCRIPT LOCATION, & DATE #####
 
-EXECUTOR=$(whoami)
 SCRIPTLOCATION=`pwd`
 UNIXTIMESTAMP=`date +%s`
 DATE=`date +%Y-%m-%d`
@@ -19,14 +18,25 @@ IPV4="45.33.112.226"
 IPV6="2600:3c00::f03c:91ff:fe26:42cf"
 TIMEZONE="Etc/UTC" # This is a server, UTC is the only appropriate timezone
 
-##### PERSON RESPONSIBLE FOR DEFAULT DOMAIN #####
+##### SYSTEM USER RESPONSIBLE FOR DEFAULT DOMAIN #####
 
-USER="administrator"
+USER="default-web"
 PASSWORD="dummypassword"
 EMAIL="$USER@$DOMAIN"
 
-#REALEMAIL="bradchesney79@gmail.com"
-REALEMAIL="dummyemail@bradchesney79.33mail.com"
+##### TOP LEVEL HUMAN USER #####
+
+USERID1000='brad'
+USERID1000EMAIL='bradchesney79@gmail.com'
+
+# There is an interesting dynamic that I just want to send myself mail.
+# No fuss, no muss-- that means in many cases no DNS, SPF, DKIM, and/or DMARC.
+# "Disposable Email Service", email launderers for hire essentially.
+# (Free providers exist...)
+# What equates to 'sketchy' emails from your unverified host to the service.
+# From the service, a fully qualified & clean email out to your target inbox.
+# 33mail.com is the service I use. Shameless plug for them in my example...
+TARGETEMAIL="dummyemail@bradchesney79.33mail.com"
 
 WEBROOT="/var/www"
 LOGDIR="/var/www/logs"
@@ -67,11 +77,13 @@ DBBACKUPUSERPASSWORD="thirddummypassword"
 ######################################################################
 ######################################################################
 
-# configure sendmail
+#####TO DO
 
-# have a website system user -- scripts to add new system users & human user acccounts
+# a script to add new system users & human user acccounts
 
 # a script to add a new virtualhost
+
+# a workflow to ensure users are added to groups appropriately
 
 # make security improvement changes to apache
 # (like hiding version & whatnot, much guided by securityheaders.com)
@@ -88,8 +100,13 @@ DBBACKUPUSERPASSWORD="thirddummypassword"
 
 # break into modular scripts
 
-# add kudos to http://reddit.com/user/cheaphomemadeacid
-#  2>&1 >> execution.log
+######################################################################
+
+#####NICE TO HAVE
+
+# partitions
+
+
 
 #based upon:
 # 
@@ -107,12 +124,12 @@ DBBACKUPUSERPASSWORD="thirddummypassword"
 # http://float64.uk/blog/2014/08/20/php-fpm-sockets-apache-mod-proxy-fcgi-ubuntu/
 # https://chris-lamb.co.uk/posts/checklist-configuring-debian-system
 
-#exit; halt
 #pushd /root; mkdir bin; pushd bin; wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/build-script.sh; chmod +x build-script.sh; time ./build-script.sh 2>&1 >> /var/log/auto-install.log; popd; popd
 
 #Takes ... on a Linode 1024
 #real    7m55.128s
 #real    9m49.525s
+#
 
 printf "\n##################################################"
 printf "\n#                                                #"
@@ -124,7 +141,6 @@ printf "\n##################################################\n\n"
 
 printf "\n########## SCRIPT EXECUTION PARTICULARS ##########\n\n"
 
-printf "\nEXECUTOR - $EXECUTIONLOGLOCATION"
 printf "\nSCRIPTLOCATION - $SCRIPTLOCATION"
 printf "\nEXECUTIONLOG - $EXECUTIONLOG"
 printf "\nTROUBLESHOOTINGFILES - $TROUBLESHOOTINGFILES"
@@ -144,6 +160,8 @@ printf "\nTIMEZONE - $TIMEZONE\n\n"
 printf "\nUSER - $USER\n\n"
 printf "\nPASSWORD - $PASSWORD\n"
 printf "\nEMAIL - $EMAIL=\n\n"
+
+printf "\nTARGETEMAIL - $TARGETEMAIL\n\n"
 
 printf "\nWEBROOT - $WEBROOT\n"
 printf "\nLOGDIR - $LOGDIR\n\n"
@@ -258,8 +276,6 @@ touch /etc/iptables/rules.v4
 touch /etc/iptables/rules.v6
 
 printf "\nBegin updating the IP tables rules\n\n"
-
-#apt-get -y install iptables-persistent
 
 printf "\nEXPECT - $EXPECT\n\n"
 
@@ -614,18 +630,6 @@ sed -i "s/;*session.cookie_httponly.*/session.cookie_httponly = 1/" /etc/php5/fp
 
 sed -i "s/;*disable_functions.*/disable_functions = apache_child_terminate, apache_setenv, define_syslog_variables, escapeshellarg, escapeshellcmd, eval, exec, fp, fput, ftp_connect, ftp_exec, ftp_get, ftp_login, ftp_nb_fput, ftp_put, ftp_raw, ftp_rawlist, highlight_file, ini_alter, ini_get_all, ini_restore, inject_code, mysql_pconnect, openlog, passthru, pcntl_alarm, pcntl_exec, pcntl_fork, pcntl_get_last_error, pcntl_getpriority, pcntl_setpriority, pcntl_signal, pcntl_signal_dispatch, pcntl_sigprocmask, pcntl_sigtimedwait, pcntl_sigwaitinfo, pcntl_strerror, pcntl_wait, pcntl_waitpid, pcntl_wexitstatus, pcntl_wifexited, pcntl_wifsignaled, pcntl_wifstopped, pcntl_wstopsig, pcntl_wtermsig, phpAds_XmlRpc, phpAds_remoteInfo, phpAds_xmlrpcDecode, phpAds_xmlrpcEncode, php_uname, popen, posix_getpwuid, posix_kill, posix_mkfifo, posix_setpgid, posix_setsid, posix_setuid, posix_uname, proc_close, proc_get_status, proc_nice, proc_open, proc_terminate, shell_exec, syslog, system, xmlrpc_entity_decode/" /etc/php5/fpm/php.ini
 
-#List from previous notes
-
-#disable_functions = apache_child_terminate, apache_setenv, define_syslog_variables, escapeshellarg, escapeshellcmd, eval, exec, fp, fput, ftp_connect, ftp_exec, ftp_get, ftp_login, ftp_nb_fput, ftp_put, ftp_raw, ftp_rawlist, highlight_file, ini_alter, ini_get_all, ini_restore, inject_code, mysql_pconnect, openlog, passthru, php_uname, phpAds_remoteInfo, phpAds_XmlRpc, phpAds_xmlrpcDecode, phpAds_xmlrpcEncode, popen, posix_getpwuid, posix_kill, posix_mkfifo, posix_setpgid, posix_setsid, posix_setuid, posix_setuid, posix_uname, proc_close, proc_get_status, proc_nice, proc_open, proc_terminate, shell_exec, syslog, system, xmlrpc_entity_decode
-
-# From default installation list
-
-#disable_functions = pcntl_alarm, pcntl_fork, pcntl_waitpid, pcntl_wait, pcntl_wifexited, pcntl_wifstopped, pcntl_wifsignaled, pcntl_wexitstatus, pcntl_wtermsig, pcntl_wstopsig, pcntl_signal, pcntl_signal_dispatch, pcntl_get_last_error, pcntl_strerror, pcntl_sigprocmask, pcntl_sigwaitinfo, pcntl_sigtimedwait, pcntl_exec, pcntl_getpriority, pcntl_setpriority
-
-#Combined and deduped list
-
-#disable_functions = apache_child_terminate, apache_setenv, define_syslog_variables, escapeshellarg, escapeshellcmd, eval, exec, fp, fput, ftp_connect, ftp_exec, ftp_get, ftp_login, ftp_nb_fput, ftp_put, ftp_raw, ftp_rawlist, highlight_file, ini_alter, ini_get_all, ini_restore, inject_code, mysql_pconnect, openlog, passthru, pcntl_alarm, pcntl_exec, pcntl_fork, pcntl_get_last_error, pcntl_getpriority, pcntl_setpriority, pcntl_signal, pcntl_signal_dispatch, pcntl_sigprocmask, pcntl_sigtimedwait, pcntl_sigwaitinfo, pcntl_strerror, pcntl_wait, pcntl_waitpid, pcntl_wexitstatus, pcntl_wifexited, pcntl_wifsignaled, pcntl_wifstopped, pcntl_wstopsig, pcntl_wtermsig, phpAds_XmlRpc, phpAds_remoteInfo, phpAds_xmlrpcDecode, phpAds_xmlrpcEncode, php_uname, popen, posix_getpwuid, posix_kill, posix_mkfifo, posix_setpgid, posix_setsid, posix_setuid, posix_uname, proc_close, proc_get_status, proc_nice, proc_open, proc_terminate, shell_exec, syslog, system, xmlrpc_entity_decode
-
 printf "\n########## INSTALL WEBDEVELOPER RESOURCES ###\n"
 
 
@@ -638,10 +642,11 @@ echo "<?php phpinfo(); ?>" >> /var/www/http/index.php
 
 printf "\n########## SETUP MAIL ###\n"
 
-#### Needed an SPF record
+#### May need an SPF record
 # from http://spfwizard.com
 
-# rustbeltrebellion.com.  IN TXT "v=spf1 mx a ip4:45.33.112.226/32 ?all"
+echo "SPF Record:"
+echo "$DOMAIN.  IN TXT \"v=spf1 mx a ip4:$IPV4/32 ?all\""
 
 # in my DNS config the first text field was: rustbeltrebellion.com.
 # in the dropdown: TXT
@@ -650,7 +655,7 @@ printf "\n########## SETUP MAIL ###\n"
 #### Needed DMARC record
 # https://www.unlocktheinbox.com/dmarcwizard/
 
-# _dmarc.rustbeltrebellion.com. IN TXT "v=DMARC1; p=quarantine; sp=quarantine; rua=mailto:bradchesney79@gmail.com; ruf=mailto:bradchesney79@gmail.com; rf=afrf; pct=100; ri=604800"
+echo "_dmarc.$DOMAIN. IN TXT \"v=DMARC1; p=quarantine; sp=quarantine; rua=mailto:$USERID1000EMAIL; ruf=mailto:$USERID1000EMAIL; rf=afrf; pct=100; ri=604800\""
 
 # in my DNS config the first text field was: _dmarc.rustbeltrebellion.com.
 # in the dropdown: TXT
@@ -658,15 +663,30 @@ printf "\n########## SETUP MAIL ###\n"
 
 #### What is DKIM?
 
+apt-get -y install opendkim opendkim-tools
+
+mkdir -p /var/www/certs/dkim
+pushd /var/www/certs/dkim
+opendkim-genkey -t -s mail -d $DOMAIN
+popd
+
+mkdir -p /etc/dkimkeys/dkim.key
+
+echo "*@$DOMAIN:$DOMAIN:/var/www/certs/dkim/default.private" >> /etc/dkimkeys/dkim.key
+
+cp /etc/opendkim.conf /etc/opendkim.conf.original
+
+sed -i "s/#Domain                 example.com/#Domain			$DOMAIN/" /etc/opendkim.conf
+sed -i "s|#KeyFile                /etc/dkimkeys/dkim.key|KeyFile	/etc/dkimkeys/dkim.key|" /etc/opendkim.conf
+sed -i "s/#Selector               2007/Selector		2007/" /etc/opendkim.conf
+
+
 # Still needed to tell Google not to spam messages from:(*@$DOMAIN) via 'filters'
 
-#apt-get -y install exim4-daemon-light bsd-mailx mailutils
+#apt-get -y install exim4-daemon-light bsd-mailx
 #### already installed
 
 apt-get -y install mailutils
-
-#dpkg-reconfigure exim4-config
-#During the Exim configuration, choose Internet site and follow all the defaults, ensuring that you only listen on 127.0.0.1 and you are not relaying mail for any other domains.
 
 printf "\n########## SET UPDATE-EXIM4.CONF MAIL CONFIGS ###\n"
 
@@ -708,9 +728,9 @@ echo "$DOMAIN" > /etc/mailname
 
 printf "\n########## REDIRECT SERVER MAIL TO A REAL WORLD ADDRESS ###\n"
 
-sed -i "s/root:.*/root: $REALEMAIL/" /etc/aliases
-#echo "root: $REALEMAIL" >> /etc/aliases
-echo "$USER: $REALEMAIL" >> /etc/aliases
+sed -i "s/root:.*/root: $TARGETEMAIL/" /etc/aliases
+#echo "root: $TARGETEMAIL" >> /etc/aliases
+echo "$USER: $TARGETEMAIL" >> /etc/aliases
 
 printf "\n########## APPLY CONFIGURATION CHANGES ###\n"
 
@@ -723,7 +743,7 @@ service exim4 restart
 
 printf "\n########## SEND TEST MAIL ###\n"
 
-echo "Email from $(hostname)" | mail "$REALEMAIL" -s "$DATE $UNIXTIMESTAMP Email from $(hostname)"
+echo "Email from $(hostname)" | mail "$TARGETEMAIL" -s "$DATE $UNIXTIMESTAMP Email from $(hostname)"
 
 echo "No DNS configuration mail testing:"
 echo "The trick is that you have to use 'disposable email' services that exist because in some cases it is not always the wisest decision to only do business with the best of the best. These services allow otherwise questionable mail to come in, melded into mail stamped  as legit from a sender with sufficient SPF & DKIM, and is sent along to your real mail box-- or at least that is how it works with 33mail.com"
