@@ -79,11 +79,11 @@ DBBACKUPUSERPASSWORD="thirddummypassword"
 
 #####TO DO
 
-# a script to add new system users & human user acccounts
+# a script to add a new virtualhost & new 'website' system users
 
-# a script to add a new virtualhost
+# a script to add human user acccounts (new VHOST fires this if 'person' user doesn't exist by default)
 
-# a workflow to ensure users are added to groups appropriately
+# a note displays to ensure users are added to groups appropriately
 
 # make security improvement changes to apache
 # (like hiding version & whatnot, much guided by securityheaders.com)
@@ -746,9 +746,9 @@ printf "\n########## SEND TEST MAIL ###\n"
 echo "Email from $(hostname)" | mail "$TARGETEMAIL" -s "$DATE $UNIXTIMESTAMP Email from $(hostname)"
 
 echo "No DNS configuration mail testing:"
-echo "The trick is that you have to use 'disposable email' services that exist because in some cases it is not always the wisest decision to only do business with the best of the best. These services allow otherwise questionable mail to come in, melded into mail stamped  as legit from a sender with sufficient SPF & DKIM, and is sent along to your real mail box-- or at least that is how it works with 33mail.com"
-ech0 "Welcome to the seedy world of email laundering."
-#echo "This message" | mail -s"a message" root@bradchesney79.33mail.com
+echo "The trick is that you have to use 'disposable email' services that exist because in some cases it is not always the wisest decision to only do business with the best of the best. These services allow otherwise questionable mail to come in, melded into mail stamped as legit from a sender with sufficient SPF, DMARC, & DKIM-- and is sent along to your real mail box --or at least that is how it works with 33mail.com"
+echo "Welcome to the seedy world of email laundering."
+
 
 printf "\n########## CLEAN UP ###\n"
 
