@@ -104,7 +104,7 @@ DBBACKUPUSERPASSWORD="thirddummypassword"
 
 #####NICE TO HAVE
 
-# partitions
+# disk partitions
 
 
 
