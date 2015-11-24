@@ -83,10 +83,6 @@ DBBACKUPUSERPASSWORD="thirddummypassword"
 
 # a script to add a new virtualhost & new 'website' system users
 
-# a script to add human user acccounts (new VHOST fires this if 'person' user doesn't exist by default)
-
-# a note displays to ensure users are added to groups appropriately
-
 # make security improvement changes to apache
 # (like hiding version & whatnot, much guided by securityheaders.com)
 
@@ -799,6 +795,10 @@ printf "Start collecting config files\n\n"
 
 cp /etc/hosts ${TROUBLESHOOTINGFILES}/etc-hosts
 
+cp /etc/passwd ${TROUBLESHOOTINGFILES}/etc-passwd
+
+cp /etc/group ${TROUBLESHOOTINGFILES}/etc-group
+
 cp /etc/apt/sources.list ${TROUBLESHOOTINGFILES}/etc-apt-sources.list
 
 cp /etc/iptables/rules.v4 ${TROUBLESHOOTINGFILES}/etc-iptables-rules.v4
@@ -856,6 +856,12 @@ uptime >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
 
 printf "\n\n########## IP TABLE RULES LOADED ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
 iptables -L >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
+
+printf "########## /ETC/PASSWD (USERS) ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
+cat ${TROUBLESHOOTINGFILES}/etc-passwd >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
+
+printf "########## /ETC/GROUP ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
+cat ${TROUBLESHOOTINGFILES}/etc-group >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
 
 printf "\n\n########## PACKAGES INSTALLED ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
 dpkg -l >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
