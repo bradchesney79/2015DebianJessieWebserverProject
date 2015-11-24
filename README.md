@@ -10,8 +10,6 @@ I will use the bash script as a roadmap to build an Ansible playbook.
 
 TODO:
 
-configure DKIM
-
 a script to add a new virtualhost & new 'website' system users
 
 a script to add human user acccounts (new VHOST fires this if 'person' user doesn't exist by default)
@@ -31,7 +29,12 @@ update troubleshooting resources on github
 
 improve readability
 
-break into modular scripts
+break into modular Ansible scripts
+
+
+NICE TO HAVE:
+
+disk partitions
 
 THANKS:
 
