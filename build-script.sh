@@ -787,7 +787,7 @@ cp /etc/apache2/includes/vhost-ssl ${TROUBLESHOOTINGFILES}/etc-apache2-includes-
 
 cp /etc/apache2/sites-available/default-ssl.conf ${TROUBLESHOOTINGFILES}/etc-apache2-sites-available-default-ssl.conf
 
-cp /etc/mysql/mysql.cnf ${TROUBLESHOOTINGFILES}/etc-mysql-mysql.cnf
+cp /etc/mysql/my.cnf ${TROUBLESHOOTINGFILES}/etc-mysql-my.cnf
 
 cp /etc/php5/fpm/php.ini ${TROUBLESHOOTINGFILES}/etc-php5-fpm-php.ini
 
@@ -861,7 +861,7 @@ printf "\n\n\n########## SITES-AVAILABLE/DEFAULT-SSL.CONF ###########\n\n" >> ${
 cat ${TROUBLESHOOTINGFILES}/etc-apache2-sites-available-default-ssl.conf >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
 
 printf "########## MYSQL.CNF ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
-cat ${TROUBLESHOOTINGFILES}/etc-mysql-mysql.cnf >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
+cat ${TROUBLESHOOTINGFILES}/etc-mysql-my.cnf >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
 
 printf "\n\n\n########## PHP.INI ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
 cat ${TROUBLESHOOTINGFILES}/etc-php5-fpm-php.ini >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
@@ -892,8 +892,10 @@ printf "\n#                                                #"
 printf "\n#                                                #"
 printf "\n##################################################\n\n"
 
-tar -czvf /root/bin/troubleshooting/troubleshooting.tgz /root/bin/troubleshooting/${UNIXTIMESTAMP}/*  
-mv /root/bin/troubleshooting/troubleshooting.tgz /root/bin/troubleshooting/${UNIXTIMESTAMP}/
+pushd ${TROUBLESHOOTINGFILES}
+tar -czvf troubleshooting.tgz ${TROUBLESHOOTINGFILES}/*  
+#mv /root/bin/troubleshooting/troubleshooting.tgz /root/bin/troubleshooting/${UNIXTIMESTAMP}/
+cp ${TROUBLESHOOTINGFILES}/troubleshooting.tgz $WEBROOT/http
 
 printf "\nThinking inside my head that a few minutes of uptime is trivial at this point-- nobody is actually depending on the system being up or even using it at this exact moment-- a reboot might be a smart idea"
 
