@@ -26,8 +26,8 @@ EMAIL="$USER@$DOMAIN"
 
 ##### TOP LEVEL HUMAN USER #####
 
-USERID1000='brad'
-USERID1000EMAIL='bradchesney79@gmail.com'
+USERID1001='brad'
+USERID1001EMAIL='bradchesney79@gmail.com'
 
 # There is an interesting dynamic that I just want to send myself mail.
 # No fuss, no muss-- that means in many cases no DNS, SPF, DKIM, and/or DMARC.
@@ -666,7 +666,7 @@ echo "$DOMAIN.  IN TXT \"v=spf1 mx a ip4:$IPV4/32 ?all\""
 #### Needed DMARC record
 # https://www.unlocktheinbox.com/dmarcwizard/
 
-echo "_dmarc.$DOMAIN. IN TXT \"v=DMARC1; p=quarantine; sp=quarantine; rua=mailto:$USERID1000EMAIL; ruf=mailto:$USERID1000EMAIL; rf=afrf; pct=100; ri=604800\""
+echo "_dmarc.$DOMAIN. IN TXT \"v=DMARC1; p=quarantine; sp=quarantine; rua=mailto:$USERID1001EMAIL; ruf=mailto:$USERID1001EMAIL; rf=afrf; pct=100; ri=604800\""
 
 # in my DNS config the first text field was: _dmarc.rustbeltrebellion.com.
 # in the dropdown: TXT
