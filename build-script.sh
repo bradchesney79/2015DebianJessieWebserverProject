@@ -123,6 +123,8 @@ DBBACKUPUSERPASSWORD="thirddummypassword"
 # http://serverfault.com/a/672969/106593
 # http://float64.uk/blog/2014/08/20/php-fpm-sockets-apache-mod-proxy-fcgi-ubuntu/
 # https://chris-lamb.co.uk/posts/checklist-configuring-debian-system
+# http://tecadmin.net/setup-dkim-with-postfix-on-ubuntu-debian/
+# http://www.rackspace.com/knowledge_center/article/checking-system-load-on-linux
 
 #pushd /root; mkdir bin; pushd bin; wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/build-script.sh; chmod +x build-script.sh; time ./build-script.sh 2>&1 >> /var/log/auto-install.log; popd; popd
 
@@ -567,6 +569,7 @@ openssl req -nodes $ALGORITHM -newkey rsa:$KEYSIZE -keyout $WEBROOT/certs/$YEAR/
 
 #####!!!!! So, skipping swapping out mpm_prefork and disabling the ssl host allows the webserver to start
 #####!!!!! Using mpm_worker causes an invalid config based upon mpm_worker being threaded and php5-fpm not being threadsafe
+#####!!!!! First no SSL-Cert that matches the SSL Virtual Host Configuration
 
 printf "\n########## DISABLE THE ACTIONS APACHE MODULE ###\n"
 a2dismod -f actions
@@ -822,6 +825,12 @@ printf "########## TROUBLESHOOTING REPORT $DATE $UNIXTIMESTAMP ###########\n\n" 
 
 printf "\n########## HOSTNAME ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
 hostname >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
+
+printf "\n########## PROCESSORS AVAILABLE (COUNT) ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
+grep processor /proc/cpuinfo | wc -l >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
+
+printf "\n########## UPTIME, USERS (COUNT), AND LOAD AVG (LOAD MAX = 100% * PROCESSORS AVAILABLE FOR PREVIOUS 1, 5, & 15 MINUTES) ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
+uptime >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
 
 printf "\n\n########## IP TABLE RULES LOADED ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
 iptables -L >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
