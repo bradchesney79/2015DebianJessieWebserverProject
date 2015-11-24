@@ -79,6 +79,8 @@ DBBACKUPUSERPASSWORD="thirddummypassword"
 
 #####TO DO
 
+# copy & tar keys for facilitating backups
+
 # a script to add a new virtualhost & new 'website' system users
 
 # a script to add human user acccounts (new VHOST fires this if 'person' user doesn't exist by default)
@@ -106,7 +108,12 @@ DBBACKUPUSERPASSWORD="thirddummypassword"
 
 # disk partitions
 
+######################################################################
 
+#####LEANING ON OTHERS
+
+# is /etc/aliases specifically okay?
+# is exim4/SPF/DMARC/DKIM more or less good to go?
 
 #based upon:
 # 
@@ -675,7 +682,19 @@ openssl genrsa -out dkim.default.key 1024
 openssl rsa -in dkim.default.key -out dkim.default.pub -pubout -outform PEM
 popd
 
-# If not updating DNS: still need to tell Google not to spam messages from:(*@$DOMAIN) via 'filters'
+DKIMPUBLICKEY=${cat /var/www/certs/dkim/dkim.default.pub | sed -e s/"-.*"// | tr -d '\n'}
+
+echo "default._domainkey.$DOMAIN IN TXT \"v=DKIM1;p=$DKIMPUBLICKEY\""
+
+# in my DNS config the first text field was: default._domainkey..rustbeltrebellion.com.
+# in the dropdown: TXT
+# in the last text field went: "v=DKIM1;p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC3xvSbgwX5WMMfIui3w2Lcwjj1RBVy/AjTCptQT4BGMRiLQcS5vhP4XnlzifX/G4Tp3oD+eh75zMLyw3mHjaT0dX1Yg79U/GAMndtkpoZaGMQwDKzKI0c0rt1AdmXHBEJ+BpPrG3IGGUN1H2eybyp4cZJ11ST51knk2mbSKooIPwIDAQAB"
+
+echo "verify with this command:"
+echo "host -t txt default._domainkey.$DOMAIN default._domainkey.$DOMAIN descriptive text \"v=DKIM1\\;p=$DKIMPUBLICKEY"
+
+
+# If not updating DNS for SPF but not DMARC or DKIM: still need to tell Google not to spam messages from:(*@$DOMAIN) via 'filters'
 # Or use 3rd party disposable email forwarding
 
 
@@ -795,6 +814,13 @@ cp /etc/php5/fpm/pool.d/${DOMAIN}.conf ${TROUBLESHOOTINGFILES}/etc-php5-fpm-pool
 
 cp /etc/php5/fpm/pool.d/${DOMAIN}-ssl.conf ${TROUBLESHOOTINGFILES}/etc-php5-fpm-pool.d-${DOMAIN}-ssl.conf
 
+cp /etc/exim4/update-exim4.conf.conf ${TROUBLESHOOTINGFILES}/etc-exim4-update-exim4.conf.conf
+
+cp /etc/exim4/conf.d/main/00_localmacros ${TROUBLESHOOTINGFILES}/etc-exim4-conf.d-main-00_localmacros
+
+cp /etc/aliases ${TROUBLESHOOTINGFILES}/etc-aliases
+
+
 printf "Start collecting log files\n\n"
 
 printf "Apache log files\n"
@@ -880,6 +906,15 @@ cat ${TROUBLESHOOTINGFILES}/etc-php5-fpm-pool.d-${DOMAIN}-ssl.conf >> ${TROUBLES
 
 printf "\n\n\n########## PHP-FPM LOG ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
 cat ${TROUBLESHOOTINGFILES}/php5-fpm.log >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
+
+printf "########## MAIN EXIM CONFIG ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
+cat ${TROUBLESHOOTINGFILES}/etc-exim4-update-exim4.conf.conf >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
+
+printf "########## EXIM CONF.D CONFIG ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
+cat ${TROUBLESHOOTINGFILES}/etc-exim4-conf.d-main-00_localmacros >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
+
+printf "########## ETC/ALIASES ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
+cat ${TROUBLESHOOTINGFILES}/etc-aliases >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
 
 printf "\n\n\n########## UNABRIDGED SETUP LOG ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
 cat ${EXECUTIONLOG} >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
