@@ -98,7 +98,7 @@ DBBACKUPUSERPASSWORD="thirddummypassword"
 
 # improve readability
 
-# break into modular scripts
+# break into modular Ansible scripts
 
 ######################################################################
 
@@ -227,13 +227,13 @@ printf "\n########## UPDATE APT SOURCES ###\n"
 
 printf "\nUpdate apt sources\n\n"
 
-echo "deb http://ftp.us.debian.org/debian testing main contrib non-free" > /etc/apt/sources.list
+echo "deb http://ftp.us.debian.org/debian jessie main contrib non-free" > /etc/apt/sources.list
 printf "\n" >> /etc/apt/sources.list
-echo "deb http://ftp.debian.org/debian/ jessie-updates main contrib non-free" >> /etc/apt/sources.list
+echo "deb http://httpredir.debian.org/debian jessie-updates main contrib non-free" >> /etc/apt/sources.list
 printf "\n" >> /etc/apt/sources.list
 echo "deb http://security.debian.org/ jessie/updates main contrib non-free" >> /etc/apt/sources.list
 printf "\n" >> /etc/apt/sources.list
-echo "deb http://backports.debian.org/debian-backports squeeze-backports main" >> /etc/apt/sources.list
+echo "deb http://http.debian.net/debian jessie-backports main contrib non-free" >> /etc/apt/sources.list
 
 printf "\n########## UPDATE THE SYSTEM ###\n"
 
