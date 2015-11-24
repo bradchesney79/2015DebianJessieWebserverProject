@@ -666,30 +666,17 @@ echo "_dmarc.$DOMAIN. IN TXT \"v=DMARC1; p=quarantine; sp=quarantine; rua=mailto
 
 #### What is DKIM?
 
-apt-get -y install opendkim opendkim-tools
+apt-get -y install exim4 exim4-daemon-light bsd-mailx opendkim opendkim-tools mailutils
 
 mkdir -p /var/www/certs/dkim
 pushd /var/www/certs/dkim
-opendkim-genkey -t -s mail -d $DOMAIN
+openssl genrsa -out dkim.default.key 1024
+openssl rsa -in dkim.default.key -out dkim.default.pub -pubout -outform PEM
 popd
 
-mkdir -p /etc/dkimkeys/dkim.key
+# If not updating DNS: still need to tell Google not to spam messages from:(*@$DOMAIN) via 'filters'
+# Or use 3rd party disposable email forwarding
 
-echo "*@$DOMAIN:$DOMAIN:/var/www/certs/dkim/default.private" >> /etc/dkimkeys/dkim.key
-
-cp /etc/opendkim.conf /etc/opendkim.conf.original
-
-sed -i "s/#Domain                 example.com/#Domain			$DOMAIN/" /etc/opendkim.conf
-sed -i "s|#KeyFile                /etc/dkimkeys/dkim.key|KeyFile	/etc/dkimkeys/dkim.key|" /etc/opendkim.conf
-sed -i "s/#Selector               2007/Selector		2007/" /etc/opendkim.conf
-
-
-# Still needed to tell Google not to spam messages from:(*@$DOMAIN) via 'filters'
-
-#apt-get -y install exim4-daemon-light bsd-mailx
-#### already installed
-
-apt-get -y install mailutils
 
 printf "\n########## SET UPDATE-EXIM4.CONF MAIL CONFIGS ###\n"
 
@@ -724,6 +711,11 @@ echo "dc_use_split_config='false'" >> /etc/exim4/update-exim4.conf.conf
 echo "dc_hide_mailname=''" >> /etc/exim4/update-exim4.conf.conf
 echo "dc_mailname_in_oh='true'" >> /etc/exim4/update-exim4.conf.conf
 echo "dc_localdelivery='maildir_home'" >> /etc/exim4/update-exim4.conf.conf
+
+echo "DKIM_CANON = strict" >> /etc/exim4/conf.d/main/00_localmacros
+echo "DKIM_SELECTOR = default" >> /etc/exim4/conf.d/main/00_localmacros
+echo "DKIM_PRIVATE_KEY = /var/www/certs/dkim/dkim.default.key" >> /etc/exim4/conf.d/main/00_localmacros
+echo "DKIM_DOMAIN = ${lc:${domain:$h_from:}}" >> /etc/exim4/conf.d/main/00_localmacros
 
 printf "\n########## SET EXIM4 MAILNAME ###\n"
 
