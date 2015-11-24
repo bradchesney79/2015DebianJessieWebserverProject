@@ -133,7 +133,7 @@ DBBACKUPUSERPASSWORD="thirddummypassword"
 # http://tecadmin.net/setup-dkim-with-postfix-on-ubuntu-debian/
 # http://www.rackspace.com/knowledge_center/article/checking-system-load-on-linux
 
-#pushd /root; mkdir bin; pushd bin; wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/build-script.sh; chmod +x build-script.sh; time ./build-script.sh 2>&1 | tee /var/log/auto-install.log; popd; popd
+#pushd /root; mkdir bin; pushd bin; wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/build-script.sh; wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/add-web-person-user.sh; chmod +x *.sh; time ./build-script.sh 2>&1 | tee /var/log/auto-install.log; popd; popd
 
 #Takes ... on a Linode 1024
 #real    7m55.128s
@@ -764,6 +764,9 @@ echo "No DNS configuration mail testing:"
 echo "The trick is that you have to use 'disposable email' services that exist because in some cases it is not always the wisest decision to only do business with the best of the best. These services allow otherwise questionable mail to come in, melded into mail stamped as legit from a sender with sufficient SPF, DMARC, & DKIM-- and is sent along to your real mail box --or at least that is how it works with 33mail.com"
 echo "Welcome to the seedy world of email laundering."
 
+printf "\n########## ADD FIRST PERSON USER ###\n"
+
+./add-web-person-user.sh $USERID1001 $USER true
 
 printf "\n########## CLEAN UP ###\n"
 
