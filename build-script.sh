@@ -932,6 +932,8 @@ tar -czvf troubleshooting.tgz ${TROUBLESHOOTINGFILES}/*
 #mv /root/bin/troubleshooting/troubleshooting.tgz /root/bin/troubleshooting/${UNIXTIMESTAMP}/
 cp ${TROUBLESHOOTINGFILES}/troubleshooting.tgz $WEBROOT/http
 
-printf "\nThinking inside my head that a few minutes of uptime is trivial at this point-- nobody is actually depending on the system being up or even using it at this exact moment-- a reboot might be a smart idea"
+printf "\nThinking inside my head that a few minutes of uptime is trivial at this point-- nobody is actually depending on the system being up or even using it at this exact moment-- a reboot might be a smart idea.\n"
+
+printf "\nDon't forget to set up Reverse DNS while you wait -- gets rid of those pesky problem with the server being referred to by the linode assigned machine name in most places."
 
 exit 0
