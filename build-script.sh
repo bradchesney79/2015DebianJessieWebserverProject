@@ -126,12 +126,13 @@ DBBACKUPUSERPASSWORD="thirddummypassword"
 # http://tecadmin.net/setup-dkim-with-postfix-on-ubuntu-debian/
 # http://www.rackspace.com/knowledge_center/article/checking-system-load-on-linux
 
-#pushd /root; mkdir bin; pushd bin; wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/build-script.sh; chmod +x build-script.sh; time ./build-script.sh 2>&1 >> /var/log/auto-install.log; popd; popd
+#pushd /root; mkdir bin; pushd bin; wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/build-script.sh; chmod +x build-script.sh; time ./build-script.sh 2>&1 | tee /var/log/auto-install.log; popd; popd
 
 #Takes ... on a Linode 1024
 #real    7m55.128s
 #real    9m49.525s
-#
+#real    4m27.518s
+
 
 printf "\n##################################################"
 printf "\n#                                                #"
