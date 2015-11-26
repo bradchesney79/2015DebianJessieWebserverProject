@@ -129,7 +129,7 @@ DBBACKUPUSERPASSWORD="thirddummypassword"
 # http://tecadmin.net/setup-dkim-with-postfix-on-ubuntu-debian/
 # http://www.rackspace.com/knowledge_center/article/checking-system-load-on-linux
 
-#pushd /root; mkdir bin; pushd bin; wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/build-script.sh; wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/add-web-person-user.sh; chmod +x *.sh; time ./build-script.sh 2>&1 | tee /var/log/auto-install.log; popd; popd
+#pushd /root; mkdir bin; pushd bin; wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/build-script.sh; wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/add-web-person-user.sh; wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/add-website.sh; chmod +x *.sh; time ./build-script.sh 2>&1 | tee /var/log/auto-install.log; popd; popd
 
 #Takes ... on a Linode 1024
 #real    7m55.128s
@@ -306,7 +306,7 @@ expect {
 send "\r"
 EOD
 
-cat /tmp/iptables-persistent.log
+cat /tmp/iptables-persistent.loghttps://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/add-website.sh
 
 #FIXME rm /tmp/iptables-persistent.log
 
