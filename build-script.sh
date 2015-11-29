@@ -128,13 +128,27 @@ DBBACKUPUSERPASSWORD="thirddummypassword"
 # https://chris-lamb.co.uk/posts/checklist-configuring-debian-system
 # http://tecadmin.net/setup-dkim-with-postfix-on-ubuntu-debian/
 # http://www.rackspace.com/knowledge_center/article/checking-system-load-on-linux
+#CSR Generation-- use full state name and not the abbreviation
+#http://www.cisco.com/c/en/us/support/docs/application-networking-services/sca-11000-series-secure-content-accelerators/22400-cert-request-22400.html
 
+###For me to test the whole thing as-is
 #pushd /root; mkdir bin; pushd bin; wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/build-script.sh; wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/add-web-person-user.sh; wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/add-website.sh; chmod +x *.sh; time ./build-script.sh 2>&1 | tee /var/log/auto-install.log; popd; popd
 
 #Takes ... on a Linode 1024
 #real    7m55.128s
 #real    9m49.525s
 #real    4m27.518s
+
+###For myself and others to acquire & modify 
+
+#Acquire the scripts
+#pushd /root; mkdir bin; pushd bin; wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/build-script.sh; wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/add-web-person-user.sh; wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/add-website.sh; chmod +x *.sh
+
+#Modify the scripts
+#--You'll have to manage this on your own.
+
+#Run the build script
+#time ./build-script.sh 2>&1 | tee /var/log/auto-install.log; popd; popd
 
 
 printf "\n##################################################"
