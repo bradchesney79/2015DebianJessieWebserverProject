@@ -1,14 +1,79 @@
 #!/bin/bash
 
+######################################################################
+######################################################################
+
+#####NOTES & SNIPPETS#####
+
+######################################################################
+######################################################################
+
+#based upon:
+# 
+# http://stackoverflow.com/questions/3601515/how-to-check-if-a-variable-is-set-in-bash
+
+
+usage(){
+	echo "Usage: $0"
+	echo ""
+	echo "Two mandatory arguments"
+	echo "Up to eight arguments, space delimited"
+	echo "The script is not 'smart', must specify all arguments up until the last one you need to specify"
+	echo ""
+	echo "DOMAIN (example.com)*"
+	echo "NON-PERSON WEBSITE USER PASSWORD (passw0rd)*"
+	echo ""
+	echo "SSL CERT ORGANIZATION (Rust Belt Rebellion)✓"
+	echo ""
+	echo "SSL CERT ORGANIZATIONAL UNIT (Web Development)✓"
+	echo ""
+	echo "SSL Provider (start-ssl)✓"
+	echo ""
+	echo "SSL CERT LOCALITY (Eastlake)✓"
+	echo "SSL CERT STATE (Ohio)✓"
+	echo "SSL CERT COUNTRY (US)✓"
+	echo ""
+	echo "* denotes a required argument"
+	echo "✓ denotes a default value as the example"
+	exit 1
+}
+ 
+# invoke  usage
+# call usage() function if parameters not supplied
+[[ $# -eq 0 ]] && usage
+
+if [ -z "$1" ]
+then usage
+fi
+
+if [ -z "$2" ]
+then usage
+fi
+
 #setup variables
-DOMAIN=$1
+DOMAIN="$1"
 
 DOMAINUSER=`echo "$DOMAIN-web" | sed -e 's/\.//g'`
-PASSWORD=$2
+EMAIL="$DOMAINUSER@$DOMAIN"
+PASSWORD="$2"
 
+HOSTNAME="www"
 WEBROOT="/home/$DOMAINUSER"
 LOGDIR="$WEBROOT/logs"
-SSLPROVIDER=$3
+
+##### SSL KEY PARTICULARS #####
+
+KEYSIZE="2048"
+ALGORITHM="-sha256"
+
+##### DEFAULT DOMAIN INFO FOR SSL #####
+
+ORGANIZATION=${3:-"Rust Belt Rebellion"}
+ORGANIZATIONALUNIT=${4:-"Web Development"}
+SSLPROVIDER=${5:-"start-ssl"}
+LOCALITY=${6:-"Eastlake"}
+STATE=${7:-"Ohio"}
+COUNTRY=${8:-"US"}
 
 SCRIPTLOCATION=`pwd`
 UNIXTIMESTAMP=`date +%s`
@@ -18,17 +83,15 @@ YEAR=`date +%Y`
 EXECUTIONLOG="/var/log/$DOMAIN-auto-install.log"
 
 
-
-
 #add the user
-printf "\n########## CREATE A USER FOR THE SITE ###\n"
+printf "\n########## CREATE A NOT-A-PERSON USER ACCOUNT FOR THE SITE ###\n"
 printf "\n########## THIS AIDS RESOURCE SEGREGATION ###\n"
 
 mkdir "/home/$DOMAINUSER"
 
-useradd -d $WEBROOT -p $PASSWORD -c "$DOMAIN Web Site User" $DOMAINUSER
+useradd -d $WEBROOT -p $PASSWORD -c "$DOMAIN FPM Web Site User" $DOMAINUSER
 
-printf "\n########## LOCK THE NOT USER ACCOUNT THE WEBSITE RUNS AS ###\n"
+printf "\n########## LOCK THE NOT-A-PERSON USER ACCOUNT THE FPM WEBSITE RUNS AS ###\n"
 passwd -l $DOMAINUSER
 
 #setup virtualhost directory structure
