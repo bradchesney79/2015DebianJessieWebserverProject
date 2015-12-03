@@ -86,6 +86,10 @@ DBBACKUPUSERPASSWORD="thirddummypassword"
 # make security improvement changes to apache
 # (like hiding version & whatnot, much guided by securityheaders.com)
 
+# improve reporting report
+
+# break reporting into its own script so it can be rerun at whim
+
 # install global webdev resources like composer, node, fonts
 
 # improve troubleshooting resources
@@ -130,6 +134,10 @@ DBBACKUPUSERPASSWORD="thirddummypassword"
 # http://www.rackspace.com/knowledge_center/article/checking-system-load-on-linux
 #CSR Generation-- use full state name and not the abbreviation
 #http://www.cisco.com/c/en/us/support/docs/application-networking-services/sca-11000-series-secure-content-accelerators/22400-cert-request-22400.html
+###BRAAAAAAD, these:
+#http://www.html5rocks.com/en/tutorials/security/content-security-policy/
+#https://www.linode.com/docs/tools-reference/linux-system-administration-basics
+#http://techblog.netflix.com/2015/11/linux-performance-analysis-in-60s.html
 
 ###For me to test the whole thing as-is
 #pushd /root; mkdir bin; pushd bin; wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/build-script.sh; wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/add-web-person-user.sh; wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/add-website.sh; chmod +x *.sh; time ./build-script.sh 2>&1 | tee /var/log/auto-install.log; popd; popd
