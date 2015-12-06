@@ -198,5 +198,5 @@ printf "\n##################################################\n\n"
 pushd ${TROUBLESHOOTINGFILES}
 tar -czvf troubleshooting.tgz ${TROUBLESHOOTINGFILES}/*  
 #mv /root/bin/troubleshooting/troubleshooting.tgz /root/bin/troubleshooting/${UNIXTIMESTAMP}/
-cp ${TROUBLESHOOTINGFILES}/troubleshooting.tgz $WEBROOT/http
+cp ${TROUBLESHOOTINGFILES}/troubleshooting.tgz $WEBROOT/
 popd
