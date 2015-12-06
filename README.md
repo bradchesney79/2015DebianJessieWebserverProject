@@ -10,8 +10,7 @@ I will use the bash script as a roadmap to build an Ansible playbook.
 
 TODO:
 
-make security improvement changes to apache
-(like hiding version & whatnot, much guided by securityheaders.com)
+separate troubleshooting into it's own script
 
 install global webdev resources like composer, node, fonts
 
