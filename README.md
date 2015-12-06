@@ -10,8 +10,6 @@ I will use the bash script as a roadmap to build an Ansible playbook.
 
 TODO:
 
-separate troubleshooting into it's own script
-
 install global webdev resources like composer, node, fonts
 
 improve troubleshooting resources
