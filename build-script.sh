@@ -55,7 +55,8 @@ LOCALITY="Eastlake"
 ORGANIZATION="Rust Belt Rebellion"
 ORGANIZATIONALUNIT="Web Development"
 
-SSLPROVIDER="start-ssl"
+# start-ssl-free start-ssl-class2 lets-encrypt 
+SSLPROVIDER="start-ssl-class2"
 
 ##### DATABASE INFO #####
 
@@ -138,6 +139,7 @@ DBBACKUPUSERPASSWORD="thirddummypassword"
 #http://www.html5rocks.com/en/tutorials/security/content-security-policy/
 #https://www.linode.com/docs/tools-reference/linux-system-administration-basics
 #http://techblog.netflix.com/2015/11/linux-performance-analysis-in-60s.html
+#http://serverfault.com/questions/570288/is-it-bad-to-redirect-http-to-https
 
 ###For me to test the whole thing as-is
 #pushd /root; mkdir bin; pushd bin; wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/build-script.sh; wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/add-web-person-user.sh; wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/add-website.sh; chmod +x *.sh; time ./build-script.sh 2>&1 | tee /var/log/auto-install.log; popd; popd
@@ -492,13 +494,37 @@ printf "\n########## MODIFY DEFAULT VHOST CONFIGURATION FILES ###\n"
 mv /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/000-default.conf.original
 
 
-printf "<VirtualHost *:80>\n" > /etc/apache2/sites-available/default.conf
+printf "<VirtualHost _default_:80>\n" > /etc/apache2/sites-available/default.conf
 printf "  ServerName $DOMAIN\n" >> /etc/apache2/sites-available/default.conf
 printf "  ServerAlias $HOSTNAME.$DOMAIN\n\n" >> /etc/apache2/sites-available/default.conf
 printf "  ServerAdmin $EMAIL\n" >> /etc/apache2/sites-available/default.conf
 printf "  DocumentRoot $WEBROOT/http\n\n" >> /etc/apache2/sites-available/default.conf
 printf "  ErrorLog $LOGDIR/error.log\n" >> /etc/apache2/sites-available/default.conf
 printf "  CustomLog $LOGDIR/access.log combined\n\n" >> /etc/apache2/sites-available/default.conf
+
+printf "\n        #   Configure Apache to Advertise Trying SSL First\n\n" >> /etc/apache2/sites-available/default.conf
+printf "        Header always set Strict-Transport-Security \"max-age=63072000; includeSubdomains; preload\"\n\n" >> /etc/apache2/sites-available/default.conf
+
+printf "\n        #   Do Not Permit Embedding In an iframe Tag\n\n" >> /etc/apache2/sites-available/default.conf
+printf "\n        #   See SAMEORIGIN or ALLOW-FROM Documentation for More Relaxed X-Frame Usage\n\n" >> /etc/apache2/sites-available/default.conf
+printf "        Header always set X-Frame-Options DENY\n\n" >> /etc/apache2/sites-available/default.conf
+
+printf "\n        #   Set Server Level XSS Prevention\n\n" >> /etc/apache2/sites-available/default.conf
+printf "        Header set X-XSS-Protection: \"1; mode=block\"\n\n" >> /etc/apache2/sites-available/default.conf
+
+printf "\n        #   Remove Poorly Performing etag Cache Invalidation Header\n\n" >> /etc/apache2/sites-available/default.conf
+printf "        Header unset ETag\n\n" >> /etc/apache2/sites-available/default.conf
+
+printf "\n        #   Prevent MIME sniffing a non-declared content type\n\n" >> /etc/apache2/sites-available/default.conf
+printf "        Header set X-Content-Type-Options: nosniff\n\n" >> /etc/apache2/sites-available/default.conf
+
+printf "\n        #   Allow Running Scripts from Self and Third-Party Resources from Google\n\n" >> /etc/apache2/sites-available/default.conf
+printf "        Header set X-WebKit-CSP: \"default-src 'self';script-src 'self' www.google-analytics.com ajax.googleapis.com;\"\n\n" >> /etc/apache2/sites-available/default.conf
+printf "        Header set X-Content-Security-Policy: \"default-src 'self';script-src 'self' www.google-analytics.com ajax.googleapis.com;\"\n\n" >> /etc/apache2/sites-available/default.conf
+printf "        Header set Content-Security-Policy: \"default-src 'self';script-src 'self' www.google-analytics.com ajax.googleapis.com;\"\n\n" >> /etc/apache2/sites-available/default.conf
+
+printf "\n        #   Used by Adobe PDF & Flash -- Don't Use Flash\n\n" >> /etc/apache2/sites-available/default.conf
+printf "        Header set X-Permitted-Cross-Domain-Policies: "master-only"\n\n" >> /etc/apache2/sites-available/default.conf
 
 printf "  <FilesMatch \"\.php$\">\n" >> /etc/apache2/sites-available/default.conf
 printf "    SetHandler \"proxy:unix://$WEBROOT/sockets/$DOMAIN.sock|fcgi://$DOMAIN\"\n" >> /etc/apache2/sites-available/default.conf
@@ -538,12 +564,47 @@ printf "        </Proxy>\n" >> /etc/apache2/sites-available/default-ssl.conf
 
 printf "        Include /etc/apache2/includes/vhost-ssl\n\n" >> /etc/apache2/sites-available/default-ssl.conf
 
+if [ "$SSLPROVIDER" = "start-ssl-class2" ]
+then
 printf "        #   The StartSSL Certificate\n\n" >> /etc/apache2/sites-available/default-ssl.conf
 printf "        SSLCertificateFile $WEBROOT/certs/$YEAR/$SSLPROVIDER/ssl.crt\n" >> /etc/apache2/sites-available/default-ssl.conf
 printf "        SSLCertificateKeyFile $WEBROOT/certs/$YEAR/$SSLPROVIDER/ssl.key\n" >> /etc/apache2/sites-available/default-ssl.conf
 printf "        SSLCertificateChainFile $WEBROOT/certs/$YEAR/$SSLPROVIDER/sub.class2.server.ca.pem\n" >> /etc/apache2/sites-available/default-ssl.conf
 printf "        SSLCACertificateFile $WEBROOT/certs/$YEAR/$SSLPROVIDER/ca.pem\n\n" >> /etc/apache2/sites-available/default-ssl.conf
 printf "        \n" >> /etc/apache2/sites-available/default-ssl.conf
+fi
+
+printf "\nModify Headers Served for a More Secure Server\n\n"
+
+printf "\n        #   Configure Apache to Advertise Trying SSL First\n\n" >> /etc/apache2/sites-available/default-ssl.conf
+printf "        Header always set Strict-Transport-Security \"max-age=63072000; includeSubdomains; preload\"\n\n" >> /etc/apache2/sites-available/default-ssl.conf
+
+printf "\n        #   Do Not Permit Embedding In an iframe Tag\n\n" >> /etc/apache2/sites-available/default-ssl.conf
+printf "\n        #   See SAMEORIGIN or ALLOW-FROM Documentation for More Relaxed X-Frame Usage\n\n" >> /etc/apache2/sites-available/default-ssl.conf
+printf "        Header always set X-Frame-Options DENY\n\n" >> /etc/apache2/sites-available/default-ssl.conf
+
+printf "\n        #   Set Server Level XSS Prevention\n\n" >> /etc/apache2/sites-available/default-ssl.conf
+printf "        Header set X-XSS-Protection: \"1; mode=block\"\n\n" >> /etc/apache2/sites-available/default-ssl.conf
+
+printf "\n        #   Remove Poorly Performing etag Cache Invalidation Header\n\n" >> /etc/apache2/sites-available/default-ssl.conf
+printf "        Header unset ETag\n\n" >> /etc/apache2/sites-available/default-ssl.conf
+
+printf "\n        #   Prevent MIME sniffing a non-declared content type\n\n" >> /etc/apache2/sites-available/default-ssl.conf
+printf "        Header set X-Content-Type-Options: nosniff\n\n" >> /etc/apache2/sites-available/default-ssl.conf
+
+printf "\n        #   Allow Running Scripts from Self and Third-Party Resources from Google\n\n" >> /etc/apache2/sites-available/default-ssl.conf
+printf "        Header set X-WebKit-CSP: \"default-src 'self';script-src 'self' www.google-analytics.com ajax.googleapis.com;\"\n\n" >> /etc/apache2/sites-available/default-ssl.conf
+printf "        Header set X-Content-Security-Policy: \"default-src 'self';script-src 'self' www.google-analytics.com ajax.googleapis.com;\"\n\n" >> /etc/apache2/sites-available/default-ssl.conf
+printf "        Header set Content-Security-Policy: \"default-src 'self';script-src 'self' www.google-analytics.com ajax.googleapis.com;\"\n\n" >> /etc/apache2/sites-available/default-ssl.conf
+
+printf "\n        #   Used by Adobe PDF & Flash -- Don't Use Flash\n\n" >> /etc/apache2/sites-available/default-ssl.conf
+printf "#        Header set X-Permitted-Cross-Domain-Policies: "master-only"\n\n" >> /etc/apache2/sites-available/default-ssl.conf
+
+    
+    
+    
+    
+    
 
 printf "        #   SSL Protocol Adjustments:\n" >> /etc/apache2/sites-available/default-ssl.conf
 printf "        #   The safe and default but still SSL/TLS standard compliant shutdown\n" >> /etc/apache2/sites-available/default-ssl.conf
@@ -600,8 +661,8 @@ openssl req -nodes $ALGORITHM -newkey rsa:$KEYSIZE -keyout $WEBROOT/certs/$YEAR/
 printf "\n########## DISABLE THE ACTIONS APACHE MODULE ###\n"
 a2dismod -f actions
 
-printf "\n########## ENABLE THE PROXY FCGI APACHE MODULE ###\n"
-a2enmod proxy_fcgi ssl
+printf "\n########## ENABLE THE PROXY FCGI, SSL, & HEADERS APACHE MODULES ###\n"
+a2enmod proxy_fcgi ssl headers
 
 printf "\n########## REMOVE EXISTING ENABLED SITES ###\n"
 rm /etc/apache2/sites-enabled/*
@@ -962,6 +1023,8 @@ pushd ${TROUBLESHOOTINGFILES}
 tar -czvf troubleshooting.tgz ${TROUBLESHOOTINGFILES}/*  
 #mv /root/bin/troubleshooting/troubleshooting.tgz /root/bin/troubleshooting/${UNIXTIMESTAMP}/
 cp ${TROUBLESHOOTINGFILES}/troubleshooting.tgz $WEBROOT/http
+
+printf "\nSSL Certs come from a third-party, be sure to get them and put any in the appropriate directory.\n"
 
 printf "\nThinking inside my head that a few minutes of uptime is trivial at this point-- nobody is actually depending on the system being up or even using it at this exact moment-- a reboot might be a smart idea.\n"
 

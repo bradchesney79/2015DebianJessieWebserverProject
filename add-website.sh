@@ -126,7 +126,7 @@ find $WEBROOT -type d -exec chmod -R 775 {} \;
 
 #setup virtual hosts
 
-printf "<VirtualHost $DOMAIN:80>\n" > /etc/apache2/sites-available/$DOMAIN.conf
+printf "<VirtualHost *:80>\n" > /etc/apache2/sites-available/$DOMAIN.conf
 printf "  ServerName $DOMAIN\n" >> /etc/apache2/sites-available/$DOMAIN.conf
 printf "  ServerAlias $HOSTNAME.$DOMAIN\n\n" >> /etc/apache2/sites-available/$DOMAIN.conf
 printf "  ServerAdmin $EMAIL\n" >> /etc/apache2/sites-available/$DOMAIN.conf
@@ -146,7 +146,7 @@ printf "</VirtualHost>\n" >> /etc/apache2/sites-available/$DOMAIN.conf
 
 
 printf "<IfModule mod_ssl.c>\n" > /etc/apache2/sites-available/$DOMAIN-ssl.conf
-printf "    <VirtualHost $DOMAIN:443>\n\n" >> /etc/apache2/sites-available/$DOMAIN-ssl.conf
+printf "    <VirtualHost *:443>\n\n" >> /etc/apache2/sites-available/$DOMAIN-ssl.conf
 printf "        ServerName $DOMAIN\n" >> /etc/apache2/sites-available/$DOMAIN-ssl.conf
 printf "        ServerAlias *.$DOMAIN\n" >> /etc/apache2/sites-available/$DOMAIN-ssl.conf
 printf "        DocumentRoot $WEBROOT/https\n" >> /etc/apache2/sites-available/$DOMAIN-ssl.conf
