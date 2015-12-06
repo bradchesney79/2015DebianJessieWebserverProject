@@ -1,0 +1,4 @@
+DKIM_CANON = strict
+DKIM_SELECTOR = default
+DKIM_PRIVATE_KEY = /var/www/certs/dkim/dkim.default.key
+DKIM_DOMAIN = 

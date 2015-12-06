@@ -1,4 +1,4 @@
-########## TROUBLESHOOTING REPORT 2015-11-24 1448342652 ###########
+########## TROUBLESHOOTING REPORT 2015-12-06 1449426740 ###########
 
 
 ########## HOSTNAME ###########
@@ -9,7 +9,122 @@ www
 
 1
 
-########## UPTIME, USERS (COUNT), AND LOAD AVG (LOAD MAX = 100 05:28:39 up 5 min,  1 user,  load average: 0.93, 0.60, 0.26
+########## UPTIME, USERS (COUNT), AND LOAD AVG (LOAD MAX = 100 PERCENT x PROCESSORS AVAILABLE FOR PREVIOUS 1, 5, & 15 MINUTES) ###########
+
+ 18:32:21 up 9 min,  1 user,  load average: 1.01, 0.61, 0.25
+
+
+########## LOWER LEVEL MACHINE MESSAGE INFO ###########
+
+[3920398.554230] systemd[1]: Listening on Syslog Socket.
+[3920398.554310] systemd[1]: Starting Journal Service...
+[3920398.565831] systemd[1]: Started Journal Service.
+[3920398.638679] systemd-udevd[2248]: starting version 215
+[3920398.653841] EXT4-fs (xvda): re-mounted. Opts: errors=remount-ro
+[3920398.712674] systemd-journald[1681]: Received request to flush runtime journal from PID 1
+[3920398.905224] Adding 262140k swap on /dev/xvdb.  Priority:-1 extents:1 across:262140k SSFS
+[3920399.660134] random: nonblocking pool is initialized
+[3920407.325514] nf_conntrack: automatic helper assignment is deprecated and it will be removed soon. Use the iptables CT target to attach helpers instead.
+[3920765.366988] systemd-udevd[7120]: starting version 215
+
+
+########## CPU MEMORY USAGE ###########
+
+procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
+ r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st
+ 0  0      4  42632  34736 703456    0    0   159  2743  646 2447 14 16 66  3  1
+
+
+########## PROCESSOR USAGE ###########
+
+Linux 4.1.5-x86_64-linode61 (www) 	12/06/2015 	_x86_64_	(1 CPU)
+
+06:32:21 PM  CPU    %usr   %nice    %sys %iowait    %irq   %soft  %steal  %guest  %gnice   %idle
+06:32:21 PM  all   13.95    0.00   16.20    2.51    0.00    0.08    0.90    0.00    0.00   66.37
+06:32:21 PM    0   13.95    0.00   16.20    2.51    0.00    0.08    0.90    0.00    0.00   66.37
+
+
+########## RUNNING PROCESSES ###########
+
+Linux 4.1.5-x86_64-linode61 (www) 	12/06/2015 	_x86_64_	(1 CPU)
+
+06:32:21 PM   UID       PID    %usr %system  %guest    %CPU   CPU  Command
+06:32:21 PM     0         1    0.67    0.79    0.00    1.46     0  systemd
+06:32:21 PM     0         3    0.00    0.02    0.00    0.02     0  ksoftirqd/0
+06:32:21 PM     0         4    0.00    0.00    0.00    0.00     0  kworker/0:0
+06:32:21 PM     0         6    0.00    0.01    0.00    0.01     0  kworker/u2:0
+06:32:21 PM     0         7    0.00    0.04    0.00    0.04     0  rcu_sched
+06:32:21 PM     0       542    0.00    0.01    0.00    0.01     0  kswapd0
+06:32:21 PM     0      1503    0.00    0.10    0.00    0.10     0  kworker/0:1H
+06:32:21 PM     0      1504    0.00    0.13    0.00    0.13     0  jbd2/xvda-8
+06:32:21 PM     0      1681    0.01    0.03    0.00    0.04     0  systemd-journal
+06:32:21 PM   105      2647    0.36    0.14    0.00    0.50     0  dbus-daemon
+06:32:21 PM     0      3102    0.02    0.03    0.00    0.04     0  sshd
+06:32:21 PM     0      3107    0.01    0.00    0.00    0.01     0  bash
+06:32:21 PM     0      3540    0.00    0.01    0.00    0.01     0  build-script.sh
+06:32:21 PM     0      3541    0.00    0.01    0.00    0.01     0  tee
+06:32:21 PM     0      4215    0.00    0.01    0.00    0.01     0  kworker/0:2
+06:32:21 PM     0      8150    0.07    0.05    0.00    0.12     0  systemd-logind
+06:32:21 PM   107     11031    0.00    0.00    0.00    0.00     0  ntpd
+06:32:21 PM     0     11099    0.00    0.00    0.00    0.00     0  rsyslogd
+06:32:21 PM     0     17307    0.02    0.01    0.00    0.02     0  fail2ban-server
+06:32:21 PM     0     19219    0.00    0.01    0.00    0.01     0  mysqld_safe
+06:32:21 PM   109     19566    0.02    0.02    0.00    0.04     0  mysqld
+06:32:21 PM     0     24537    0.00    0.01    0.00    0.01     0  apache2
+06:32:21 PM     0     24560    0.00    0.01    0.00    0.01     0  php5-fpm
+06:32:21 PM     0     26104    0.00    0.00    0.00    0.00     0  troubleshooting
+06:32:21 PM     0     26135    0.00    0.00    0.00    0.00     0  pidstat
+
+
+########## IO USAGE ###########
+
+Linux 4.1.5-x86_64-linode61 (www) 	12/06/2015 	_x86_64_	(1 CPU)
+
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          13.95    0.00   16.28    2.51    0.90   66.37
+
+Device:         rrqm/s   wrqm/s     r/s     w/s    rkB/s    wkB/s avgrq-sz avgqu-sz   await r_await w_await  svctm  %util
+xvda              0.40   138.72    9.09   99.75   158.44  2743.08    53.32     0.13    1.18    0.70    1.23   0.37   4.02
+xvdb              0.00     0.00    0.11    0.00     1.05     0.01    18.62     0.00    0.45    0.41    3.00   0.25   0.00
+
+
+
+########## MEMORY USAGE ###########
+
+             total       used       free     shared    buffers     cached
+Mem:           987        945         41         18         33        687
+-/+ buffers/cache:        224        762
+Swap:          255          0        255
+
+
+########## KERNEL INFO ###########
+
+Linux 4.1.5-x86_64-linode61 (www) 	12/06/2015 	_x86_64_	(1 CPU)
+
+06:32:21 PM     IFACE   rxpck/s   txpck/s    rxkB/s    txkB/s   rxcmp/s   txcmp/s  rxmcst/s   %ifutil
+06:32:21 PM     teql0      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+06:32:21 PM      eth0     88.39     28.77    252.60      2.93      0.00      0.00      0.00      0.00
+06:32:21 PM   gretap0      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+06:32:21 PM  ip6_vti0      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+06:32:21 PM    dummy0      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+06:32:21 PM      gre0      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+06:32:21 PM   ip6tnl0      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+06:32:21 PM   ip_vti0      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+06:32:21 PM   ip6gre0      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+06:32:21 PM      sit0      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+06:32:21 PM        lo      0.11      0.11      0.01      0.01      0.00      0.00      0.00      0.00
+06:32:21 PM     tunl0      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+
+
+########## NETWORK INFO ###########
+
+Linux 4.1.5-x86_64-linode61 (www) 	12/06/2015 	_x86_64_	(1 CPU)
+
+06:32:21 PM  active/s passive/s    iseg/s    oseg/s
+06:32:21 PM      0.05      0.02     35.14     28.25
+
+06:32:21 PM  atmptf/s  estres/s retrans/s isegerr/s   orsts/s
+06:32:21 PM      0.00      0.00      0.01      0.00      0.37
 
 
 ########## IP TABLE RULES LOADED ###########
@@ -32,6 +147,98 @@ DROP       all  --  anywhere             anywhere
 Chain OUTPUT (policy ACCEPT)
 target     prot opt source               destination         
 ACCEPT     all  --  anywhere             anywhere            
+########## /ETC/PASSWD (USERS) ###########
+
+root:x:0:0:root:/root:/bin/bash
+daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+bin:x:2:2:bin:/bin:/usr/sbin/nologin
+sys:x:3:3:sys:/dev:/usr/sbin/nologin
+sync:x:4:65534:sync:/bin:/bin/sync
+games:x:5:60:games:/usr/games:/usr/sbin/nologin
+man:x:6:12:man:/var/cache/man:/usr/sbin/nologin
+lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin
+mail:x:8:8:mail:/var/mail:/usr/sbin/nologin
+news:x:9:9:news:/var/spool/news:/usr/sbin/nologin
+uucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin
+proxy:x:13:13:proxy:/bin:/usr/sbin/nologin
+www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin
+backup:x:34:34:backup:/var/backups:/usr/sbin/nologin
+list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin
+irc:x:39:39:ircd:/var/run/ircd:/usr/sbin/nologin
+gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin
+nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
+systemd-timesync:x:100:103:systemd Time Synchronization,,,:/run/systemd:/bin/false
+systemd-network:x:101:104:systemd Network Management,,,:/run/systemd/netif:/bin/false
+systemd-resolve:x:102:105:systemd Resolver,,,:/run/systemd/resolve:/bin/false
+systemd-bus-proxy:x:103:106:systemd Bus Proxy,,,:/run/systemd:/bin/false
+Debian-exim:x:104:109::/var/spool/exim4:/bin/false
+messagebus:x:105:110::/var/run/dbus:/bin/false
+statd:x:106:65534::/var/lib/nfs:/bin/false
+sshd:x:108:65534::/var/run/sshd:/usr/sbin/nologin
+ntp:x:107:113::/home/ntp:/bin/false
+default-web:x:1000:1000:Default Web Site User:/var/www:/bin/sh
+mysql:x:109:117:MySQL Server,,,:/nonexistent:/bin/false
+opendkim:x:110:118::/var/run/opendkim:/bin/false
+########## /ETC/GROUP ###########
+
+root:x:0:
+daemon:x:1:
+bin:x:2:
+sys:x:3:
+adm:x:4:
+tty:x:5:
+disk:x:6:
+lp:x:7:
+mail:x:8:
+news:x:9:
+uucp:x:10:
+man:x:12:
+proxy:x:13:
+kmem:x:15:
+dialout:x:20:
+fax:x:21:
+voice:x:22:
+cdrom:x:24:
+floppy:x:25:
+tape:x:26:
+sudo:x:27:
+audio:x:29:
+dip:x:30:
+www-data:x:33:
+backup:x:34:
+operator:x:37:
+list:x:38:
+irc:x:39:
+src:x:40:
+gnats:x:41:
+shadow:x:42:
+utmp:x:43:
+video:x:44:
+sasl:x:45:
+plugdev:x:46:
+staff:x:50:
+games:x:60:
+users:x:100:
+nogroup:x:65534:
+input:x:101:
+systemd-journal:x:102:
+systemd-timesync:x:103:
+systemd-network:x:104:
+systemd-resolve:x:105:
+systemd-bus-proxy:x:106:
+crontab:x:107:
+netdev:x:108:
+Debian-exim:x:109:
+messagebus:x:110:
+mlocate:x:111:
+ssh:x:112:
+bluetooth:x:114:
+ntp:x:113:
+utempter:x:115:
+ssl-cert:x:116:
+default-web:x:1000:
+mysql:x:117:
+opendkim:x:118:
 
 
 ########## PACKAGES INSTALLED ###########
@@ -90,7 +297,7 @@ ii  dnsutils                          1:9.9.5.dfsg-9+deb8u3        amd64        
 ii  doc-debian                        6.2                          all          Debian Project documentation and other documents
 ii  docutils-common                   0.12+dfsg-1                  all          text processing system for reStructuredText - common data
 ii  docutils-doc                      0.12+dfsg-1                  all          text processing system for reStructuredText - documentation
-ii  dpkg                              1.17.25                      amd64        Debian package management system
+ii  dpkg                              1.17.26                      amd64        Debian package management system
 ii  e2fslibs:amd64                    1.42.12-1.1                  amd64        ext2/ext3/ext4 file system libraries
 ii  e2fsprogs                         1.42.12-1.1                  amd64        ext2/ext3/ext4 file system utilities
 ii  emacsen-common                    2.0.8                        all          Common facilities for all emacsen
@@ -192,7 +399,7 @@ ii  libcomerr2:amd64                  1.42.12-1.1                  amd64        
 ii  libcpan-meta-perl                 2.142690-1                   all          Perl module to access CPAN distributions metadata
 ii  libcryptsetup4:amd64              2:1.6.6-5                    amd64        disk encryption support - shared library
 ii  libcups2:amd64                    1.7.5-11+deb8u1              amd64        Common UNIX Printing System(tm) - Core library
-ii  libcupsfilters1:amd64             1.0.61-5+deb8u1              amd64        OpenPrinting CUPS Filters - Shared library
+ii  libcupsfilters1:amd64             1.0.61-5+deb8u2              amd64        OpenPrinting CUPS Filters - Shared library
 ii  libcupsimage2:amd64               1.7.5-11+deb8u1              amd64        Common UNIX Printing System(tm) - Raster image library
 ii  libcurl3:amd64                    7.38.0-4+deb8u2              amd64        easy-to-use client-side URL transfer library (OpenSSL flavour)
 ii  libcurl3-gnutls:amd64             7.38.0-4+deb8u2              amd64        easy-to-use client-side URL transfer library (GnuTLS flavour)
@@ -405,7 +612,7 @@ ii  libsoftware-license-perl          0.103010-3                   all          
 ii  libsqlite3-0:amd64                3.8.7.1-1+deb8u1             amd64        SQLite 3 shared library
 ii  libss2:amd64                      1.42.12-1.1                  amd64        command-line interface parsing library
 ii  libssh2-1:amd64                   1.4.3-4.1                    amd64        SSH2 client-side library
-ii  libssl1.0.0:amd64                 1.0.1k-3+deb8u1              amd64        Secure Sockets Layer toolkit - shared libraries
+ii  libssl1.0.0:amd64                 1.0.1k-3+deb8u2              amd64        Secure Sockets Layer toolkit - shared libraries
 ii  libstdc++6:amd64                  4.9.2-10                     amd64        GNU Standard C++ Library v3
 ii  libsub-exporter-perl              0.986-1                      all          sophisticated exporter for custom-built routines
 ii  libsub-install-perl               0.928-1                      all          module for installing subroutines into packages easily
@@ -527,7 +734,7 @@ ii  opendkim-tools                    2.9.2-2                      amd64        
 ii  openssh-client                    1:6.7p1-5                    amd64        secure shell (SSH) client, for secure access to remote machines
 ii  openssh-server                    1:6.7p1-5                    amd64        secure shell (SSH) server, for secure access from remote machines
 ii  openssh-sftp-server               1:6.7p1-5                    amd64        secure shell (SSH) sftp server module, for SFTP access from remote machines
-ii  openssl                           1.0.1k-3+deb8u1              amd64        Secure Sockets Layer toolkit - cryptographic utility
+ii  openssl                           1.0.1k-3+deb8u2              amd64        Secure Sockets Layer toolkit - cryptographic utility
 ii  openssl-blacklist                 0.5-3                        all          Blacklists for  OpenSSL RSA keys and tools
 ii  passwd                            1:4.2-3                      amd64        change and administer password and group data
 ii  patch                             2.7.5-1                      amd64        Apply a diff file to an original
@@ -710,25 +917,6 @@ COMMIT
 
 ########## SITES-AVAILABLE/DEFAULT.CONF ###########
 
-<VirtualHost *:80>
-  ServerName rustbeltrebellion.com
-  ServerAlias www.rustbeltrebellion.com
-
-  ServerAdmin default-web@rustbeltrebellion.com
-  DocumentRoot /var/www/http
-
-  ErrorLog /var/www/logs/error.log
-  CustomLog /var/www/logs/access.log combined
-
-  <FilesMatch "\.php$">
-    SetHandler "proxy:unix:///var/www/sockets/rustbeltrebellion.com.sock|fcgi://rustbeltrebellion.com"
-  </FilesMatch>
-
-  <Proxy fcgi://rustbeltrebellion.com>
-    ProxySet connectiontimeout=5 timeout=240
-  </Proxy>
-
-</VirtualHost>
 
 
 
@@ -746,76 +934,136 @@ COMMIT
 
 ########## SITES-AVAILABLE/DEFAULT-SSL.CONF ###########
 
-<IfModule mod_ssl.c>
-    <VirtualHost _default_:443>
-
-        ServerName rustbeltrebellion.com
-        ServerAlias *.rustbeltrebellion.com
-        DocumentRoot /var/www/https
-        <Directory /var/www/https/>
-            Options Indexes FollowSymLinks MultiViews
-            AllowOverride None
-            Order allow,deny
-            allow from all
-        </Directory>
-
-        LogLevel warn
-
-        ErrorLog /var/www/logs/error-ssl.log
-        CustomLog /var/www/logs/access-ssl.log combined
-
-        <FilesMatch "\.php$">
-          SetHandler "proxy:unix:///var/www/sockets/rustbeltrebellion.com-ssl.sock|fcgi://rustbeltrebellion.com-SSL"
-        </FilesMatch>
-
-        <Proxy fcgi://rustbeltrebellion.com-SSL>
-
-          ProxySet connectiontimeout=5 timeout=240
-        </Proxy>
-        Include /etc/apache2/includes/vhost-ssl
-
-        #   The StartSSL Certificate
-
-        SSLCertificateFile /var/www/certs/2015/start-ssl/ssl.crt
-        SSLCertificateKeyFile /var/www/certs/2015/start-ssl/ssl.key
-        SSLCertificateChainFile /var/www/certs/2015/start-ssl/sub.class2.server.ca.pem
-        SSLCACertificateFile /var/www/certs/2015/start-ssl/ca.pem
-
-        
-        #   SSL Protocol Adjustments:
-        #   The safe and default but still SSL/TLS standard compliant shutdown
-        #   approach is that mod_ssl sends the close notify alert but doesn't wait for
-        #   the close notify alert from client. When you need a different shutdown
-        #   approach you can use one of the following variables:
-        #   o ssl-unclean-shutdown:
-        #     This forces an unclean shutdown when the connection is closed, i.e. no
-        #     SSL close notify alert is send or allowed to received.  This violates
-        #     the SSL/TLS standard but is needed for some brain-dead browsers. Use
-        #     this when you receive I/O errors because of the standard approach where
-        #     mod_ssl sends the close notify alert.
-        #   o ssl-accurate-shutdown:
-        #     This forces an accurate shutdown when the connection is closed, i.e. a
-        #     SSL close notify alert is send and mod_ssl waits for the close notify
-        #     alert of the client. This is 100% SSL/TLS standard compliant, but in
-        #     practice often causes hanging connections with brain-dead browsers. Use
-        #     this only for browsers where you know that their SSL implementation
-        #     works correctly.
-        #   Notice: Most problems of broken clients are also related to the HTTP
-        #   keep-alive facility, so you usually additionally want to disable
-        #   keep-alive for those clients, too. Use variable nokeepalive for this.
-        #   Similarly, one has to force some clients to use HTTP/1.0 to workaround
-        #   their broken HTTP/1.1 implementation. Use variables downgrade-1.0 and
-        #   force-response-1.0 for this.
-        BrowserMatch "MSIE [2-6]" \
-            nokeepalive ssl-unclean-shutdown \
-            downgrade-1.0 force-response-1.0
-            # MSIE 7 and newer should be able to use keepalive
-        BrowserMatch "MSIE [17-9]" ssl-unclean-shutdown
-
-    </VirtualHost>
-</IfModule>
 ########## MYSQL.CNF ###########
 
+#
+# The MySQL database server configuration file.
+#
+# You can copy this to one of:
+# - "/etc/mysql/my.cnf" to set global options,
+# - "~/.my.cnf" to set user-specific options.
+# 
+# One can use all long options that the program supports.
+# Run program with --help to get a list of available options and with
+# --print-defaults to see which it would actually understand and use.
+#
+# For explanations see
+# http://dev.mysql.com/doc/mysql/en/server-system-variables.html
+
+# This will be passed to all mysql clients
+# It has been reported that passwords should be enclosed with ticks/quotes
+# escpecially if they contain "#" chars...
+# Remember to edit /etc/mysql/debian.cnf when changing the socket location.
+[client]
+port		= 3306
+socket		= /var/run/mysqld/mysqld.sock
+
+# Here is entries for some specific programs
+# The following values assume you have at least 32M ram
+
+# This was formally known as [safe_mysqld]. Both versions are currently parsed.
+[mysqld_safe]
+socket		= /var/run/mysqld/mysqld.sock
+nice		= 0
+
+[mysqld]
+#
+# * Basic Settings
+#
+user		= mysql
+pid-file	= /var/run/mysqld/mysqld.pid
+socket		= /var/run/mysqld/mysqld.sock
+port		= 3306
+basedir		= /usr
+datadir		= /var/lib/mysql
+tmpdir		= /tmp
+lc-messages-dir	= /usr/share/mysql
+skip-external-locking
+#
+# Instead of skip-networking the default is now to listen only on
+# localhost which is more compatible and is not less secure.
+bind-address		= 127.0.0.1
+#
+# * Fine Tuning
+#
+key_buffer		= 16M
+max_allowed_packet	= 16M
+thread_stack		= 192K
+thread_cache_size       = 8
+# This replaces the startup script and checks MyISAM tables if needed
+# the first time they are touched
+myisam-recover         = BACKUP
+#max_connections        = 100
+#table_cache            = 64
+#thread_concurrency     = 10
+#
+# * Query Cache Configuration
+#
+query_cache_limit	= 1M
+query_cache_size        = 16M
+#
+# * Logging and Replication
+#
+# Both location gets rotated by the cronjob.
+# Be aware that this log type is a performance killer.
+# As of 5.1 you can enable the log at runtime!
+#general_log_file        = /var/log/mysql/mysql.log
+#general_log             = 1
+#
+# Error log - should be very few entries.
+#
+log_error = /var/log/mysql/error.log
+#
+# Here you can see queries with especially long duration
+#slow_query_log_file = /var/log/mysql/mysql-slow.log
+#slow_query_log      = 1
+#long_query_time = 2
+#log_queries_not_using_indexes
+#
+# The following can be used as easy to replay backup logs or for replication.
+# note: if you are setting up a replication slave, see README.Debian about
+#       other settings you may need to change.
+#server-id		= 1
+#log_bin			= /var/log/mysql/mysql-bin.log
+expire_logs_days	= 10
+max_binlog_size         = 100M
+#binlog_do_db		= include_database_name
+#binlog_ignore_db	= include_database_name
+#
+# * InnoDB
+#
+# InnoDB is enabled by default with a 10MB datafile in /var/lib/mysql/.
+# Read the manual for more InnoDB related options. There are many!
+#
+# * Security Features
+#
+# Read the manual, too, if you want chroot!
+# chroot = /var/lib/mysql/
+#
+# For generating SSL certificates I recommend the OpenSSL GUI "tinyca".
+#
+# ssl-ca=/etc/mysql/cacert.pem
+# ssl-cert=/etc/mysql/server-cert.pem
+# ssl-key=/etc/mysql/server-key.pem
+
+
+
+[mysqldump]
+quick
+quote-names
+max_allowed_packet	= 16M
+
+[mysql]
+#no-auto-rehash	# faster start of mysql but no tab completition
+
+[isamchk]
+key_buffer		= 16M
+
+#
+# * IMPORTANT: Additional settings that can override those from this file!
+#   The files must end with '.cnf', otherwise they'll be ignored.
+#
+!includedir /etc/mysql/conf.d/
 
 
 
@@ -2777,850 +3025,93 @@ ldap.max_links = -1
 
 
 
-########## FPM/POOL.D/rustbeltrebellion.com.CONF ###########
-
-; Start a new pool named 'www'.
-; the variable $pool can we used in any directive and will be replaced by the
-; pool name ('www' here)
-[rustbeltrebellion.com]
-
-; Per pool prefix
-; It only applies on the following directives:
-; - 'access.log'
-; - 'slowlog'
-; - 'listen' (unixsocket)
-; - 'chroot'
-; - 'chdir'
-; - 'php_values'
-; - 'php_admin_values'
-; When not set, the global prefix (or /usr) applies instead.
-; Note: This directive can also be relative to the global prefix.
-; Default Value: none
-;prefix = /path/to/pools/$pool
-
-; Unix user/group of processes
-; Note: The user is mandatory. If the group is not set, the default user's group
-;       will be used.
-user = default-web
-group = default-web
-
-; The address on which to accept FastCGI requests.
-; Valid syntaxes are:
-;   'ip.add.re.ss:port'    - to listen on a TCP socket to a specific IPv4 address on
-;                            a specific port;
-;   '[ip:6:addr:ess]:port' - to listen on a TCP socket to a specific IPv6 address on
-;                            a specific port;
-;   'port'                 - to listen on a TCP socket to all IPv4 addresses on a
-;                            specific port;
-;   '[::]:port'            - to listen on a TCP socket to all addresses
-;                            (IPv6 and IPv4-mapped) on a specific port;
-;   '/path/to/unix/socket' - to listen on a unix socket.
-; Note: This value is mandatory.
-listen = /var/www/sockets/rustbeltrebellion.com.sock
-
-; Set listen(2) backlog.
-; Default Value: 65535 (-1 on FreeBSD and OpenBSD)
-;listen.backlog = 65535
-
-; Set permissions for unix socket, if one is used. In Linux, read/write
-; permissions must be set in order to allow connections from a web server. Many
-; BSD-derived systems allow connections regardless of permissions. 
-; Default Values: user and group are set as the running user
-;                 mode is set to 0660
-listen.owner = www-data
-listen.group = default-web
-listen.mode = 0660
-; When POSIX Access Control Lists are supported you can set them using
-; these options, value is a comma separated list of user/group names.
-; When set, listen.owner and listen.group are ignored
-;listen.acl_users =
-;listen.acl_groups =
- 
-; List of addresses (IPv4/IPv6) of FastCGI clients which are allowed to connect.
-; Equivalent to the FCGI_WEB_SERVER_ADDRS environment variable in the original
-; PHP FCGI (5.2.2+). Makes sense only with a tcp listening socket. Each address
-; must be separated by a comma. If this value is left blank, connections will be
-; accepted from any ip address.
-; Default Value: any
-;listen.allowed_clients = 127.0.0.1
-
-; Specify the nice(2) priority to apply to the pool processes (only if set)
-; The value can vary from -19 (highest priority) to 20 (lower priority)
-; Note: - It will only work if the FPM master process is launched as root
-;       - The pool processes will inherit the master process priority
-;         unless it specified otherwise
-; Default Value: no set
-; process.priority = -19
-
-; Choose how the process manager will control the number of child processes.
-; Possible Values:
-;   static  - a fixed number (pm.max_children) of child processes;
-;   dynamic - the number of child processes are set dynamically based on the
-;             following directives. With this process management, there will be
-;             always at least 1 children.
-;             pm.max_children      - the maximum number of children that can
-;                                    be alive at the same time.
-;             pm.start_servers     - the number of children created on startup.
-;             pm.min_spare_servers - the minimum number of children in 'idle'
-;                                    state (waiting to process). If the number
-;                                    of 'idle' processes is less than this
-;                                    number then some children will be created.
-;             pm.max_spare_servers - the maximum number of children in 'idle'
-;                                    state (waiting to process). If the number
-;                                    of 'idle' processes is greater than this
-;                                    number then some children will be killed.
-;  ondemand - no children are created at startup. Children will be forked when
-;             new requests will connect. The following parameter are used:
-;             pm.max_children           - the maximum number of children that
-;                                         can be alive at the same time.
-;             pm.process_idle_timeout   - The number of seconds after which
-;                                         an idle process will be killed.
-; Note: This value is mandatory.
-pm = dynamic
-
-; The number of child processes to be created when pm is set to 'static' and the
-; maximum number of child processes when pm is set to 'dynamic' or 'ondemand'.
-; This value sets the limit on the number of simultaneous requests that will be
-; served. Equivalent to the ApacheMaxClients directive with mpm_prefork.
-; Equivalent to the PHP_FCGI_CHILDREN environment variable in the original PHP
-; CGI. The below defaults are based on a server without much resources. Don't
-; forget to tweak pm.* to fit your needs.
-; Note: Used when pm is set to 'static', 'dynamic' or 'ondemand'
-; Note: This value is mandatory.
-pm.max_children = 5
-
-; The number of child processes created on startup.
-; Note: Used only when pm is set to 'dynamic'
-; Default Value: min_spare_servers + (max_spare_servers - min_spare_servers) / 2
-pm.start_servers = 2
-
-; The desired minimum number of idle server processes.
-; Note: Used only when pm is set to 'dynamic'
-; Note: Mandatory when pm is set to 'dynamic'
-pm.min_spare_servers = 1
-
-; The desired maximum number of idle server processes.
-; Note: Used only when pm is set to 'dynamic'
-; Note: Mandatory when pm is set to 'dynamic'
-pm.max_spare_servers = 3
-
-; The number of seconds after which an idle process will be killed.
-; Note: Used only when pm is set to 'ondemand'
-; Default Value: 10s
-;pm.process_idle_timeout = 10s;
- 
-; The number of requests each child process should execute before respawning.
-; This can be useful to work around memory leaks in 3rd party libraries. For
-; endless request processing specify '0'. Equivalent to PHP_FCGI_MAX_REQUESTS.
-; Default Value: 0
-;pm.max_requests = 500
-
-; The URI to view the FPM status page. If this value is not set, no URI will be
-; recognized as a status page. It shows the following informations:
-;   pool                 - the name of the pool;
-;   process manager      - static, dynamic or ondemand;
-;   start time           - the date and time FPM has started;
-;   start since          - number of seconds since FPM has started;
-;   accepted conn        - the number of request accepted by the pool;
-;   listen queue         - the number of request in the queue of pending
-;                          connections (see backlog in listen(2));
-;   max listen queue     - the maximum number of requests in the queue
-;                          of pending connections since FPM has started;
-;   listen queue len     - the size of the socket queue of pending connections;
-;   idle processes       - the number of idle processes;
-;   active processes     - the number of active processes;
-;   total processes      - the number of idle + active processes;
-;   max active processes - the maximum number of active processes since FPM
-;                          has started;
-;   max children reached - number of times, the process limit has been reached,
-;                          when pm tries to start more children (works only for
-;                          pm 'dynamic' and 'ondemand');
-; Value are updated in real time.
-; Example output:
-;   pool:                 www
-;   process manager:      static
-;   start time:           01/Jul/2011:17:53:49 +0200
-;   start since:          62636
-;   accepted conn:        190460
-;   listen queue:         0
-;   max listen queue:     1
-;   listen queue len:     42
-;   idle processes:       4
-;   active processes:     11
-;   total processes:      15
-;   max active processes: 12
-;   max children reached: 0
-;
-; By default the status page output is formatted as text/plain. Passing either
-; 'html', 'xml' or 'json' in the query string will return the corresponding
-; output syntax. Example:
-;   http://www.foo.bar/status
-;   http://www.foo.bar/status?json
-;   http://www.foo.bar/status?html
-;   http://www.foo.bar/status?xml
-;
-; By default the status page only outputs short status. Passing 'full' in the
-; query string will also return status for each pool process.
-; Example: 
-;   http://www.foo.bar/status?full
-;   http://www.foo.bar/status?json&full
-;   http://www.foo.bar/status?html&full
-;   http://www.foo.bar/status?xml&full
-; The Full status returns for each process:
-;   pid                  - the PID of the process;
-;   state                - the state of the process (Idle, Running, ...);
-;   start time           - the date and time the process has started;
-;   start since          - the number of seconds since the process has started;
-;   requests             - the number of requests the process has served;
-;   request duration     - the duration in µs of the requests;
-;   request method       - the request method (GET, POST, ...);
-;   request URI          - the request URI with the query string;
-;   content length       - the content length of the request (only with POST);
-;   user                 - the user (PHP_AUTH_USER) (or '-' if not set);
-;   script               - the main script called (or '-' if not set);
-;   last request cpu     - the %cpu the last request consumed
-;                          it's always 0 if the process is not in Idle state
-;                          because CPU calculation is done when the request
-;                          processing has terminated;
-;   last request memory  - the max amount of memory the last request consumed
-;                          it's always 0 if the process is not in Idle state
-;                          because memory calculation is done when the request
-;                          processing has terminated;
-; If the process is in Idle state, then informations are related to the
-; last request the process has served. Otherwise informations are related to
-; the current request being served.
-; Example output:
-;   ************************
-;   pid:                  31330
-;   state:                Running
-;   start time:           01/Jul/2011:17:53:49 +0200
-;   start since:          63087
-;   requests:             12808
-;   request duration:     1250261
-;   request method:       GET
-;   request URI:          /test_mem.php?N=10000
-;   content length:       0
-;   user:                 -
-;   script:               /home/fat/web/docs/php/test_mem.php
-;   last request cpu:     0.00
-;   last request memory:  0
-;
-; Note: There is a real-time FPM status monitoring sample web page available
-;       It's available in: /usr/share/php5/fpm/status.html
-;
-; Note: The value must start with a leading slash (/). The value can be
-;       anything, but it may not be a good idea to use the .php extension or it
-;       may conflict with a real PHP file.
-; Default Value: not set 
-;pm.status_path = /status
- 
-; The ping URI to call the monitoring page of FPM. If this value is not set, no
-; URI will be recognized as a ping page. This could be used to test from outside
-; that FPM is alive and responding, or to
-; - create a graph of FPM availability (rrd or such);
-; - remove a server from a group if it is not responding (load balancing);
-; - trigger alerts for the operating team (24/7).
-; Note: The value must start with a leading slash (/). The value can be
-;       anything, but it may not be a good idea to use the .php extension or it
-;       may conflict with a real PHP file.
-; Default Value: not set
-;ping.path = /ping
-
-; This directive may be used to customize the response of a ping request. The
-; response is formatted as text/plain with a 200 response code.
-; Default Value: pong
-;ping.response = pong
-
-; The access log file
-; Default: not set
-;access.log = log/$pool.access.log
-
-; The access log format.
-; The following syntax is allowed
-;  %%: the '%' character
-;  %C: %CPU used by the request
-;      it can accept the following format:
-;      - %{user}C for user CPU only
-;      - %{system}C for system CPU only
-;      - %{total}C  for user + system CPU (default)
-;  %d: time taken to serve the request
-;      it can accept the following format:
-;      - %{seconds}d (default)
-;      - %{miliseconds}d
-;      - %{mili}d
-;      - %{microseconds}d
-;      - %{micro}d
-;  %e: an environment variable (same as $_ENV or $_SERVER)
-;      it must be associated with embraces to specify the name of the env
-;      variable. Some exemples:
-;      - server specifics like: %{REQUEST_METHOD}e or %{SERVER_PROTOCOL}e
-;      - HTTP headers like: %{HTTP_HOST}e or %{HTTP_USER_AGENT}e
-;  %f: script filename
-;  %l: content-length of the request (for POST request only)
-;  %m: request method
-;  %M: peak of memory allocated by PHP
-;      it can accept the following format:
-;      - %{bytes}M (default)
-;      - %{kilobytes}M
-;      - %{kilo}M
-;      - %{megabytes}M
-;      - %{mega}M
-;  %n: pool name
-;  %o: output header
-;      it must be associated with embraces to specify the name of the header:
-;      - %{Content-Type}o
-;      - %{X-Powered-By}o
-;      - %{Transfert-Encoding}o
-;      - ....
-;  %p: PID of the child that serviced the request
-;  %P: PID of the parent of the child that serviced the request
-;  %q: the query string 
-;  %Q: the '?' character if query string exists
-;  %r: the request URI (without the query string, see %q and %Q)
-;  %R: remote IP address
-;  %s: status (response code)
-;  %t: server time the request was received
-;      it can accept a strftime(3) format:
-;      %d/%b/%Y:%H:%M:%S %z (default)
-;  %T: time the log has been written (the request has finished)
-;      it can accept a strftime(3) format:
-;      %d/%b/%Y:%H:%M:%S %z (default)
-;  %u: remote user
-;
-; Default: "%R - %u %t \"%m %r\" %s"
-;access.format = "%R - %u %t \"%m %r%Q%q\" %s %f %{mili}d %{kilo}M %C%%"
- 
-; The log file for slow requests
-; Default Value: not set
-; Note: slowlog is mandatory if request_slowlog_timeout is set
-;slowlog = log/$pool.log.slow
- 
-; The timeout for serving a single request after which a PHP backtrace will be
-; dumped to the 'slowlog' file. A value of '0s' means 'off'.
-; Available units: s(econds)(default), m(inutes), h(ours), or d(ays)
-; Default Value: 0
-;request_slowlog_timeout = 0
- 
-; The timeout for serving a single request after which the worker process will
-; be killed. This option should be used when the 'max_execution_time' ini option
-; does not stop script execution for some reason. A value of '0' means 'off'.
-; Available units: s(econds)(default), m(inutes), h(ours), or d(ays)
-; Default Value: 0
-;request_terminate_timeout = 0
- 
-; Set open file descriptor rlimit.
-; Default Value: system defined value
-;rlimit_files = 1024
- 
-; Set max core size rlimit.
-; Possible Values: 'unlimited' or an integer greater or equal to 0
-; Default Value: system defined value
-;rlimit_core = 0
- 
-; Chroot to this directory at the start. This value must be defined as an
-; absolute path. When this value is not set, chroot is not used.
-; Note: you can prefix with '$prefix' to chroot to the pool prefix or one
-; of its subdirectories. If the pool prefix is not set, the global prefix
-; will be used instead.
-; Note: chrooting is a great security feature and should be used whenever 
-;       possible. However, all PHP paths will be relative to the chroot
-;       (error_log, sessions.save_path, ...).
-; Default Value: not set
-;chroot = 
- 
-; Chdir to this directory at the start.
-; Note: relative path can be used.
-; Default Value: current directory or / when chroot
-chdir = /
- 
-; Redirect worker stdout and stderr into main error log. If not set, stdout and
-; stderr will be redirected to /dev/null according to FastCGI specs.
-; Note: on highloaded environement, this can cause some delay in the page
-; process time (several ms).
-; Default Value: no
-;catch_workers_output = yes
-
-; Clear environment in FPM workers
-; Prevents arbitrary environment variables from reaching FPM worker processes
-; by clearing the environment in workers before env vars specified in this
-; pool configuration are added.
-; Setting to "no" will make all environment variables available to PHP code
-; via getenv(), $_ENV and $_SERVER.
-; Default Value: yes
-;clear_env = no
-
-; Limits the extensions of the main script FPM will allow to parse. This can
-; prevent configuration mistakes on the web server side. You should only limit
-; FPM to .php extensions to prevent malicious users to use other extensions to
-; exectute php code.
-; Note: set an empty value to allow all extensions.
-; Default Value: .php
-;security.limit_extensions = .php .php3 .php4 .php5
- 
-; Pass environment variables like LD_LIBRARY_PATH. All $VARIABLEs are taken from
-; the current environment.
-; Default Value: clean env
-;env[HOSTNAME] = $HOSTNAME
-;env[PATH] = /usr/local/bin:/usr/bin:/bin
-;env[TMP] = /tmp
-;env[TMPDIR] = /tmp
-;env[TEMP] = /tmp
-
-; Additional php.ini defines, specific to this pool of workers. These settings
-; overwrite the values previously defined in the php.ini. The directives are the
-; same as the PHP SAPI:
-;   php_value/php_flag             - you can set classic ini defines which can
-;                                    be overwritten from PHP call 'ini_set'. 
-;   php_admin_value/php_admin_flag - these directives won't be overwritten by
-;                                     PHP call 'ini_set'
-; For php_*flag, valid values are on, off, 1, 0, true, false, yes or no.
-
-; Defining 'extension' will load the corresponding shared extension from
-; extension_dir. Defining 'disable_functions' or 'disable_classes' will not
-; overwrite previously defined php.ini values, but will append the new value
-; instead.
-
-; Note: path INI options can be relative and will be expanded with the prefix
-; (pool, global or /usr)
-
-; Default Value: nothing is defined by default except the values in php.ini and
-;                specified at startup with the -d argument
-;php_admin_value[sendmail_path] = /usr/sbin/sendmail -t -i -f www@my.domain.com
-;php_flag[display_errors] = off
-;php_admin_value[error_log] = /var/log/fpm-php.www.log
-;php_admin_flag[log_errors] = on
-;php_admin_value[memory_limit] = 32M
+########## FPM/POOL.D/.CONF ###########
 
 
 
-########## FPM/POOL.D/rustbeltrebellion.com-SSL.CONF ###########
 
-; Start a new pool named 'www'.
-; the variable $pool can we used in any directive and will be replaced by the
-; pool name ('www' here)
-[rustbeltrebellion.com-SSL]
+########## FPM/POOL.D/-SSL.CONF ###########
 
-; Per pool prefix
-; It only applies on the following directives:
-; - 'access.log'
-; - 'slowlog'
-; - 'listen' (unixsocket)
-; - 'chroot'
-; - 'chdir'
-; - 'php_values'
-; - 'php_admin_values'
-; When not set, the global prefix (or /usr) applies instead.
-; Note: This directive can also be relative to the global prefix.
-; Default Value: none
-;prefix = /path/to/pools/$pool
-
-; Unix user/group of processes
-; Note: The user is mandatory. If the group is not set, the default user's group
-;       will be used.
-user = default-web
-group = default-web
-
-; The address on which to accept FastCGI requests.
-; Valid syntaxes are:
-;   'ip.add.re.ss:port'    - to listen on a TCP socket to a specific IPv4 address on
-;                            a specific port;
-;   '[ip:6:addr:ess]:port' - to listen on a TCP socket to a specific IPv6 address on
-;                            a specific port;
-;   'port'                 - to listen on a TCP socket to all IPv4 addresses on a
-;                            specific port;
-;   '[::]:port'            - to listen on a TCP socket to all addresses
-;                            (IPv6 and IPv4-mapped) on a specific port;
-;   '/path/to/unix/socket' - to listen on a unix socket.
-; Note: This value is mandatory.
-listen = /var/www/sockets/rustbeltrebellion.com-SSL.sock
-
-; Set listen(2) backlog.
-; Default Value: 65535 (-1 on FreeBSD and OpenBSD)
-;listen.backlog = 65535
-
-; Set permissions for unix socket, if one is used. In Linux, read/write
-; permissions must be set in order to allow connections from a web server. Many
-; BSD-derived systems allow connections regardless of permissions. 
-; Default Values: user and group are set as the running user
-;                 mode is set to 0660
-listen.owner = www-data
-listen.group = default-web
-listen.mode = 0660
-; When POSIX Access Control Lists are supported you can set them using
-; these options, value is a comma separated list of user/group names.
-; When set, listen.owner and listen.group are ignored
-;listen.acl_users =
-;listen.acl_groups =
- 
-; List of addresses (IPv4/IPv6) of FastCGI clients which are allowed to connect.
-; Equivalent to the FCGI_WEB_SERVER_ADDRS environment variable in the original
-; PHP FCGI (5.2.2+). Makes sense only with a tcp listening socket. Each address
-; must be separated by a comma. If this value is left blank, connections will be
-; accepted from any ip address.
-; Default Value: any
-;listen.allowed_clients = 127.0.0.1
-
-; Specify the nice(2) priority to apply to the pool processes (only if set)
-; The value can vary from -19 (highest priority) to 20 (lower priority)
-; Note: - It will only work if the FPM master process is launched as root
-;       - The pool processes will inherit the master process priority
-;         unless it specified otherwise
-; Default Value: no set
-; process.priority = -19
-
-; Choose how the process manager will control the number of child processes.
-; Possible Values:
-;   static  - a fixed number (pm.max_children) of child processes;
-;   dynamic - the number of child processes are set dynamically based on the
-;             following directives. With this process management, there will be
-;             always at least 1 children.
-;             pm.max_children      - the maximum number of children that can
-;                                    be alive at the same time.
-;             pm.start_servers     - the number of children created on startup.
-;             pm.min_spare_servers - the minimum number of children in 'idle'
-;                                    state (waiting to process). If the number
-;                                    of 'idle' processes is less than this
-;                                    number then some children will be created.
-;             pm.max_spare_servers - the maximum number of children in 'idle'
-;                                    state (waiting to process). If the number
-;                                    of 'idle' processes is greater than this
-;                                    number then some children will be killed.
-;  ondemand - no children are created at startup. Children will be forked when
-;             new requests will connect. The following parameter are used:
-;             pm.max_children           - the maximum number of children that
-;                                         can be alive at the same time.
-;             pm.process_idle_timeout   - The number of seconds after which
-;                                         an idle process will be killed.
-; Note: This value is mandatory.
-pm = dynamic
-
-; The number of child processes to be created when pm is set to 'static' and the
-; maximum number of child processes when pm is set to 'dynamic' or 'ondemand'.
-; This value sets the limit on the number of simultaneous requests that will be
-; served. Equivalent to the ApacheMaxClients directive with mpm_prefork.
-; Equivalent to the PHP_FCGI_CHILDREN environment variable in the original PHP
-; CGI. The below defaults are based on a server without much resources. Don't
-; forget to tweak pm.* to fit your needs.
-; Note: Used when pm is set to 'static', 'dynamic' or 'ondemand'
-; Note: This value is mandatory.
-pm.max_children = 5
-
-; The number of child processes created on startup.
-; Note: Used only when pm is set to 'dynamic'
-; Default Value: min_spare_servers + (max_spare_servers - min_spare_servers) / 2
-pm.start_servers = 2
-
-; The desired minimum number of idle server processes.
-; Note: Used only when pm is set to 'dynamic'
-; Note: Mandatory when pm is set to 'dynamic'
-pm.min_spare_servers = 1
-
-; The desired maximum number of idle server processes.
-; Note: Used only when pm is set to 'dynamic'
-; Note: Mandatory when pm is set to 'dynamic'
-pm.max_spare_servers = 3
-
-; The number of seconds after which an idle process will be killed.
-; Note: Used only when pm is set to 'ondemand'
-; Default Value: 10s
-;pm.process_idle_timeout = 10s;
- 
-; The number of requests each child process should execute before respawning.
-; This can be useful to work around memory leaks in 3rd party libraries. For
-; endless request processing specify '0'. Equivalent to PHP_FCGI_MAX_REQUESTS.
-; Default Value: 0
-;pm.max_requests = 500
-
-; The URI to view the FPM status page. If this value is not set, no URI will be
-; recognized as a status page. It shows the following informations:
-;   pool                 - the name of the pool;
-;   process manager      - static, dynamic or ondemand;
-;   start time           - the date and time FPM has started;
-;   start since          - number of seconds since FPM has started;
-;   accepted conn        - the number of request accepted by the pool;
-;   listen queue         - the number of request in the queue of pending
-;                          connections (see backlog in listen(2));
-;   max listen queue     - the maximum number of requests in the queue
-;                          of pending connections since FPM has started;
-;   listen queue len     - the size of the socket queue of pending connections;
-;   idle processes       - the number of idle processes;
-;   active processes     - the number of active processes;
-;   total processes      - the number of idle + active processes;
-;   max active processes - the maximum number of active processes since FPM
-;                          has started;
-;   max children reached - number of times, the process limit has been reached,
-;                          when pm tries to start more children (works only for
-;                          pm 'dynamic' and 'ondemand');
-; Value are updated in real time.
-; Example output:
-;   pool:                 www
-;   process manager:      static
-;   start time:           01/Jul/2011:17:53:49 +0200
-;   start since:          62636
-;   accepted conn:        190460
-;   listen queue:         0
-;   max listen queue:     1
-;   listen queue len:     42
-;   idle processes:       4
-;   active processes:     11
-;   total processes:      15
-;   max active processes: 12
-;   max children reached: 0
-;
-; By default the status page output is formatted as text/plain. Passing either
-; 'html', 'xml' or 'json' in the query string will return the corresponding
-; output syntax. Example:
-;   http://www.foo.bar/status
-;   http://www.foo.bar/status?json
-;   http://www.foo.bar/status?html
-;   http://www.foo.bar/status?xml
-;
-; By default the status page only outputs short status. Passing 'full' in the
-; query string will also return status for each pool process.
-; Example: 
-;   http://www.foo.bar/status?full
-;   http://www.foo.bar/status?json&full
-;   http://www.foo.bar/status?html&full
-;   http://www.foo.bar/status?xml&full
-; The Full status returns for each process:
-;   pid                  - the PID of the process;
-;   state                - the state of the process (Idle, Running, ...);
-;   start time           - the date and time the process has started;
-;   start since          - the number of seconds since the process has started;
-;   requests             - the number of requests the process has served;
-;   request duration     - the duration in µs of the requests;
-;   request method       - the request method (GET, POST, ...);
-;   request URI          - the request URI with the query string;
-;   content length       - the content length of the request (only with POST);
-;   user                 - the user (PHP_AUTH_USER) (or '-' if not set);
-;   script               - the main script called (or '-' if not set);
-;   last request cpu     - the %cpu the last request consumed
-;                          it's always 0 if the process is not in Idle state
-;                          because CPU calculation is done when the request
-;                          processing has terminated;
-;   last request memory  - the max amount of memory the last request consumed
-;                          it's always 0 if the process is not in Idle state
-;                          because memory calculation is done when the request
-;                          processing has terminated;
-; If the process is in Idle state, then informations are related to the
-; last request the process has served. Otherwise informations are related to
-; the current request being served.
-; Example output:
-;   ************************
-;   pid:                  31330
-;   state:                Running
-;   start time:           01/Jul/2011:17:53:49 +0200
-;   start since:          63087
-;   requests:             12808
-;   request duration:     1250261
-;   request method:       GET
-;   request URI:          /test_mem.php?N=10000
-;   content length:       0
-;   user:                 -
-;   script:               /home/fat/web/docs/php/test_mem.php
-;   last request cpu:     0.00
-;   last request memory:  0
-;
-; Note: There is a real-time FPM status monitoring sample web page available
-;       It's available in: /usr/share/php5/fpm/status.html
-;
-; Note: The value must start with a leading slash (/). The value can be
-;       anything, but it may not be a good idea to use the .php extension or it
-;       may conflict with a real PHP file.
-; Default Value: not set 
-;pm.status_path = /status
- 
-; The ping URI to call the monitoring page of FPM. If this value is not set, no
-; URI will be recognized as a ping page. This could be used to test from outside
-; that FPM is alive and responding, or to
-; - create a graph of FPM availability (rrd or such);
-; - remove a server from a group if it is not responding (load balancing);
-; - trigger alerts for the operating team (24/7).
-; Note: The value must start with a leading slash (/). The value can be
-;       anything, but it may not be a good idea to use the .php extension or it
-;       may conflict with a real PHP file.
-; Default Value: not set
-;ping.path = /ping
-
-; This directive may be used to customize the response of a ping request. The
-; response is formatted as text/plain with a 200 response code.
-; Default Value: pong
-;ping.response = pong
-
-; The access log file
-; Default: not set
-;access.log = log/$pool.access.log
-
-; The access log format.
-; The following syntax is allowed
-;  %%: the '%' character
-;  %C: %CPU used by the request
-;      it can accept the following format:
-;      - %{user}C for user CPU only
-;      - %{system}C for system CPU only
-;      - %{total}C  for user + system CPU (default)
-;  %d: time taken to serve the request
-;      it can accept the following format:
-;      - %{seconds}d (default)
-;      - %{miliseconds}d
-;      - %{mili}d
-;      - %{microseconds}d
-;      - %{micro}d
-;  %e: an environment variable (same as $_ENV or $_SERVER)
-;      it must be associated with embraces to specify the name of the env
-;      variable. Some exemples:
-;      - server specifics like: %{REQUEST_METHOD}e or %{SERVER_PROTOCOL}e
-;      - HTTP headers like: %{HTTP_HOST}e or %{HTTP_USER_AGENT}e
-;  %f: script filename
-;  %l: content-length of the request (for POST request only)
-;  %m: request method
-;  %M: peak of memory allocated by PHP
-;      it can accept the following format:
-;      - %{bytes}M (default)
-;      - %{kilobytes}M
-;      - %{kilo}M
-;      - %{megabytes}M
-;      - %{mega}M
-;  %n: pool name
-;  %o: output header
-;      it must be associated with embraces to specify the name of the header:
-;      - %{Content-Type}o
-;      - %{X-Powered-By}o
-;      - %{Transfert-Encoding}o
-;      - ....
-;  %p: PID of the child that serviced the request
-;  %P: PID of the parent of the child that serviced the request
-;  %q: the query string 
-;  %Q: the '?' character if query string exists
-;  %r: the request URI (without the query string, see %q and %Q)
-;  %R: remote IP address
-;  %s: status (response code)
-;  %t: server time the request was received
-;      it can accept a strftime(3) format:
-;      %d/%b/%Y:%H:%M:%S %z (default)
-;  %T: time the log has been written (the request has finished)
-;      it can accept a strftime(3) format:
-;      %d/%b/%Y:%H:%M:%S %z (default)
-;  %u: remote user
-;
-; Default: "%R - %u %t \"%m %r\" %s"
-;access.format = "%R - %u %t \"%m %r%Q%q\" %s %f %{mili}d %{kilo}M %C%%"
- 
-; The log file for slow requests
-; Default Value: not set
-; Note: slowlog is mandatory if request_slowlog_timeout is set
-;slowlog = log/$pool.log.slow
- 
-; The timeout for serving a single request after which a PHP backtrace will be
-; dumped to the 'slowlog' file. A value of '0s' means 'off'.
-; Available units: s(econds)(default), m(inutes), h(ours), or d(ays)
-; Default Value: 0
-;request_slowlog_timeout = 0
- 
-; The timeout for serving a single request after which the worker process will
-; be killed. This option should be used when the 'max_execution_time' ini option
-; does not stop script execution for some reason. A value of '0' means 'off'.
-; Available units: s(econds)(default), m(inutes), h(ours), or d(ays)
-; Default Value: 0
-;request_terminate_timeout = 0
- 
-; Set open file descriptor rlimit.
-; Default Value: system defined value
-;rlimit_files = 1024
- 
-; Set max core size rlimit.
-; Possible Values: 'unlimited' or an integer greater or equal to 0
-; Default Value: system defined value
-;rlimit_core = 0
- 
-; Chroot to this directory at the start. This value must be defined as an
-; absolute path. When this value is not set, chroot is not used.
-; Note: you can prefix with '$prefix' to chroot to the pool prefix or one
-; of its subdirectories. If the pool prefix is not set, the global prefix
-; will be used instead.
-; Note: chrooting is a great security feature and should be used whenever 
-;       possible. However, all PHP paths will be relative to the chroot
-;       (error_log, sessions.save_path, ...).
-; Default Value: not set
-;chroot = 
- 
-; Chdir to this directory at the start.
-; Note: relative path can be used.
-; Default Value: current directory or / when chroot
-chdir = /
- 
-; Redirect worker stdout and stderr into main error log. If not set, stdout and
-; stderr will be redirected to /dev/null according to FastCGI specs.
-; Note: on highloaded environement, this can cause some delay in the page
-; process time (several ms).
-; Default Value: no
-;catch_workers_output = yes
-
-; Clear environment in FPM workers
-; Prevents arbitrary environment variables from reaching FPM worker processes
-; by clearing the environment in workers before env vars specified in this
-; pool configuration are added.
-; Setting to "no" will make all environment variables available to PHP code
-; via getenv(), $_ENV and $_SERVER.
-; Default Value: yes
-;clear_env = no
-
-; Limits the extensions of the main script FPM will allow to parse. This can
-; prevent configuration mistakes on the web server side. You should only limit
-; FPM to .php extensions to prevent malicious users to use other extensions to
-; exectute php code.
-; Note: set an empty value to allow all extensions.
-; Default Value: .php
-;security.limit_extensions = .php .php3 .php4 .php5
- 
-; Pass environment variables like LD_LIBRARY_PATH. All $VARIABLEs are taken from
-; the current environment.
-; Default Value: clean env
-;env[HOSTNAME] = $HOSTNAME
-;env[PATH] = /usr/local/bin:/usr/bin:/bin
-;env[TMP] = /tmp
-;env[TMPDIR] = /tmp
-;env[TEMP] = /tmp
-
-; Additional php.ini defines, specific to this pool of workers. These settings
-; overwrite the values previously defined in the php.ini. The directives are the
-; same as the PHP SAPI:
-;   php_value/php_flag             - you can set classic ini defines which can
-;                                    be overwritten from PHP call 'ini_set'. 
-;   php_admin_value/php_admin_flag - these directives won't be overwritten by
-;                                     PHP call 'ini_set'
-; For php_*flag, valid values are on, off, 1, 0, true, false, yes or no.
-
-; Defining 'extension' will load the corresponding shared extension from
-; extension_dir. Defining 'disable_functions' or 'disable_classes' will not
-; overwrite previously defined php.ini values, but will append the new value
-; instead.
-
-; Note: path INI options can be relative and will be expanded with the prefix
-; (pool, global or /usr)
-
-; Default Value: nothing is defined by default except the values in php.ini and
-;                specified at startup with the -d argument
-;php_admin_value[sendmail_path] = /usr/sbin/sendmail -t -i -f www@my.domain.com
-;php_flag[display_errors] = off
-;php_admin_value[error_log] = /var/log/fpm-php.www.log
-;php_admin_flag[log_errors] = on
-;php_admin_value[memory_limit] = 32M
 
 
 
 ########## PHP-FPM LOG ###########
 
-[24-Nov-2015 05:28:18] NOTICE: fpm is running, pid 23414
-[24-Nov-2015 05:28:18] NOTICE: ready to handle connections
-[24-Nov-2015 05:28:18] NOTICE: systemd monitor interval set to 10000ms
-[24-Nov-2015 05:28:24] NOTICE: Terminating ...
-[24-Nov-2015 05:28:24] NOTICE: exiting, bye-bye!
-[24-Nov-2015 05:28:24] NOTICE: configuration file /etc/php5/fpm/php-fpm.conf test is successful
+[06-Dec-2015 18:31:53] NOTICE: configuration file /etc/php5/fpm/php-fpm.conf test is successful
 
-[24-Nov-2015 05:28:24] NOTICE: fpm is running, pid 23599
-[24-Nov-2015 05:28:24] NOTICE: ready to handle connections
-[24-Nov-2015 05:28:24] NOTICE: systemd monitor interval set to 10000ms
+[06-Dec-2015 18:31:53] NOTICE: fpm is running, pid 22250
+[06-Dec-2015 18:31:53] NOTICE: ready to handle connections
+[06-Dec-2015 18:31:53] NOTICE: systemd monitor interval set to 10000ms
+[06-Dec-2015 18:32:00] NOTICE: Terminating ...
+[06-Dec-2015 18:32:00] NOTICE: exiting, bye-bye!
+[06-Dec-2015 18:32:00] NOTICE: configuration file /etc/php5/fpm/php-fpm.conf test is successful
+
+[06-Dec-2015 18:32:00] NOTICE: fpm is running, pid 24373
+[06-Dec-2015 18:32:00] NOTICE: ready to handle connections
+[06-Dec-2015 18:32:00] NOTICE: systemd monitor interval set to 10000ms
+[06-Dec-2015 18:32:07] NOTICE: Terminating ...
+[06-Dec-2015 18:32:07] NOTICE: exiting, bye-bye!
+[06-Dec-2015 18:32:07] NOTICE: configuration file /etc/php5/fpm/php-fpm.conf test is successful
+
+[06-Dec-2015 18:32:07] NOTICE: fpm is running, pid 24560
+[06-Dec-2015 18:32:07] NOTICE: ready to handle connections
+[06-Dec-2015 18:32:07] NOTICE: systemd monitor interval set to 10000ms
+########## MAIN EXIM CONFIG ###########
+
+# /etc/exim4/update-exim4.conf.conf
+#
+# Edit this file and /etc/mailname by hand and execute update-exim4.conf
+# yourself or use 'dpkg-reconfigure exim4-config'
+#
+# Please note that this is _not_ a dpkg-conffile and that automatic changes
+# to this file might happen. The code handling this will honor your local
+# changes, so this is usually fine, but will break local schemes that mess
+# around with multiple versions of the file.
+#
+# update-exim4.conf uses this file to determine variable values to generate
+# exim configuration macros for the configuration file.
+#
+# Most settings found in here do have corresponding questions in the
+# Debconf configuration, but not all of them.
+#
+# This is a Debian specific file
+
+dc_eximconfig_configtype='internet'
+dc_other_hostnames='localhost'
+dc_local_interfaces='127.0.0.1; ::1'
+dc_readhost=''
+dc_relay_domains=''
+dc_minimaldns='false'
+dc_relay_nets=''
+dc_smarthost=''
+CFILEMODE='644'
+dc_use_split_config='false'
+dc_hide_mailname=''
+dc_mailname_in_oh='true'
+dc_localdelivery='maildir_home'
+########## EXIM CONF.D CONFIG ###########
+
+DKIM_CANON = strict
+DKIM_SELECTOR = default
+DKIM_PRIVATE_KEY = /var/www/certs/dkim/dkim.default.key
+DKIM_DOMAIN = 
+########## ETC/ALIASES ###########
+
+# /etc/aliases
+mailer-daemon: postmaster
+postmaster: root
+nobody: root
+hostmaster: root
+usenet: root
+news: root
+webmaster: root
+www: root
+ftp: root
+abuse: root
+noc: root
+security: root
+root: dummyemail@bradchesney79.33mail.com
+default-web: dummyemail@bradchesney79.33mail.com
 
 
 
@@ -3641,8 +3132,8 @@ chdir = /
 
 SCRIPTLOCATION - /root/bin
 EXECUTIONLOG - /var/log/auto-install.log
-TROUBLESHOOTINGFILES - /root/bin/troubleshooting/1448342652
-2015-11-24 - 1448342652
+TROUBLESHOOTINGFILES - 
+2015-12-06 - 1449426497
 
 
 ########## RECORD THE VARIABLES FOR POSTERITY ####
@@ -3696,7 +3187,7 @@ EMAIL - default-web@rustbeltrebellion.com
 PASSWORD - dummypassword
 
 
-SSLPROVIDER - start-ssl
+SSLPROVIDER - start-ssl-class2
 
 
 DBROOTUSER - datalord
@@ -3743,33 +3234,33 @@ Get:1 http://security.debian.org jessie/updates InRelease [63.1 kB]
 Ign http://ftp.us.debian.org jessie InRelease
 Get:2 http://ftp.us.debian.org jessie Release.gpg [2,373 B]
 Get:3 http://ftp.us.debian.org jessie Release [148 kB]
-Get:4 http://http.debian.net jessie-backports InRelease [160 kB]
-Get:5 http://security.debian.org jessie/updates/main amd64 Packages [148 kB]
-Get:6 http://ftp.us.debian.org jessie/main amd64 Packages [6,764 kB]
-Get:7 http://httpredir.debian.org jessie-updates InRelease [135 kB]
+Get:4 http://security.debian.org jessie/updates/main amd64 Packages [162 kB]
+Get:5 http://ftp.us.debian.org jessie/main amd64 Packages [6,764 kB]
+Get:6 http://httpredir.debian.org jessie-updates InRelease [136 kB]
+Get:7 http://http.debian.net jessie-backports InRelease [165 kB]
 Get:8 http://security.debian.org jessie/updates/contrib amd64 Packages [2,512 B]
 Get:9 http://security.debian.org jessie/updates/non-free amd64 Packages [14 B]
 Get:10 http://security.debian.org jessie/updates/contrib Translation-en [1,211 B]
-Get:11 http://security.debian.org jessie/updates/main Translation-en [82.5 kB]
-Get:12 http://httpredir.debian.org jessie-updates/contrib amd64 Packages [32 B]
-Get:13 http://security.debian.org jessie/updates/non-free Translation-en [14 B]
-Get:14 http://httpredir.debian.org jessie-updates/non-free amd64 Packages [32 B]
-Get:15 http://httpredir.debian.org jessie-updates/main Translation-en [2,506 B]
-Get:16 http://ftp.us.debian.org jessie/contrib amd64 Packages [50.1 kB]
-Get:17 http://httpredir.debian.org jessie-updates/contrib Translation-en [14 B]
-Get:18 http://ftp.us.debian.org jessie/non-free amd64 Packages [83.6 kB]
-Get:19 http://http.debian.net jessie-backports/main Translation-en [187 kB]
-Get:20 http://http.debian.net jessie-backports/contrib Translation-en [4,328 B]
-Get:21 http://ftp.us.debian.org jessie/contrib Translation-en [38.4 kB]
-Get:22 http://httpredir.debian.org jessie-updates/non-free Translation-en [14 B]
-Get:23 http://ftp.us.debian.org jessie/main Translation-en [4,585 kB]
-Get:24 http://http.debian.net jessie-backports/non-free Translation-en [17.3 kB]
-Get:25 http://http.debian.net jessie-backports/main amd64 Packages [279 kB]
-Get:26 http://httpredir.debian.org jessie-updates/main amd64 Packages [3,452 B]
-Get:27 http://http.debian.net jessie-backports/contrib amd64 Packages [5,884 B]
-Get:28 http://http.debian.net jessie-backports/non-free amd64 Packages [13.1 kB]
-Get:29 http://ftp.us.debian.org jessie/non-free Translation-en [72.2 kB]
-Fetched 12.8 MB in 5s (2,387 kB/s)
+Get:11 http://security.debian.org jessie/updates/main Translation-en [87.5 kB]
+Get:12 http://security.debian.org jessie/updates/non-free Translation-en [14 B]
+Get:13 http://ftp.us.debian.org jessie/contrib amd64 Packages [50.1 kB]
+Get:14 http://ftp.us.debian.org jessie/non-free amd64 Packages [83.6 kB]
+Get:15 http://ftp.us.debian.org jessie/contrib Translation-en [38.4 kB]
+Get:16 http://ftp.us.debian.org jessie/main Translation-en [4,585 kB]
+Get:17 http://ftp.us.debian.org jessie/non-free Translation-en [72.2 kB]
+Get:18 http://http.debian.net jessie-backports/contrib Translation-en [5,144 B]
+Get:19 http://httpredir.debian.org jessie-updates/contrib amd64 Packages [32 B]
+Get:20 http://http.debian.net jessie-backports/main Translation-en [193 kB]
+Get:21 http://httpredir.debian.org jessie-updates/non-free amd64 Packages [32 B]
+Get:22 http://httpredir.debian.org jessie-updates/contrib Translation-en [14 B]
+Get:23 http://http.debian.net jessie-backports/non-free Translation-en [22.1 kB]
+Get:24 http://http.debian.net jessie-backports/main amd64 Packages [285 kB]
+Get:25 http://http.debian.net jessie-backports/contrib amd64 Packages [7,192 B]
+Get:26 http://httpredir.debian.org jessie-updates/non-free Translation-en [14 B]
+Get:27 http://httpredir.debian.org jessie-updates/main Translation-en [2,506 B]
+Get:28 http://http.debian.net jessie-backports/non-free amd64 Packages [17.2 kB]
+Get:29 http://httpredir.debian.org jessie-updates/main amd64 Packages [3,452 B]
+Fetched 12.9 MB in 5s (2,340 kB/s)
 Reading package lists...
 
 Upgrade the system
@@ -3780,74 +3271,80 @@ Reading package lists...
 Building dependency tree...
 Reading state information...
 The following packages will be upgraded:
-  apt apt-utils base-files bind9-host cron dbus dnsutils host krb5-locales
-  libapt-inst1.5 libapt-pkg4.12 libbind9-90 libc-bin libc6 libdbus-1-3
-  libdns-export100 libdns100 libexpat1 libgnutls-deb0-28 libgnutls-openssl27
-  libgssapi-krb5-2 libicu52 libio-socket-ssl-perl libirs-export91
-  libisc-export95 libisc95 libisccc90 libisccfg-export90 libisccfg90
-  libk5crypto3 libkrb5-3 libkrb5support0 libldap-2.4-2 liblwres90 libpng12-0
-  libsasl2-2 libsasl2-modules libsasl2-modules-db libsystemd0 libudev1 locales
-  multiarch-support ntp ntpdate python-apt python-apt-common rpcbind rsyslog
-  screen systemd systemd-sysv tzdata udev unzip
-54 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
-Need to get 32.7 MB of archives.
-After this operation, 79.9 kB disk space will be freed.
+  apt apt-utils base-files bind9-host cron dbus dnsutils dpkg host
+  krb5-locales libapt-inst1.5 libapt-pkg4.12 libbind9-90 libc-bin libc6
+  libdbus-1-3 libdns-export100 libdns100 libexpat1 libgnutls-deb0-28
+  libgnutls-openssl27 libgssapi-krb5-2 libicu52 libio-socket-ssl-perl
+  libirs-export91 libisc-export95 libisc95 libisccc90 libisccfg-export90
+  libisccfg90 libk5crypto3 libkrb5-3 libkrb5support0 libldap-2.4-2 liblwres90
+  libpng12-0 libsasl2-2 libsasl2-modules libsasl2-modules-db libssl1.0.0
+  libsystemd0 libudev1 locales multiarch-support ntp ntpdate openssl
+  python-apt python-apt-common rpcbind rsyslog screen systemd systemd-sysv
+  tzdata udev unzip
+57 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+Need to get 37.4 MB of archives.
+After this operation, 77.8 kB disk space will be freed.
 Get:1 http://security.debian.org/ jessie/updates/main rpcbind amd64 0.2.1-6+deb8u1 [41.6 kB]
 Get:2 http://ftp.us.debian.org/debian/ jessie/main base-files amd64 8+deb8u2 [77.9 kB]
-Get:3 http://security.debian.org/ jessie/updates/main libgssapi-krb5-2 amd64 1.12.1+dfsg-19+deb8u1 [151 kB]
+Get:3 http://security.debian.org/ jessie/updates/main dpkg amd64 1.17.26 [2,991 kB]
 Get:4 http://ftp.us.debian.org/debian/ jessie/main libc-bin amd64 2.19-18+deb8u1 [1,284 kB]
-Get:5 http://security.debian.org/ jessie/updates/main libkrb5-3 amd64 1.12.1+dfsg-19+deb8u1 [302 kB]
-Get:6 http://httpredir.debian.org/debian/ jessie-updates/main tzdata all 2015g-0+deb8u1 [184 kB]
-Get:7 http://ftp.us.debian.org/debian/ jessie/main libc6 amd64 2.19-18+deb8u1 [4,659 kB]
-Get:8 http://security.debian.org/ jessie/updates/main libkrb5support0 amd64 1.12.1+dfsg-19+deb8u1 [58.7 kB]
-Get:9 http://security.debian.org/ jessie/updates/main libk5crypto3 amd64 1.12.1+dfsg-19+deb8u1 [115 kB]
-Get:10 http://security.debian.org/ jessie/updates/main libsasl2-modules-db amd64 2.1.26.dfsg1-13+deb8u1 [67.1 kB]
-Get:11 http://security.debian.org/ jessie/updates/main libsasl2-2 amd64 2.1.26.dfsg1-13+deb8u1 [105 kB]
-Get:12 http://ftp.us.debian.org/debian/ jessie/main libapt-pkg4.12 amd64 1.0.9.8.1 [791 kB]
-Get:13 http://security.debian.org/ jessie/updates/main libldap-2.4-2 amd64 2.4.40+dfsg-1+deb8u1 [218 kB]
-Get:14 http://ftp.us.debian.org/debian/ jessie/main apt amd64 1.0.9.8.1 [1,110 kB]
+Get:5 http://httpredir.debian.org/debian/ jessie-updates/main tzdata all 2015g-0+deb8u1 [184 kB]
+Get:6 http://ftp.us.debian.org/debian/ jessie/main libc6 amd64 2.19-18+deb8u1 [4,659 kB]
+Get:7 http://security.debian.org/ jessie/updates/main libssl1.0.0 amd64 1.0.1k-3+deb8u2 [1,038 kB]
+Get:8 http://security.debian.org/ jessie/updates/main libgssapi-krb5-2 amd64 1.12.1+dfsg-19+deb8u1 [151 kB]
+Get:9 http://security.debian.org/ jessie/updates/main libkrb5-3 amd64 1.12.1+dfsg-19+deb8u1 [302 kB]
+Get:10 http://security.debian.org/ jessie/updates/main libkrb5support0 amd64 1.12.1+dfsg-19+deb8u1 [58.7 kB]
+Get:11 http://security.debian.org/ jessie/updates/main libk5crypto3 amd64 1.12.1+dfsg-19+deb8u1 [115 kB]
+Get:12 http://security.debian.org/ jessie/updates/main libsasl2-modules-db amd64 2.1.26.dfsg1-13+deb8u1 [67.1 kB]
+Get:13 http://security.debian.org/ jessie/updates/main libsasl2-2 amd64 2.1.26.dfsg1-13+deb8u1 [105 kB]
+Get:14 http://security.debian.org/ jessie/updates/main libldap-2.4-2 amd64 2.4.40+dfsg-1+deb8u1 [218 kB]
 Get:15 http://security.debian.org/ jessie/updates/main libisc-export95 amd64 1:9.9.5.dfsg-9+deb8u3 [140 kB]
-Get:16 http://ftp.us.debian.org/debian/ jessie/main libudev1 amd64 215-17+deb8u2 [55.7 kB]
-Get:17 http://ftp.us.debian.org/debian/ jessie/main udev amd64 215-17+deb8u2 [878 kB]
-Get:18 http://security.debian.org/ jessie/updates/main libdns-export100 amd64 1:9.9.5.dfsg-9+deb8u3 [455 kB]
-Get:19 http://ftp.us.debian.org/debian/ jessie/main libsystemd0 amd64 215-17+deb8u2 [87.2 kB]
-Get:20 http://ftp.us.debian.org/debian/ jessie/main systemd amd64 215-17+deb8u2 [2,550 kB]
-Get:21 http://ftp.us.debian.org/debian/ jessie/main systemd-sysv amd64 215-17+deb8u2 [34.5 kB]
-Get:22 http://security.debian.org/ jessie/updates/main libicu52 amd64 52.1-8+deb8u3 [6,784 kB]
-Get:23 http://ftp.us.debian.org/debian/ jessie/main cron amd64 3.0pl1-127+deb8u1 [94.0 kB]
-Get:24 http://ftp.us.debian.org/debian/ jessie/main libapt-inst1.5 amd64 1.0.9.8.1 [169 kB]
-Get:25 http://ftp.us.debian.org/debian/ jessie/main libgnutls-openssl27 amd64 3.3.8-6+deb8u3 [143 kB]
-Get:26 http://ftp.us.debian.org/debian/ jessie/main libgnutls-deb0-28 amd64 3.3.8-6+deb8u3 [694 kB]
-Get:27 http://ftp.us.debian.org/debian/ jessie/main libdbus-1-3 amd64 1.8.20-0+deb8u1 [170 kB]
-Get:28 http://ftp.us.debian.org/debian/ jessie/main libexpat1 amd64 2.1.0-6+deb8u1 [80.0 kB]
-Get:29 http://ftp.us.debian.org/debian/ jessie/main multiarch-support amd64 2.19-18+deb8u1 [179 kB]
-Get:30 http://ftp.us.debian.org/debian/ jessie/main apt-utils amd64 1.0.9.8.1 [369 kB]
-Get:31 http://ftp.us.debian.org/debian/ jessie/main rsyslog amd64 8.4.2-1+deb8u1 [545 kB]
-Get:32 http://ftp.us.debian.org/debian/ jessie/main dbus amd64 1.8.20-0+deb8u1 [291 kB]
-Get:33 http://ftp.us.debian.org/debian/ jessie/main locales all 2.19-18+deb8u1 [3,908 kB]
-Get:34 http://ftp.us.debian.org/debian/ jessie/main python-apt-common all 0.9.3.12 [89.9 kB]
-Get:35 http://ftp.us.debian.org/debian/ jessie/main python-apt amd64 0.9.3.12 [171 kB]
-Get:36 http://ftp.us.debian.org/debian/ jessie/main libio-socket-ssl-perl all 2.002-2+deb8u1 [172 kB]
-Get:37 http://security.debian.org/ jessie/updates/main libisccfg-export90 amd64 1:9.9.5.dfsg-9+deb8u3 [40.1 kB]
-Get:38 http://security.debian.org/ jessie/updates/main libirs-export91 amd64 1:9.9.5.dfsg-9+deb8u3 [37.8 kB]
-Get:39 http://security.debian.org/ jessie/updates/main libpng12-0 amd64 1.2.50-2+deb8u1 [173 kB]
-Get:40 http://security.debian.org/ jessie/updates/main ntp amd64 1:4.2.6.p5+dfsg-7+deb8u1 [394 kB]
-Get:41 http://security.debian.org/ jessie/updates/main ntpdate amd64 1:4.2.6.p5+dfsg-7+deb8u1 [74.5 kB]
-Get:42 http://security.debian.org/ jessie/updates/main dnsutils amd64 1:9.9.5.dfsg-9+deb8u3 [118 kB]
-Get:43 http://security.debian.org/ jessie/updates/main bind9-host amd64 1:9.9.5.dfsg-9+deb8u3 [66.9 kB]
-Get:44 http://security.debian.org/ jessie/updates/main libisc95 amd64 1:9.9.5.dfsg-9+deb8u3 [168 kB]
-Get:45 http://security.debian.org/ jessie/updates/main libdns100 amd64 1:9.9.5.dfsg-9+deb8u3 [680 kB]
-Get:46 http://security.debian.org/ jessie/updates/main libisccc90 amd64 1:9.9.5.dfsg-9+deb8u3 [35.9 kB]
-Get:47 http://security.debian.org/ jessie/updates/main libisccfg90 amd64 1:9.9.5.dfsg-9+deb8u3 [56.5 kB]
-Get:48 http://security.debian.org/ jessie/updates/main liblwres90 amd64 1:9.9.5.dfsg-9+deb8u3 [52.4 kB]
-Get:49 http://security.debian.org/ jessie/updates/main host all 1:9.9.5.dfsg-9+deb8u3 [22.9 kB]
-Get:50 http://security.debian.org/ jessie/updates/main libbind9-90 amd64 1:9.9.5.dfsg-9+deb8u3 [42.7 kB]
-Get:51 http://security.debian.org/ jessie/updates/main krb5-locales all 1.12.1+dfsg-19+deb8u1 [2,648 kB]
-Get:52 http://security.debian.org/ jessie/updates/main libsasl2-modules amd64 2.1.26.dfsg1-13+deb8u1 [101 kB]
-Get:53 http://security.debian.org/ jessie/updates/main screen amd64 4.2.1-3+deb8u1 [569 kB]
-Get:54 http://security.debian.org/ jessie/updates/main unzip amd64 6.0-16+deb8u2 [162 kB]
+Get:16 http://security.debian.org/ jessie/updates/main libdns-export100 amd64 1:9.9.5.dfsg-9+deb8u3 [455 kB]
+Get:17 http://ftp.us.debian.org/debian/ jessie/main cron amd64 3.0pl1-127+deb8u1 [94.0 kB]
+Get:18 http://ftp.us.debian.org/debian/ jessie/main libapt-pkg4.12 amd64 1.0.9.8.1 [791 kB]
+Get:19 http://security.debian.org/ jessie/updates/main libicu52 amd64 52.1-8+deb8u3 [6,784 kB]
+Get:20 http://ftp.us.debian.org/debian/ jessie/main apt amd64 1.0.9.8.1 [1,110 kB]
+Get:21 http://ftp.us.debian.org/debian/ jessie/main libudev1 amd64 215-17+deb8u2 [55.7 kB]
+Get:22 http://ftp.us.debian.org/debian/ jessie/main udev amd64 215-17+deb8u2 [878 kB]
+Get:23 http://ftp.us.debian.org/debian/ jessie/main libsystemd0 amd64 215-17+deb8u2 [87.2 kB]
+Get:24 http://ftp.us.debian.org/debian/ jessie/main systemd amd64 215-17+deb8u2 [2,550 kB]
+Get:25 http://security.debian.org/ jessie/updates/main libisccfg-export90 amd64 1:9.9.5.dfsg-9+deb8u3 [40.1 kB]
+Get:26 http://security.debian.org/ jessie/updates/main libirs-export91 amd64 1:9.9.5.dfsg-9+deb8u3 [37.8 kB]
+Get:27 http://security.debian.org/ jessie/updates/main libpng12-0 amd64 1.2.50-2+deb8u1 [173 kB]
+Get:28 http://security.debian.org/ jessie/updates/main ntp amd64 1:4.2.6.p5+dfsg-7+deb8u1 [394 kB]
+Get:29 http://ftp.us.debian.org/debian/ jessie/main systemd-sysv amd64 215-17+deb8u2 [34.5 kB]
+Get:30 http://ftp.us.debian.org/debian/ jessie/main libapt-inst1.5 amd64 1.0.9.8.1 [169 kB]
+Get:31 http://security.debian.org/ jessie/updates/main ntpdate amd64 1:4.2.6.p5+dfsg-7+deb8u1 [74.5 kB]
+Get:32 http://security.debian.org/ jessie/updates/main dnsutils amd64 1:9.9.5.dfsg-9+deb8u3 [118 kB]
+Get:33 http://ftp.us.debian.org/debian/ jessie/main libgnutls-openssl27 amd64 3.3.8-6+deb8u3 [143 kB]
+Get:34 http://ftp.us.debian.org/debian/ jessie/main libgnutls-deb0-28 amd64 3.3.8-6+deb8u3 [694 kB]
+Get:35 http://security.debian.org/ jessie/updates/main bind9-host amd64 1:9.9.5.dfsg-9+deb8u3 [66.9 kB]
+Get:36 http://security.debian.org/ jessie/updates/main libisc95 amd64 1:9.9.5.dfsg-9+deb8u3 [168 kB]
+Get:37 http://security.debian.org/ jessie/updates/main libdns100 amd64 1:9.9.5.dfsg-9+deb8u3 [680 kB]
+Get:38 http://ftp.us.debian.org/debian/ jessie/main libdbus-1-3 amd64 1.8.20-0+deb8u1 [170 kB]
+Get:39 http://ftp.us.debian.org/debian/ jessie/main libexpat1 amd64 2.1.0-6+deb8u1 [80.0 kB]
+Get:40 http://ftp.us.debian.org/debian/ jessie/main multiarch-support amd64 2.19-18+deb8u1 [179 kB]
+Get:41 http://ftp.us.debian.org/debian/ jessie/main apt-utils amd64 1.0.9.8.1 [369 kB]
+Get:42 http://ftp.us.debian.org/debian/ jessie/main rsyslog amd64 8.4.2-1+deb8u1 [545 kB]
+Get:43 http://security.debian.org/ jessie/updates/main libisccc90 amd64 1:9.9.5.dfsg-9+deb8u3 [35.9 kB]
+Get:44 http://ftp.us.debian.org/debian/ jessie/main dbus amd64 1.8.20-0+deb8u1 [291 kB]
+Get:45 http://security.debian.org/ jessie/updates/main libisccfg90 amd64 1:9.9.5.dfsg-9+deb8u3 [56.5 kB]
+Get:46 http://security.debian.org/ jessie/updates/main liblwres90 amd64 1:9.9.5.dfsg-9+deb8u3 [52.4 kB]
+Get:47 http://ftp.us.debian.org/debian/ jessie/main locales all 2.19-18+deb8u1 [3,908 kB]
+Get:48 http://security.debian.org/ jessie/updates/main host all 1:9.9.5.dfsg-9+deb8u3 [22.9 kB]
+Get:49 http://security.debian.org/ jessie/updates/main libbind9-90 amd64 1:9.9.5.dfsg-9+deb8u3 [42.7 kB]
+Get:50 http://security.debian.org/ jessie/updates/main krb5-locales all 1.12.1+dfsg-19+deb8u1 [2,648 kB]
+Get:51 http://ftp.us.debian.org/debian/ jessie/main python-apt-common all 0.9.3.12 [89.9 kB]
+Get:52 http://ftp.us.debian.org/debian/ jessie/main python-apt amd64 0.9.3.12 [171 kB]
+Get:53 http://ftp.us.debian.org/debian/ jessie/main libio-socket-ssl-perl all 2.002-2+deb8u1 [172 kB]
+Get:54 http://security.debian.org/ jessie/updates/main libsasl2-modules amd64 2.1.26.dfsg1-13+deb8u1 [101 kB]
+Get:55 http://security.debian.org/ jessie/updates/main openssl amd64 1.0.1k-3+deb8u2 [677 kB]
+Get:56 http://security.debian.org/ jessie/updates/main screen amd64 4.2.1-3+deb8u1 [569 kB]
+Get:57 http://security.debian.org/ jessie/updates/main unzip amd64 6.0-16+deb8u2 [162 kB]
+Reading changelogs...
+Extracting templates from packages: 52%Extracting templates from packages: 100%
 Preconfiguring packages ...
-Fetched 32.7 MB in 17s (1,920 kB/s)
+Fetched 37.4 MB in 14s (2,581 kB/s)
 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 24184 files and directories currently installed.)
 Preparing to unpack .../base-files_8+deb8u2_amd64.deb ...
 Unpacking base-files (8+deb8u2) over (8+deb8u1) ...
@@ -3868,6 +3365,14 @@ Preparing to unpack .../libc6_2.19-18+deb8u1_amd64.deb ...
 Unpacking libc6:amd64 (2.19-18+deb8u1) over (2.19-18) ...
 Setting up libc6:amd64 (2.19-18+deb8u1) ...
 Processing triggers for libc-bin (2.19-18+deb8u1) ...
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 24184 files and directories currently installed.)
+Preparing to unpack .../cron_3.0pl1-127+deb8u1_amd64.deb ...
+Unpacking cron (3.0pl1-127+deb8u1) over (3.0pl1-127) ...
+Preparing to unpack .../dpkg_1.17.26_amd64.deb ...
+Unpacking dpkg (1.17.26) over (1.17.25) ...
+Processing triggers for systemd (215-17+deb8u1) ...
+Processing triggers for man-db (2.7.0.2-5) ...
+Setting up dpkg (1.17.26) ...
 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 24184 files and directories currently installed.)
 Preparing to unpack .../libapt-pkg4.12_1.0.9.8.1_amd64.deb ...
 Unpacking libapt-pkg4.12:amd64 (1.0.9.8.1) over (1.0.9.8) ...
@@ -3908,10 +3413,10 @@ Unpacking systemd-sysv (215-17+deb8u2) over (215-17+deb8u1) ...
 Processing triggers for man-db (2.7.0.2-5) ...
 Setting up systemd-sysv (215-17+deb8u2) ...
 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 24184 files and directories currently installed.)
-Preparing to unpack .../cron_3.0pl1-127+deb8u1_amd64.deb ...
-Unpacking cron (3.0pl1-127+deb8u1) over (3.0pl1-127) ...
 Preparing to unpack .../libapt-inst1.5_1.0.9.8.1_amd64.deb ...
 Unpacking libapt-inst1.5:amd64 (1.0.9.8.1) over (1.0.9.8) ...
+Preparing to unpack .../libssl1.0.0_1.0.1k-3+deb8u2_amd64.deb ...
+Unpacking libssl1.0.0:amd64 (1.0.1k-3+deb8u2) over (1.0.1k-3+deb8u1) ...
 Preparing to unpack .../libgnutls-openssl27_3.3.8-6+deb8u3_amd64.deb ...
 Unpacking libgnutls-openssl27:amd64 (3.3.8-6+deb8u3) over (3.3.8-6+deb8u1) ...
 Preparing to unpack .../libgnutls-deb0-28_3.3.8-6+deb8u3_amd64.deb ...
@@ -3952,8 +3457,8 @@ Preparing to unpack .../ntpdate_1%3a4.2.6.p5+dfsg-7+deb8u1_amd64.deb ...
 Unpacking ntpdate (1:4.2.6.p5+dfsg-7+deb8u1) over (1:4.2.6.p5+dfsg-7) ...
 Preparing to unpack .../multiarch-support_2.19-18+deb8u1_amd64.deb ...
 Unpacking multiarch-support (2.19-18+deb8u1) over (2.19-18) ...
-Processing triggers for systemd (215-17+deb8u2) ...
 Processing triggers for man-db (2.7.0.2-5) ...
+Processing triggers for systemd (215-17+deb8u2) ...
 Setting up multiarch-support (2.19-18+deb8u1) ...
 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 24182 files and directories currently installed.)
 Preparing to unpack .../tzdata_2015g-0+deb8u1_all.deb ...
@@ -3961,8 +3466,8 @@ Unpacking tzdata (2015g-0+deb8u1) over (2015e-0+deb8u1) ...
 Setting up tzdata (2015g-0+deb8u1) ...
 
 Current default time zone: 'Etc/UTC'
-Local time is now:      Tue Nov 24 05:25:14 UTC 2015.
-Universal Time is now:  Tue Nov 24 05:25:14 UTC 2015.
+Local time is now:      Sun Dec  6 18:29:17 UTC 2015.
+Universal Time is now:  Sun Dec  6 18:29:17 UTC 2015.
 Run 'dpkg-reconfigure tzdata' if you wish to change it.
 
 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 24185 files and directories currently installed.)
@@ -4002,6 +3507,8 @@ Preparing to unpack .../libio-socket-ssl-perl_2.002-2+deb8u1_all.deb ...
 Unpacking libio-socket-ssl-perl (2.002-2+deb8u1) over (2.002-2) ...
 Preparing to unpack .../libsasl2-modules_2.1.26.dfsg1-13+deb8u1_amd64.deb ...
 Unpacking libsasl2-modules:amd64 (2.1.26.dfsg1-13+deb8u1) over (2.1.26.dfsg1-13) ...
+Preparing to unpack .../openssl_1.0.1k-3+deb8u2_amd64.deb ...
+Unpacking openssl (1.0.1k-3+deb8u2) over (1.0.1k-3+deb8u1) ...
 Preparing to unpack .../screen_4.2.1-3+deb8u1_amd64.deb ...
 Unpacking screen (4.2.1-3+deb8u1) over (4.2.1-3) ...
 Preparing to unpack .../unzip_6.0-16+deb8u2_amd64.deb ...
@@ -4014,6 +3521,7 @@ Setting up rpcbind (0.2.1-6+deb8u1) ...
 Setting up cron (3.0pl1-127+deb8u1) ...
 update-rc.d: warning: start and stop actions are no longer supported; falling back to defaults
 Setting up libapt-inst1.5:amd64 (1.0.9.8.1) ...
+Setting up libssl1.0.0:amd64 (1.0.1k-3+deb8u2) ...
 Setting up libgnutls-deb0-28:amd64 (3.3.8-6+deb8u3) ...
 Setting up libgnutls-openssl27:amd64 (3.3.8-6+deb8u3) ...
 Setting up libkrb5support0:amd64 (1.12.1+dfsg-19+deb8u1) ...
@@ -4055,6 +3563,7 @@ Setting up python-apt-common (0.9.3.12) ...
 Setting up python-apt (0.9.3.12) ...
 Setting up libio-socket-ssl-perl (2.002-2+deb8u1) ...
 Setting up libsasl2-modules:amd64 (2.1.26.dfsg1-13+deb8u1) ...
+Setting up openssl (1.0.1k-3+deb8u2) ...
 Setting up screen (4.2.1-3+deb8u1) ...
 Setting up unzip (6.0-16+deb8u2) ...
 Processing triggers for libc-bin (2.19-18+deb8u1) ...
@@ -4072,10 +3581,10 @@ Building dependency tree...
 Reading state information...
 libnet-ssleay-perl is already the newest version.
 libnet-ssleay-perl set to manually installed.
-openssl is already the newest version.
-openssl set to manually installed.
 perl is already the newest version.
 sudo is already the newest version.
+openssl is already the newest version.
+openssl set to manually installed.
 The following extra packages will be installed:
   apache2-bin apache2-data apache2-utils dh-python fontconfig
   fontconfig-config fonts-dejavu-core fonts-droid ghostscript git-man gsfonts
@@ -4153,37 +3662,37 @@ Get:4 http://ftp.us.debian.org/debian/ jessie/main libaprutil1-dbd-sqlite3 amd64
 Get:5 http://ftp.us.debian.org/debian/ jessie/main libaprutil1-ldap amd64 1.5.4-1 [17.2 kB]
 Get:6 http://ftp.us.debian.org/debian/ jessie/main liblua5.1-0 amd64 5.1.5-7.1 [108 kB]
 Get:7 http://ftp.us.debian.org/debian/ jessie/main apache2-bin amd64 2.4.10-10+deb8u3 [1,031 kB]
-Get:8 http://security.debian.org/ jessie/updates/main libgdk-pixbuf2.0-common all 2.31.1-2+deb8u3 [294 kB]
-Get:9 http://ftp.us.debian.org/debian/ jessie/main apache2-utils amd64 2.4.10-10+deb8u3 [194 kB]
-Get:10 http://security.debian.org/ jessie/updates/main libgdk-pixbuf2.0-0 amd64 2.31.1-2+deb8u3 [166 kB]
+Get:8 http://security.debian.org/ jessie/updates/main libcupsfilters1 amd64 1.0.61-5+deb8u2 [106 kB]
+Get:9 http://security.debian.org/ jessie/updates/main libgdk-pixbuf2.0-common all 2.31.1-2+deb8u3 [294 kB]
+Get:10 http://ftp.us.debian.org/debian/ jessie/main apache2-utils amd64 2.4.10-10+deb8u3 [194 kB]
 Get:11 http://ftp.us.debian.org/debian/ jessie/main apache2-data all 2.4.10-10+deb8u3 [163 kB]
-Get:12 http://ftp.us.debian.org/debian/ jessie/main apache2 amd64 2.4.10-10+deb8u3 [205 kB]
-Get:13 http://ftp.us.debian.org/debian/ jessie/main fonts-dejavu-core all 2.34-1 [1,047 kB]
-Get:14 http://ftp.us.debian.org/debian/ jessie/main fontconfig-config all 2.11.0-6.3 [273 kB]
-Get:15 http://ftp.us.debian.org/debian/ jessie/main libfontconfig1 amd64 2.11.0-6.3 [329 kB]
-Get:16 http://ftp.us.debian.org/debian/ jessie/main fontconfig amd64 2.11.0-6.3 [402 kB]
-Get:17 http://ftp.us.debian.org/debian/ jessie/main fonts-droid all 1:4.4.4r2-6 [3,729 kB]
-Get:18 http://ftp.us.debian.org/debian/ jessie/main imagemagick-common all 8:6.8.9.9-5 [148 kB]
-Get:19 http://ftp.us.debian.org/debian/ jessie/main libavahi-common-data amd64 0.6.31-5 [98.6 kB]
-Get:20 http://ftp.us.debian.org/debian/ jessie/main libavahi-common3 amd64 0.6.31-5 [51.1 kB]
-Get:21 http://ftp.us.debian.org/debian/ jessie/main libavahi-client3 amd64 0.6.31-5 [54.4 kB]
-Get:22 http://ftp.us.debian.org/debian/ jessie/main libpixman-1-0 amd64 0.32.6-3 [507 kB]
-Get:23 http://ftp.us.debian.org/debian/ jessie/main libxau6 amd64 1:1.0.8-1 [20.7 kB]
-Get:24 http://ftp.us.debian.org/debian/ jessie/main libxdmcp6 amd64 1:1.1.1-1+b1 [24.9 kB]
-Get:25 http://ftp.us.debian.org/debian/ jessie/main libxcb1 amd64 1.10-3+b1 [44.4 kB]
-Get:26 http://ftp.us.debian.org/debian/ jessie/main libx11-data all 2:1.6.2-3 [126 kB]
-Get:27 http://ftp.us.debian.org/debian/ jessie/main libx11-6 amd64 2:1.6.2-3 [729 kB]
-Get:28 http://ftp.us.debian.org/debian/ jessie/main libxcb-render0 amd64 1.10-3+b1 [17.5 kB]
-Get:29 http://ftp.us.debian.org/debian/ jessie/main libxcb-shm0 amd64 1.10-3+b1 [11.5 kB]
-Get:30 http://ftp.us.debian.org/debian/ jessie/main libxext6 amd64 2:1.3.3-1 [52.7 kB]
-Get:31 http://ftp.us.debian.org/debian/ jessie/main libxrender1 amd64 1:0.9.8-1+b1 [31.4 kB]
-Get:32 http://ftp.us.debian.org/debian/ jessie/main libcairo2 amd64 1.14.0-2.1 [742 kB]
-Get:33 http://ftp.us.debian.org/debian/ jessie/main libcups2 amd64 1.7.5-11+deb8u1 [283 kB]
-Get:34 http://ftp.us.debian.org/debian/ jessie/main libcupsimage2 amd64 1.7.5-11+deb8u1 [117 kB]
-Get:35 http://ftp.us.debian.org/debian/ jessie/main libjpeg62-turbo amd64 1:1.3.1-12 [116 kB]
-Get:36 http://ftp.us.debian.org/debian/ jessie/main libjbig0 amd64 2.1-3.1 [30.7 kB]
-Get:37 http://ftp.us.debian.org/debian/ jessie/main libtiff5 amd64 4.0.3-12.3 [217 kB]
-Get:38 http://ftp.us.debian.org/debian/ jessie/main libcupsfilters1 amd64 1.0.61-5+deb8u1 [106 kB]
+Get:12 http://security.debian.org/ jessie/updates/main libgdk-pixbuf2.0-0 amd64 2.31.1-2+deb8u3 [166 kB]
+Get:13 http://ftp.us.debian.org/debian/ jessie/main apache2 amd64 2.4.10-10+deb8u3 [205 kB]
+Get:14 http://ftp.us.debian.org/debian/ jessie/main fonts-dejavu-core all 2.34-1 [1,047 kB]
+Get:15 http://ftp.us.debian.org/debian/ jessie/main fontconfig-config all 2.11.0-6.3 [273 kB]
+Get:16 http://ftp.us.debian.org/debian/ jessie/main libfontconfig1 amd64 2.11.0-6.3 [329 kB]
+Get:17 http://ftp.us.debian.org/debian/ jessie/main fontconfig amd64 2.11.0-6.3 [402 kB]
+Get:18 http://ftp.us.debian.org/debian/ jessie/main fonts-droid all 1:4.4.4r2-6 [3,729 kB]
+Get:19 http://ftp.us.debian.org/debian/ jessie/main imagemagick-common all 8:6.8.9.9-5 [148 kB]
+Get:20 http://ftp.us.debian.org/debian/ jessie/main libavahi-common-data amd64 0.6.31-5 [98.6 kB]
+Get:21 http://ftp.us.debian.org/debian/ jessie/main libavahi-common3 amd64 0.6.31-5 [51.1 kB]
+Get:22 http://ftp.us.debian.org/debian/ jessie/main libavahi-client3 amd64 0.6.31-5 [54.4 kB]
+Get:23 http://ftp.us.debian.org/debian/ jessie/main libpixman-1-0 amd64 0.32.6-3 [507 kB]
+Get:24 http://ftp.us.debian.org/debian/ jessie/main libxau6 amd64 1:1.0.8-1 [20.7 kB]
+Get:25 http://ftp.us.debian.org/debian/ jessie/main libxdmcp6 amd64 1:1.1.1-1+b1 [24.9 kB]
+Get:26 http://ftp.us.debian.org/debian/ jessie/main libxcb1 amd64 1.10-3+b1 [44.4 kB]
+Get:27 http://ftp.us.debian.org/debian/ jessie/main libx11-data all 2:1.6.2-3 [126 kB]
+Get:28 http://ftp.us.debian.org/debian/ jessie/main libx11-6 amd64 2:1.6.2-3 [729 kB]
+Get:29 http://ftp.us.debian.org/debian/ jessie/main libxcb-render0 amd64 1.10-3+b1 [17.5 kB]
+Get:30 http://ftp.us.debian.org/debian/ jessie/main libxcb-shm0 amd64 1.10-3+b1 [11.5 kB]
+Get:31 http://ftp.us.debian.org/debian/ jessie/main libxext6 amd64 2:1.3.3-1 [52.7 kB]
+Get:32 http://ftp.us.debian.org/debian/ jessie/main libxrender1 amd64 1:0.9.8-1+b1 [31.4 kB]
+Get:33 http://ftp.us.debian.org/debian/ jessie/main libcairo2 amd64 1.14.0-2.1 [742 kB]
+Get:34 http://ftp.us.debian.org/debian/ jessie/main libcups2 amd64 1.7.5-11+deb8u1 [283 kB]
+Get:35 http://ftp.us.debian.org/debian/ jessie/main libcupsimage2 amd64 1.7.5-11+deb8u1 [117 kB]
+Get:36 http://ftp.us.debian.org/debian/ jessie/main libjpeg62-turbo amd64 1:1.3.1-12 [116 kB]
+Get:37 http://ftp.us.debian.org/debian/ jessie/main libjbig0 amd64 2.1-3.1 [30.7 kB]
+Get:38 http://ftp.us.debian.org/debian/ jessie/main libtiff5 amd64 4.0.3-12.3 [217 kB]
 Get:39 http://ftp.us.debian.org/debian/ jessie/main libdatrie1 amd64 0.2.8-1 [32.6 kB]
 Get:40 http://ftp.us.debian.org/debian/ jessie/main libdjvulibre-text all 3.5.25.4-4 [59.8 kB]
 Get:41 http://ftp.us.debian.org/debian/ jessie/main libdjvulibre21 amd64 3.5.25.4-4+b1 [578 kB]
@@ -4292,8 +3801,9 @@ Get:143 http://ftp.us.debian.org/debian/ jessie/main x11-utils amd64 7.7+2 [191 
 Get:144 http://ftp.us.debian.org/debian/ jessie/main xbitmaps all 1.1.1-2 [32.1 kB]
 Get:145 http://ftp.us.debian.org/debian/ jessie/main xdg-user-dirs amd64 0.15-2 [52.1 kB]
 Get:146 http://ftp.us.debian.org/debian/ jessie/main xterm amd64 312-2 [605 kB]
+Extracting templates from packages: 20%Extracting templates from packages: 41%Extracting templates from packages: 61%Extracting templates from packages: 82%Extracting templates from packages: 100%
 Preconfiguring packages ...
-Fetched 66.7 MB in 21s (3,046 kB/s)
+Fetched 66.7 MB in 16s (3,954 kB/s)
 Selecting previously unselected package libapr1:amd64.
 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 24185 files and directories currently installed.)
 Preparing to unpack .../libapr1_1.5.1-3_amd64.deb ...
@@ -4401,8 +3911,8 @@ Selecting previously unselected package libtiff5:amd64.
 Preparing to unpack .../libtiff5_4.0.3-12.3_amd64.deb ...
 Unpacking libtiff5:amd64 (4.0.3-12.3) ...
 Selecting previously unselected package libcupsfilters1:amd64.
-Preparing to unpack .../libcupsfilters1_1.0.61-5+deb8u1_amd64.deb ...
-Unpacking libcupsfilters1:amd64 (1.0.61-5+deb8u1) ...
+Preparing to unpack .../libcupsfilters1_1.0.61-5+deb8u2_amd64.deb ...
+Unpacking libcupsfilters1:amd64 (1.0.61-5+deb8u2) ...
 Selecting previously unselected package libdatrie1:amd64.
 Preparing to unpack .../libdatrie1_0.2.8-1_amd64.deb ...
 Unpacking libdatrie1:amd64 (0.2.8-1) ...
@@ -4918,7 +4428,7 @@ Setting up xdg-user-dirs (0.15-2) ...
 Setting up xterm (312-2) ...
 update-alternatives: using /usr/bin/xterm to provide /usr/bin/x-terminal-emulator (x-terminal-emulator) in auto mode
 update-alternatives: using /usr/bin/lxterm to provide /usr/bin/x-terminal-emulator (x-terminal-emulator) in auto mode
-Setting up libcupsfilters1:amd64 (1.0.61-5+deb8u1) ...
+Setting up libcupsfilters1:amd64 (1.0.61-5+deb8u2) ...
 Setting up python3 (3.4.2-2) ...
 running python rtupdate hooks for python3.4...
 running python post-rtupdate hooks for python3.4...
@@ -4952,6 +4462,7 @@ Begin updating the IP tables rules
 
 EXPECT - 
 
+cat: /tmp/iptables-persistent.loghttps://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/add-website.sh: No such file or directory
 
 Update the IP tables rules
 
@@ -5008,8 +4519,8 @@ The following NEW packages will be installed:
 0 upgraded, 11 newly installed, 0 to remove and 0 not upgraded.
 Need to get 8,676 kB of archives.
 After this operation, 95.8 MB of additional disk space will be used.
-Get:1 http://security.debian.org/ jessie/updates/main mysql-common all 5.5.46-0+deb8u1 [85.5 kB]
-Get:2 http://ftp.us.debian.org/debian/ jessie/main libaio1 amd64 0.3.110-1 [9,312 B]
+Get:1 http://ftp.us.debian.org/debian/ jessie/main libaio1 amd64 0.3.110-1 [9,312 B]
+Get:2 http://security.debian.org/ jessie/updates/main mysql-common all 5.5.46-0+deb8u1 [85.5 kB]
 Get:3 http://ftp.us.debian.org/debian/ jessie/main libdbi-perl amd64 1.631-3+b1 [816 kB]
 Get:4 http://security.debian.org/ jessie/updates/main libmysqlclient18 amd64 5.5.46-0+deb8u1 [678 kB]
 Get:5 http://ftp.us.debian.org/debian/ jessie/main libdbd-mysql-perl amd64 4.028-2+b1 [119 kB]
@@ -5020,7 +4531,7 @@ Get:9 http://security.debian.org/ jessie/updates/main mysql-server-core-5.5 amd6
 Get:10 http://security.debian.org/ jessie/updates/main mysql-server-5.5 amd64 5.5.46-0+deb8u1 [1,776 kB]
 Get:11 http://security.debian.org/ jessie/updates/main mysql-server all 5.5.46-0+deb8u1 [83.7 kB]
 Preconfiguring packages ...
-Fetched 8,676 kB in 6s (1,281 kB/s)
+Fetched 8,676 kB in 7s (1,171 kB/s)
 Selecting previously unselected package libaio1:amd64.
 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 31288 files and directories currently installed.)
 Preparing to unpack .../libaio1_0.3.110-1_amd64.deb ...
@@ -5068,8 +4579,8 @@ Setting up libterm-readkey-perl (2.32-1+b1) ...
 Setting up mysql-client-5.5 (5.5.46-0+deb8u1) ...
 Setting up mysql-server-core-5.5 (5.5.46-0+deb8u1) ...
 Setting up mysql-server-5.5 (5.5.46-0+deb8u1) ...
-151124  5:27:25 [Warning] Using unique option prefix key_buffer instead of key_buffer_size is deprecated and will be removed in a future release. Please use the full name instead.
-151124  5:27:25 [Note] /usr/sbin/mysqld (mysqld 5.5.46-0+deb8u1) starting as process 17706 ...
+151206 18:31:14 [Warning] Using unique option prefix key_buffer instead of key_buffer_size is deprecated and will be removed in a future release. Please use the full name instead.
+151206 18:31:14 [Note] /usr/sbin/mysqld (mysqld 5.5.46-0+deb8u1) starting as process 19062 ...
 Setting up libhtml-template-perl (2.95-1) ...
 Setting up mysql-server (5.5.46-0+deb8u1) ...
 Processing triggers for libc-bin (2.19-18+deb8u1) ...
@@ -5103,11 +4614,11 @@ Get:6 http://ftp.us.debian.org/debian/ jessie/main libonig2 amd64 5.9.5-3.2 [118
 Get:7 http://ftp.us.debian.org/debian/ jessie/main libqdbm14 amd64 1.8.78-5+b1 [118 kB]
 Get:8 http://ftp.us.debian.org/debian/ jessie/main php5-json amd64 1.3.6-1 [18.6 kB]
 Get:9 http://ftp.us.debian.org/debian/ jessie/main libmcrypt4 amd64 2.5.8-3.3 [71.2 kB]
-Get:10 http://security.debian.org/ jessie/updates/main php5-cli amd64 5.6.14+dfsg-0+deb8u1 [2,173 kB]
-Get:11 http://ftp.us.debian.org/debian/ jessie/main libapparmor1 amd64 2.9.0-3 [60.3 kB]
-Get:12 http://ftp.us.debian.org/debian/ jessie/main php5-imagick amd64 3.2.0~rc1-1 [101 kB]
-Get:13 http://ftp.us.debian.org/debian/ jessie/main php5-memcached amd64 2.2.0-2 [56.4 kB]
-Get:14 http://ftp.us.debian.org/debian/ jessie/main php5-xdebug amd64 2.2.5-1 [242 kB]
+Get:10 http://ftp.us.debian.org/debian/ jessie/main libapparmor1 amd64 2.9.0-3 [60.3 kB]
+Get:11 http://ftp.us.debian.org/debian/ jessie/main php5-imagick amd64 3.2.0~rc1-1 [101 kB]
+Get:12 http://ftp.us.debian.org/debian/ jessie/main php5-memcached amd64 2.2.0-2 [56.4 kB]
+Get:13 http://ftp.us.debian.org/debian/ jessie/main php5-xdebug amd64 2.2.5-1 [242 kB]
+Get:14 http://security.debian.org/ jessie/updates/main php5-cli amd64 5.6.14+dfsg-0+deb8u1 [2,173 kB]
 Get:15 http://ftp.us.debian.org/debian/ jessie/main ttf-dejavu-core all 2.34-1 [30.7 kB]
 Get:16 http://security.debian.org/ jessie/updates/main libapache2-mod-php5 amd64 5.6.14+dfsg-0+deb8u1 [2,214 kB]
 Get:17 http://security.debian.org/ jessie/updates/main php-pear all 5.6.14+dfsg-0+deb8u1 [268 kB]
@@ -5119,7 +4630,7 @@ Get:22 http://security.debian.org/ jessie/updates/main php5-intl amd64 5.6.14+df
 Get:23 http://security.debian.org/ jessie/updates/main php5-mcrypt amd64 5.6.14+dfsg-0+deb8u1 [15.3 kB]
 Get:24 http://security.debian.org/ jessie/updates/main php5-mysql amd64 5.6.14+dfsg-0+deb8u1 [65.2 kB]
 Get:25 http://security.debian.org/ jessie/updates/main php5-readline amd64 5.6.14+dfsg-0+deb8u1 [12.5 kB]
-Fetched 9,524 kB in 13s (687 kB/s)
+Fetched 9,524 kB in 7s (1,276 kB/s)
 Selecting previously unselected package libvpx1:amd64.
 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 31758 files and directories currently installed.)
 Preparing to unpack .../libvpx1_1.3.0-3_amd64.deb ...
@@ -5306,7 +4817,32 @@ Processing triggers for php5-fpm (5.6.14+dfsg-0+deb8u1) ...
 
 ########## MODIFY DEFAULT VHOST CONFIGURATION FILES ###
 
+Modify Headers Served for a More Secure Server
+
+
 ########## ADD STARTSSSL CLASS2 CERTIFICATE FILES ###
+--2015-12-06 18:32:01--  https://www.startssl.com/certs/class2/sha2/pem/sub.class2.server.sha2.ca.pem
+Resolving www.startssl.com (www.startssl.com)... 192.116.242.20
+Connecting to www.startssl.com (www.startssl.com)|192.116.242.20|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 2090 (2.0K) [application/x509-ca-cert]
+Saving to: ‘/var/www/certs/2015/start-ssl-class2/sub.class2.server.sha2.ca.pem’
+
+     0K ..                                                    100% 52.4M=0s
+
+2015-12-06 18:32:03 (52.4 MB/s) - ‘/var/www/certs/2015/start-ssl-class2/sub.class2.server.sha2.ca.pem’ saved [2090/2090]
+
+--2015-12-06 18:32:03--  https://www.startssl.com/certs/ca.pem
+Resolving www.startssl.com (www.startssl.com)... 192.116.242.20
+Connecting to www.startssl.com (www.startssl.com)|192.116.242.20|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 2760 (2.7K) [application/x509-ca-cert]
+Saving to: ‘/var/www/certs/2015/start-ssl-class2/ca.pem’
+
+     0K ..                                                    100% 39.4M=0s
+
+2015-12-06 18:32:04 (39.4 MB/s) - ‘/var/www/certs/2015/start-ssl-class2/ca.pem’ saved [2760/2760]
+
 
 ########## GENERATE SSL FOR DEFAULT SITE ###
 
@@ -5314,13 +4850,18 @@ Configure Apache
 
 Generating SSL
 
-openssl req -nodes -sha256 -newkey rsa:2048 -keyout /var/www/certs/2015/start-ssl/ssl.key -out /var/www/certs/2015/start-ssl/ssl.csr -subj "/C=US/ST=Ohio/L=Eastlake/O=Rust Belt Rebellion/OU=Web Development/CN=rustbeltrebellion.com"
+openssl req -nodes -sha256 -newkey rsa:2048 -keyout /var/www/certs/2015/start-ssl-class2/ssl.key -out /var/www/certs/2015/start-ssl-class2/ssl.csr -subj "/C=US/ST=Ohio/L=Eastlake/O=Rust Belt Rebellion/OU=Web Development/CN=rustbeltrebellion.com"
 
+Generating a 2048 bit RSA private key
+.................+++
+.............+++
+writing new private key to '/var/www/certs/2015/start-ssl-class2/ssl.key'
+-----
 
 ########## DISABLE THE ACTIONS APACHE MODULE ###
 Module actions already disabled
 
-########## ENABLE THE PROXY FCGI APACHE MODULE ###
+########## ENABLE THE PROXY FCGI, SSL, & HEADERS APACHE MODULES ###
 Considering dependency proxy for proxy_fcgi:
 Enabling module proxy.
 Enabling module proxy_fcgi.
@@ -5332,6 +4873,7 @@ Considering dependency socache_shmcb for ssl:
 Enabling module socache_shmcb.
 Enabling module ssl.
 See /usr/share/doc/apache2/README.Debian.gz on how to configure SSL and create self-signed certificates.
+Enabling module headers.
 To activate the new configuration, you need to run:
   service apache2 restart
 
@@ -5401,7 +4943,7 @@ Get:17 http://ftp.us.debian.org/debian/ jessie/main librbl1 amd64 2.9.2-2 [42.3 
 Get:18 http://ftp.us.debian.org/debian/ jessie/main libvbr2 amd64 2.9.2-2 [44.4 kB]
 Get:19 http://ftp.us.debian.org/debian/ jessie/main opendkim amd64 2.9.2-2 [203 kB]
 Get:20 http://ftp.us.debian.org/debian/ jessie/main opendkim-tools amd64 2.9.2-2 [129 kB]
-Fetched 7,272 kB in 2s (3,003 kB/s)
+Fetched 7,272 kB in 2s (3,459 kB/s)
 Selecting previously unselected package libunistring0:amd64.
 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 32215 files and directories currently installed.)
 Preparing to unpack .../libunistring0_0.9.3-5.2+b1_amd64.deb ...
@@ -5494,7 +5036,16 @@ Setting up opendkim-tools (2.9.2-2) ...
 Processing triggers for libc-bin (2.19-18+deb8u1) ...
 Processing triggers for systemd (215-17+deb8u2) ...
 /var/www/certs/dkim ~/bin
+Generating RSA private key, 1024 bit long modulus
+...++++++
+..........++++++
+e is 65537 (0x10001)
+writing RSA key
 ~/bin
+./build-script.sh: line 757: ${cat /var/www/certs/dkim/dkim.default.pub | sed -e s/"-.*"// | tr -d '\n'}: bad substitution
+default._domainkey.rustbeltrebellion.com IN TXT "v=DKIM1;p="
+verify with this command:
+host -t txt default._domainkey.rustbeltrebellion.com default._domainkey.rustbeltrebellion.com descriptive text "v=DKIM1\;p=
 
 ########## SET UPDATE-EXIM4.CONF MAIL CONFIGS ###
 
@@ -5510,6 +5061,8 @@ Processing triggers for systemd (215-17+deb8u2) ...
 No DNS configuration mail testing:
 The trick is that you have to use 'disposable email' services that exist because in some cases it is not always the wisest decision to only do business with the best of the best. These services allow otherwise questionable mail to come in, melded into mail stamped as legit from a sender with sufficient SPF, DMARC, & DKIM-- and is sent along to your real mail box --or at least that is how it works with 33mail.com
 Welcome to the seedy world of email laundering.
+
+########## CONFIGURE SYSSTAT ###
 
 ########## CLEAN UP ###
 
@@ -5539,20 +5092,22 @@ Reading state information...
 
 
 ########## CREATE A PLACE TO STORE THE OUTPUT FOR SHARING TROUBLESHOOTING DATA###
-Location of troubleshooting files: /root/bin/troubleshooting/1448342652
+Location of troubleshooting files: /root/bin/troubleshooting/1449426740
 
 mkdir: created directory ‘/root/bin/troubleshooting’
-mkdir: created directory ‘/root/bin/troubleshooting/1448342652’
+mkdir: created directory ‘/root/bin/troubleshooting/1449426740’
 Start collecting config files
 
 Start collecting log files
 
 Apache log files
-FPM log files
+FPM log file
 Whole shebang log files
 
 Create troubleshooting report for pastebin
 
+./troubleshooting.sh: line 114: ipconfig: command not found
+Syntax OK
 
 
 Apache Server Status for localhost (via ::1)
@@ -5563,12 +5118,12 @@ Server Built: Aug 28 2015 16:28:08
 
 -------------------------------------------------------------------------------
 
-Current Time: Tuesday, 24-Nov-2015 05:28:39 UTC
-Restart Time: Tuesday, 24-Nov-2015 05:28:23 UTC
+Current Time: Sunday, 06-Dec-2015 18:32:21 UTC
+Restart Time: Sunday, 06-Dec-2015 18:32:06 UTC
 Parent Server Config. Generation: 1
 Parent Server MPM Generation: 0
 Server uptime: 15 seconds
-Server load: 0.93 0.60 0.26
+Server load: 1.01 0.61 0.26
 Total accesses: 0 - Total Traffic: 0 kB
 CPU Usage: u0 s0 cu0 cs0
 0 requests/sec - 0 B/second -
@@ -5585,7 +5140,7 @@ Scoreboard Key:
 "I" Idle cleanup of worker, "." Open slot with no current process
 
 Srv  PID  Acc  M CPU  SS Req Conn Child Slot Client          VHost                     Request
-0-0 23580 0/0/ W 0.00 0  0   0.0  0.00  0.00 ::1    rustbeltrebellion.com:80 GET /server-status HTTP/1.0
+0-0 24541 0/0/ W 0.00 0  0   0.0  0.00  0.00 ::1    rustbeltrebellion.com:80 GET /server-status HTTP/1.0
           0
 
 -------------------------------------------------------------------------------
@@ -5615,3 +5170,7 @@ total removes since starting: 0 hit, 0 miss
 -------------------------------------------------------------------------------
 
 Apache/2.4.10 (Debian) Server at localhost Port 80
+cat: /root/bin/troubleshooting/1449426740/etc-apache2-sites-available-default.conf: No such file or directory
+cat: /root/bin/troubleshooting/1449426740/etc-apache2-sites-available-default-ssl.conf: No such file or directory
+cat: /root/bin/troubleshooting/1449426740/etc-php5-fpm-pool.d-.conf: No such file or directory
+cat: /root/bin/troubleshooting/1449426740/etc-php5-fpm-pool.d--ssl.conf: No such file or directory

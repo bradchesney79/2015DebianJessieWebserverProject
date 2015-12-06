@@ -13,8 +13,8 @@
 
 SCRIPTLOCATION - /root/bin
 EXECUTIONLOG - /var/log/auto-install.log
-TROUBLESHOOTINGFILES - /root/bin/troubleshooting/1448342652
-2015-11-24 - 1448342652
+TROUBLESHOOTINGFILES - 
+2015-12-06 - 1449426497
 
 
 ########## RECORD THE VARIABLES FOR POSTERITY ####
@@ -68,7 +68,7 @@ EMAIL - default-web@rustbeltrebellion.com
 PASSWORD - dummypassword
 
 
-SSLPROVIDER - start-ssl
+SSLPROVIDER - start-ssl-class2
 
 
 DBROOTUSER - datalord
@@ -115,33 +115,33 @@ Get:1 http://security.debian.org jessie/updates InRelease [63.1 kB]
 Ign http://ftp.us.debian.org jessie InRelease
 Get:2 http://ftp.us.debian.org jessie Release.gpg [2,373 B]
 Get:3 http://ftp.us.debian.org jessie Release [148 kB]
-Get:4 http://http.debian.net jessie-backports InRelease [160 kB]
-Get:5 http://security.debian.org jessie/updates/main amd64 Packages [148 kB]
-Get:6 http://ftp.us.debian.org jessie/main amd64 Packages [6,764 kB]
-Get:7 http://httpredir.debian.org jessie-updates InRelease [135 kB]
+Get:4 http://security.debian.org jessie/updates/main amd64 Packages [162 kB]
+Get:5 http://ftp.us.debian.org jessie/main amd64 Packages [6,764 kB]
+Get:6 http://httpredir.debian.org jessie-updates InRelease [136 kB]
+Get:7 http://http.debian.net jessie-backports InRelease [165 kB]
 Get:8 http://security.debian.org jessie/updates/contrib amd64 Packages [2,512 B]
 Get:9 http://security.debian.org jessie/updates/non-free amd64 Packages [14 B]
 Get:10 http://security.debian.org jessie/updates/contrib Translation-en [1,211 B]
-Get:11 http://security.debian.org jessie/updates/main Translation-en [82.5 kB]
-Get:12 http://httpredir.debian.org jessie-updates/contrib amd64 Packages [32 B]
-Get:13 http://security.debian.org jessie/updates/non-free Translation-en [14 B]
-Get:14 http://httpredir.debian.org jessie-updates/non-free amd64 Packages [32 B]
-Get:15 http://httpredir.debian.org jessie-updates/main Translation-en [2,506 B]
-Get:16 http://ftp.us.debian.org jessie/contrib amd64 Packages [50.1 kB]
-Get:17 http://httpredir.debian.org jessie-updates/contrib Translation-en [14 B]
-Get:18 http://ftp.us.debian.org jessie/non-free amd64 Packages [83.6 kB]
-Get:19 http://http.debian.net jessie-backports/main Translation-en [187 kB]
-Get:20 http://http.debian.net jessie-backports/contrib Translation-en [4,328 B]
-Get:21 http://ftp.us.debian.org jessie/contrib Translation-en [38.4 kB]
-Get:22 http://httpredir.debian.org jessie-updates/non-free Translation-en [14 B]
-Get:23 http://ftp.us.debian.org jessie/main Translation-en [4,585 kB]
-Get:24 http://http.debian.net jessie-backports/non-free Translation-en [17.3 kB]
-Get:25 http://http.debian.net jessie-backports/main amd64 Packages [279 kB]
-Get:26 http://httpredir.debian.org jessie-updates/main amd64 Packages [3,452 B]
-Get:27 http://http.debian.net jessie-backports/contrib amd64 Packages [5,884 B]
-Get:28 http://http.debian.net jessie-backports/non-free amd64 Packages [13.1 kB]
-Get:29 http://ftp.us.debian.org jessie/non-free Translation-en [72.2 kB]
-Fetched 12.8 MB in 5s (2,387 kB/s)
+Get:11 http://security.debian.org jessie/updates/main Translation-en [87.5 kB]
+Get:12 http://security.debian.org jessie/updates/non-free Translation-en [14 B]
+Get:13 http://ftp.us.debian.org jessie/contrib amd64 Packages [50.1 kB]
+Get:14 http://ftp.us.debian.org jessie/non-free amd64 Packages [83.6 kB]
+Get:15 http://ftp.us.debian.org jessie/contrib Translation-en [38.4 kB]
+Get:16 http://ftp.us.debian.org jessie/main Translation-en [4,585 kB]
+Get:17 http://ftp.us.debian.org jessie/non-free Translation-en [72.2 kB]
+Get:18 http://http.debian.net jessie-backports/contrib Translation-en [5,144 B]
+Get:19 http://httpredir.debian.org jessie-updates/contrib amd64 Packages [32 B]
+Get:20 http://http.debian.net jessie-backports/main Translation-en [193 kB]
+Get:21 http://httpredir.debian.org jessie-updates/non-free amd64 Packages [32 B]
+Get:22 http://httpredir.debian.org jessie-updates/contrib Translation-en [14 B]
+Get:23 http://http.debian.net jessie-backports/non-free Translation-en [22.1 kB]
+Get:24 http://http.debian.net jessie-backports/main amd64 Packages [285 kB]
+Get:25 http://http.debian.net jessie-backports/contrib amd64 Packages [7,192 B]
+Get:26 http://httpredir.debian.org jessie-updates/non-free Translation-en [14 B]
+Get:27 http://httpredir.debian.org jessie-updates/main Translation-en [2,506 B]
+Get:28 http://http.debian.net jessie-backports/non-free amd64 Packages [17.2 kB]
+Get:29 http://httpredir.debian.org jessie-updates/main amd64 Packages [3,452 B]
+Fetched 12.9 MB in 5s (2,340 kB/s)
 Reading package lists...
 
 Upgrade the system
@@ -152,74 +152,80 @@ Reading package lists...
 Building dependency tree...
 Reading state information...
 The following packages will be upgraded:
-  apt apt-utils base-files bind9-host cron dbus dnsutils host krb5-locales
-  libapt-inst1.5 libapt-pkg4.12 libbind9-90 libc-bin libc6 libdbus-1-3
-  libdns-export100 libdns100 libexpat1 libgnutls-deb0-28 libgnutls-openssl27
-  libgssapi-krb5-2 libicu52 libio-socket-ssl-perl libirs-export91
-  libisc-export95 libisc95 libisccc90 libisccfg-export90 libisccfg90
-  libk5crypto3 libkrb5-3 libkrb5support0 libldap-2.4-2 liblwres90 libpng12-0
-  libsasl2-2 libsasl2-modules libsasl2-modules-db libsystemd0 libudev1 locales
-  multiarch-support ntp ntpdate python-apt python-apt-common rpcbind rsyslog
-  screen systemd systemd-sysv tzdata udev unzip
-54 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
-Need to get 32.7 MB of archives.
-After this operation, 79.9 kB disk space will be freed.
+  apt apt-utils base-files bind9-host cron dbus dnsutils dpkg host
+  krb5-locales libapt-inst1.5 libapt-pkg4.12 libbind9-90 libc-bin libc6
+  libdbus-1-3 libdns-export100 libdns100 libexpat1 libgnutls-deb0-28
+  libgnutls-openssl27 libgssapi-krb5-2 libicu52 libio-socket-ssl-perl
+  libirs-export91 libisc-export95 libisc95 libisccc90 libisccfg-export90
+  libisccfg90 libk5crypto3 libkrb5-3 libkrb5support0 libldap-2.4-2 liblwres90
+  libpng12-0 libsasl2-2 libsasl2-modules libsasl2-modules-db libssl1.0.0
+  libsystemd0 libudev1 locales multiarch-support ntp ntpdate openssl
+  python-apt python-apt-common rpcbind rsyslog screen systemd systemd-sysv
+  tzdata udev unzip
+57 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+Need to get 37.4 MB of archives.
+After this operation, 77.8 kB disk space will be freed.
 Get:1 http://security.debian.org/ jessie/updates/main rpcbind amd64 0.2.1-6+deb8u1 [41.6 kB]
 Get:2 http://ftp.us.debian.org/debian/ jessie/main base-files amd64 8+deb8u2 [77.9 kB]
-Get:3 http://security.debian.org/ jessie/updates/main libgssapi-krb5-2 amd64 1.12.1+dfsg-19+deb8u1 [151 kB]
+Get:3 http://security.debian.org/ jessie/updates/main dpkg amd64 1.17.26 [2,991 kB]
 Get:4 http://ftp.us.debian.org/debian/ jessie/main libc-bin amd64 2.19-18+deb8u1 [1,284 kB]
-Get:5 http://security.debian.org/ jessie/updates/main libkrb5-3 amd64 1.12.1+dfsg-19+deb8u1 [302 kB]
-Get:6 http://httpredir.debian.org/debian/ jessie-updates/main tzdata all 2015g-0+deb8u1 [184 kB]
-Get:7 http://ftp.us.debian.org/debian/ jessie/main libc6 amd64 2.19-18+deb8u1 [4,659 kB]
-Get:8 http://security.debian.org/ jessie/updates/main libkrb5support0 amd64 1.12.1+dfsg-19+deb8u1 [58.7 kB]
-Get:9 http://security.debian.org/ jessie/updates/main libk5crypto3 amd64 1.12.1+dfsg-19+deb8u1 [115 kB]
-Get:10 http://security.debian.org/ jessie/updates/main libsasl2-modules-db amd64 2.1.26.dfsg1-13+deb8u1 [67.1 kB]
-Get:11 http://security.debian.org/ jessie/updates/main libsasl2-2 amd64 2.1.26.dfsg1-13+deb8u1 [105 kB]
-Get:12 http://ftp.us.debian.org/debian/ jessie/main libapt-pkg4.12 amd64 1.0.9.8.1 [791 kB]
-Get:13 http://security.debian.org/ jessie/updates/main libldap-2.4-2 amd64 2.4.40+dfsg-1+deb8u1 [218 kB]
-Get:14 http://ftp.us.debian.org/debian/ jessie/main apt amd64 1.0.9.8.1 [1,110 kB]
+Get:5 http://httpredir.debian.org/debian/ jessie-updates/main tzdata all 2015g-0+deb8u1 [184 kB]
+Get:6 http://ftp.us.debian.org/debian/ jessie/main libc6 amd64 2.19-18+deb8u1 [4,659 kB]
+Get:7 http://security.debian.org/ jessie/updates/main libssl1.0.0 amd64 1.0.1k-3+deb8u2 [1,038 kB]
+Get:8 http://security.debian.org/ jessie/updates/main libgssapi-krb5-2 amd64 1.12.1+dfsg-19+deb8u1 [151 kB]
+Get:9 http://security.debian.org/ jessie/updates/main libkrb5-3 amd64 1.12.1+dfsg-19+deb8u1 [302 kB]
+Get:10 http://security.debian.org/ jessie/updates/main libkrb5support0 amd64 1.12.1+dfsg-19+deb8u1 [58.7 kB]
+Get:11 http://security.debian.org/ jessie/updates/main libk5crypto3 amd64 1.12.1+dfsg-19+deb8u1 [115 kB]
+Get:12 http://security.debian.org/ jessie/updates/main libsasl2-modules-db amd64 2.1.26.dfsg1-13+deb8u1 [67.1 kB]
+Get:13 http://security.debian.org/ jessie/updates/main libsasl2-2 amd64 2.1.26.dfsg1-13+deb8u1 [105 kB]
+Get:14 http://security.debian.org/ jessie/updates/main libldap-2.4-2 amd64 2.4.40+dfsg-1+deb8u1 [218 kB]
 Get:15 http://security.debian.org/ jessie/updates/main libisc-export95 amd64 1:9.9.5.dfsg-9+deb8u3 [140 kB]
-Get:16 http://ftp.us.debian.org/debian/ jessie/main libudev1 amd64 215-17+deb8u2 [55.7 kB]
-Get:17 http://ftp.us.debian.org/debian/ jessie/main udev amd64 215-17+deb8u2 [878 kB]
-Get:18 http://security.debian.org/ jessie/updates/main libdns-export100 amd64 1:9.9.5.dfsg-9+deb8u3 [455 kB]
-Get:19 http://ftp.us.debian.org/debian/ jessie/main libsystemd0 amd64 215-17+deb8u2 [87.2 kB]
-Get:20 http://ftp.us.debian.org/debian/ jessie/main systemd amd64 215-17+deb8u2 [2,550 kB]
-Get:21 http://ftp.us.debian.org/debian/ jessie/main systemd-sysv amd64 215-17+deb8u2 [34.5 kB]
-Get:22 http://security.debian.org/ jessie/updates/main libicu52 amd64 52.1-8+deb8u3 [6,784 kB]
-Get:23 http://ftp.us.debian.org/debian/ jessie/main cron amd64 3.0pl1-127+deb8u1 [94.0 kB]
-Get:24 http://ftp.us.debian.org/debian/ jessie/main libapt-inst1.5 amd64 1.0.9.8.1 [169 kB]
-Get:25 http://ftp.us.debian.org/debian/ jessie/main libgnutls-openssl27 amd64 3.3.8-6+deb8u3 [143 kB]
-Get:26 http://ftp.us.debian.org/debian/ jessie/main libgnutls-deb0-28 amd64 3.3.8-6+deb8u3 [694 kB]
-Get:27 http://ftp.us.debian.org/debian/ jessie/main libdbus-1-3 amd64 1.8.20-0+deb8u1 [170 kB]
-Get:28 http://ftp.us.debian.org/debian/ jessie/main libexpat1 amd64 2.1.0-6+deb8u1 [80.0 kB]
-Get:29 http://ftp.us.debian.org/debian/ jessie/main multiarch-support amd64 2.19-18+deb8u1 [179 kB]
-Get:30 http://ftp.us.debian.org/debian/ jessie/main apt-utils amd64 1.0.9.8.1 [369 kB]
-Get:31 http://ftp.us.debian.org/debian/ jessie/main rsyslog amd64 8.4.2-1+deb8u1 [545 kB]
-Get:32 http://ftp.us.debian.org/debian/ jessie/main dbus amd64 1.8.20-0+deb8u1 [291 kB]
-Get:33 http://ftp.us.debian.org/debian/ jessie/main locales all 2.19-18+deb8u1 [3,908 kB]
-Get:34 http://ftp.us.debian.org/debian/ jessie/main python-apt-common all 0.9.3.12 [89.9 kB]
-Get:35 http://ftp.us.debian.org/debian/ jessie/main python-apt amd64 0.9.3.12 [171 kB]
-Get:36 http://ftp.us.debian.org/debian/ jessie/main libio-socket-ssl-perl all 2.002-2+deb8u1 [172 kB]
-Get:37 http://security.debian.org/ jessie/updates/main libisccfg-export90 amd64 1:9.9.5.dfsg-9+deb8u3 [40.1 kB]
-Get:38 http://security.debian.org/ jessie/updates/main libirs-export91 amd64 1:9.9.5.dfsg-9+deb8u3 [37.8 kB]
-Get:39 http://security.debian.org/ jessie/updates/main libpng12-0 amd64 1.2.50-2+deb8u1 [173 kB]
-Get:40 http://security.debian.org/ jessie/updates/main ntp amd64 1:4.2.6.p5+dfsg-7+deb8u1 [394 kB]
-Get:41 http://security.debian.org/ jessie/updates/main ntpdate amd64 1:4.2.6.p5+dfsg-7+deb8u1 [74.5 kB]
-Get:42 http://security.debian.org/ jessie/updates/main dnsutils amd64 1:9.9.5.dfsg-9+deb8u3 [118 kB]
-Get:43 http://security.debian.org/ jessie/updates/main bind9-host amd64 1:9.9.5.dfsg-9+deb8u3 [66.9 kB]
-Get:44 http://security.debian.org/ jessie/updates/main libisc95 amd64 1:9.9.5.dfsg-9+deb8u3 [168 kB]
-Get:45 http://security.debian.org/ jessie/updates/main libdns100 amd64 1:9.9.5.dfsg-9+deb8u3 [680 kB]
-Get:46 http://security.debian.org/ jessie/updates/main libisccc90 amd64 1:9.9.5.dfsg-9+deb8u3 [35.9 kB]
-Get:47 http://security.debian.org/ jessie/updates/main libisccfg90 amd64 1:9.9.5.dfsg-9+deb8u3 [56.5 kB]
-Get:48 http://security.debian.org/ jessie/updates/main liblwres90 amd64 1:9.9.5.dfsg-9+deb8u3 [52.4 kB]
-Get:49 http://security.debian.org/ jessie/updates/main host all 1:9.9.5.dfsg-9+deb8u3 [22.9 kB]
-Get:50 http://security.debian.org/ jessie/updates/main libbind9-90 amd64 1:9.9.5.dfsg-9+deb8u3 [42.7 kB]
-Get:51 http://security.debian.org/ jessie/updates/main krb5-locales all 1.12.1+dfsg-19+deb8u1 [2,648 kB]
-Get:52 http://security.debian.org/ jessie/updates/main libsasl2-modules amd64 2.1.26.dfsg1-13+deb8u1 [101 kB]
-Get:53 http://security.debian.org/ jessie/updates/main screen amd64 4.2.1-3+deb8u1 [569 kB]
-Get:54 http://security.debian.org/ jessie/updates/main unzip amd64 6.0-16+deb8u2 [162 kB]
+Get:16 http://security.debian.org/ jessie/updates/main libdns-export100 amd64 1:9.9.5.dfsg-9+deb8u3 [455 kB]
+Get:17 http://ftp.us.debian.org/debian/ jessie/main cron amd64 3.0pl1-127+deb8u1 [94.0 kB]
+Get:18 http://ftp.us.debian.org/debian/ jessie/main libapt-pkg4.12 amd64 1.0.9.8.1 [791 kB]
+Get:19 http://security.debian.org/ jessie/updates/main libicu52 amd64 52.1-8+deb8u3 [6,784 kB]
+Get:20 http://ftp.us.debian.org/debian/ jessie/main apt amd64 1.0.9.8.1 [1,110 kB]
+Get:21 http://ftp.us.debian.org/debian/ jessie/main libudev1 amd64 215-17+deb8u2 [55.7 kB]
+Get:22 http://ftp.us.debian.org/debian/ jessie/main udev amd64 215-17+deb8u2 [878 kB]
+Get:23 http://ftp.us.debian.org/debian/ jessie/main libsystemd0 amd64 215-17+deb8u2 [87.2 kB]
+Get:24 http://ftp.us.debian.org/debian/ jessie/main systemd amd64 215-17+deb8u2 [2,550 kB]
+Get:25 http://security.debian.org/ jessie/updates/main libisccfg-export90 amd64 1:9.9.5.dfsg-9+deb8u3 [40.1 kB]
+Get:26 http://security.debian.org/ jessie/updates/main libirs-export91 amd64 1:9.9.5.dfsg-9+deb8u3 [37.8 kB]
+Get:27 http://security.debian.org/ jessie/updates/main libpng12-0 amd64 1.2.50-2+deb8u1 [173 kB]
+Get:28 http://security.debian.org/ jessie/updates/main ntp amd64 1:4.2.6.p5+dfsg-7+deb8u1 [394 kB]
+Get:29 http://ftp.us.debian.org/debian/ jessie/main systemd-sysv amd64 215-17+deb8u2 [34.5 kB]
+Get:30 http://ftp.us.debian.org/debian/ jessie/main libapt-inst1.5 amd64 1.0.9.8.1 [169 kB]
+Get:31 http://security.debian.org/ jessie/updates/main ntpdate amd64 1:4.2.6.p5+dfsg-7+deb8u1 [74.5 kB]
+Get:32 http://security.debian.org/ jessie/updates/main dnsutils amd64 1:9.9.5.dfsg-9+deb8u3 [118 kB]
+Get:33 http://ftp.us.debian.org/debian/ jessie/main libgnutls-openssl27 amd64 3.3.8-6+deb8u3 [143 kB]
+Get:34 http://ftp.us.debian.org/debian/ jessie/main libgnutls-deb0-28 amd64 3.3.8-6+deb8u3 [694 kB]
+Get:35 http://security.debian.org/ jessie/updates/main bind9-host amd64 1:9.9.5.dfsg-9+deb8u3 [66.9 kB]
+Get:36 http://security.debian.org/ jessie/updates/main libisc95 amd64 1:9.9.5.dfsg-9+deb8u3 [168 kB]
+Get:37 http://security.debian.org/ jessie/updates/main libdns100 amd64 1:9.9.5.dfsg-9+deb8u3 [680 kB]
+Get:38 http://ftp.us.debian.org/debian/ jessie/main libdbus-1-3 amd64 1.8.20-0+deb8u1 [170 kB]
+Get:39 http://ftp.us.debian.org/debian/ jessie/main libexpat1 amd64 2.1.0-6+deb8u1 [80.0 kB]
+Get:40 http://ftp.us.debian.org/debian/ jessie/main multiarch-support amd64 2.19-18+deb8u1 [179 kB]
+Get:41 http://ftp.us.debian.org/debian/ jessie/main apt-utils amd64 1.0.9.8.1 [369 kB]
+Get:42 http://ftp.us.debian.org/debian/ jessie/main rsyslog amd64 8.4.2-1+deb8u1 [545 kB]
+Get:43 http://security.debian.org/ jessie/updates/main libisccc90 amd64 1:9.9.5.dfsg-9+deb8u3 [35.9 kB]
+Get:44 http://ftp.us.debian.org/debian/ jessie/main dbus amd64 1.8.20-0+deb8u1 [291 kB]
+Get:45 http://security.debian.org/ jessie/updates/main libisccfg90 amd64 1:9.9.5.dfsg-9+deb8u3 [56.5 kB]
+Get:46 http://security.debian.org/ jessie/updates/main liblwres90 amd64 1:9.9.5.dfsg-9+deb8u3 [52.4 kB]
+Get:47 http://ftp.us.debian.org/debian/ jessie/main locales all 2.19-18+deb8u1 [3,908 kB]
+Get:48 http://security.debian.org/ jessie/updates/main host all 1:9.9.5.dfsg-9+deb8u3 [22.9 kB]
+Get:49 http://security.debian.org/ jessie/updates/main libbind9-90 amd64 1:9.9.5.dfsg-9+deb8u3 [42.7 kB]
+Get:50 http://security.debian.org/ jessie/updates/main krb5-locales all 1.12.1+dfsg-19+deb8u1 [2,648 kB]
+Get:51 http://ftp.us.debian.org/debian/ jessie/main python-apt-common all 0.9.3.12 [89.9 kB]
+Get:52 http://ftp.us.debian.org/debian/ jessie/main python-apt amd64 0.9.3.12 [171 kB]
+Get:53 http://ftp.us.debian.org/debian/ jessie/main libio-socket-ssl-perl all 2.002-2+deb8u1 [172 kB]
+Get:54 http://security.debian.org/ jessie/updates/main libsasl2-modules amd64 2.1.26.dfsg1-13+deb8u1 [101 kB]
+Get:55 http://security.debian.org/ jessie/updates/main openssl amd64 1.0.1k-3+deb8u2 [677 kB]
+Get:56 http://security.debian.org/ jessie/updates/main screen amd64 4.2.1-3+deb8u1 [569 kB]
+Get:57 http://security.debian.org/ jessie/updates/main unzip amd64 6.0-16+deb8u2 [162 kB]
+Reading changelogs...
+Extracting templates from packages: 52%Extracting templates from packages: 100%
 Preconfiguring packages ...
-Fetched 32.7 MB in 17s (1,920 kB/s)
+Fetched 37.4 MB in 14s (2,581 kB/s)
 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 24184 files and directories currently installed.)
 Preparing to unpack .../base-files_8+deb8u2_amd64.deb ...
 Unpacking base-files (8+deb8u2) over (8+deb8u1) ...
@@ -240,6 +246,14 @@ Preparing to unpack .../libc6_2.19-18+deb8u1_amd64.deb ...
 Unpacking libc6:amd64 (2.19-18+deb8u1) over (2.19-18) ...
 Setting up libc6:amd64 (2.19-18+deb8u1) ...
 Processing triggers for libc-bin (2.19-18+deb8u1) ...
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 24184 files and directories currently installed.)
+Preparing to unpack .../cron_3.0pl1-127+deb8u1_amd64.deb ...
+Unpacking cron (3.0pl1-127+deb8u1) over (3.0pl1-127) ...
+Preparing to unpack .../dpkg_1.17.26_amd64.deb ...
+Unpacking dpkg (1.17.26) over (1.17.25) ...
+Processing triggers for systemd (215-17+deb8u1) ...
+Processing triggers for man-db (2.7.0.2-5) ...
+Setting up dpkg (1.17.26) ...
 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 24184 files and directories currently installed.)
 Preparing to unpack .../libapt-pkg4.12_1.0.9.8.1_amd64.deb ...
 Unpacking libapt-pkg4.12:amd64 (1.0.9.8.1) over (1.0.9.8) ...
@@ -280,10 +294,10 @@ Unpacking systemd-sysv (215-17+deb8u2) over (215-17+deb8u1) ...
 Processing triggers for man-db (2.7.0.2-5) ...
 Setting up systemd-sysv (215-17+deb8u2) ...
 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 24184 files and directories currently installed.)
-Preparing to unpack .../cron_3.0pl1-127+deb8u1_amd64.deb ...
-Unpacking cron (3.0pl1-127+deb8u1) over (3.0pl1-127) ...
 Preparing to unpack .../libapt-inst1.5_1.0.9.8.1_amd64.deb ...
 Unpacking libapt-inst1.5:amd64 (1.0.9.8.1) over (1.0.9.8) ...
+Preparing to unpack .../libssl1.0.0_1.0.1k-3+deb8u2_amd64.deb ...
+Unpacking libssl1.0.0:amd64 (1.0.1k-3+deb8u2) over (1.0.1k-3+deb8u1) ...
 Preparing to unpack .../libgnutls-openssl27_3.3.8-6+deb8u3_amd64.deb ...
 Unpacking libgnutls-openssl27:amd64 (3.3.8-6+deb8u3) over (3.3.8-6+deb8u1) ...
 Preparing to unpack .../libgnutls-deb0-28_3.3.8-6+deb8u3_amd64.deb ...
@@ -324,8 +338,8 @@ Preparing to unpack .../ntpdate_1%3a4.2.6.p5+dfsg-7+deb8u1_amd64.deb ...
 Unpacking ntpdate (1:4.2.6.p5+dfsg-7+deb8u1) over (1:4.2.6.p5+dfsg-7) ...
 Preparing to unpack .../multiarch-support_2.19-18+deb8u1_amd64.deb ...
 Unpacking multiarch-support (2.19-18+deb8u1) over (2.19-18) ...
-Processing triggers for systemd (215-17+deb8u2) ...
 Processing triggers for man-db (2.7.0.2-5) ...
+Processing triggers for systemd (215-17+deb8u2) ...
 Setting up multiarch-support (2.19-18+deb8u1) ...
 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 24182 files and directories currently installed.)
 Preparing to unpack .../tzdata_2015g-0+deb8u1_all.deb ...
@@ -333,8 +347,8 @@ Unpacking tzdata (2015g-0+deb8u1) over (2015e-0+deb8u1) ...
 Setting up tzdata (2015g-0+deb8u1) ...
 
 Current default time zone: 'Etc/UTC'
-Local time is now:      Tue Nov 24 05:25:14 UTC 2015.
-Universal Time is now:  Tue Nov 24 05:25:14 UTC 2015.
+Local time is now:      Sun Dec  6 18:29:17 UTC 2015.
+Universal Time is now:  Sun Dec  6 18:29:17 UTC 2015.
 Run 'dpkg-reconfigure tzdata' if you wish to change it.
 
 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 24185 files and directories currently installed.)
@@ -374,6 +388,8 @@ Preparing to unpack .../libio-socket-ssl-perl_2.002-2+deb8u1_all.deb ...
 Unpacking libio-socket-ssl-perl (2.002-2+deb8u1) over (2.002-2) ...
 Preparing to unpack .../libsasl2-modules_2.1.26.dfsg1-13+deb8u1_amd64.deb ...
 Unpacking libsasl2-modules:amd64 (2.1.26.dfsg1-13+deb8u1) over (2.1.26.dfsg1-13) ...
+Preparing to unpack .../openssl_1.0.1k-3+deb8u2_amd64.deb ...
+Unpacking openssl (1.0.1k-3+deb8u2) over (1.0.1k-3+deb8u1) ...
 Preparing to unpack .../screen_4.2.1-3+deb8u1_amd64.deb ...
 Unpacking screen (4.2.1-3+deb8u1) over (4.2.1-3) ...
 Preparing to unpack .../unzip_6.0-16+deb8u2_amd64.deb ...
@@ -386,6 +402,7 @@ Setting up rpcbind (0.2.1-6+deb8u1) ...
 Setting up cron (3.0pl1-127+deb8u1) ...
 update-rc.d: warning: start and stop actions are no longer supported; falling back to defaults
 Setting up libapt-inst1.5:amd64 (1.0.9.8.1) ...
+Setting up libssl1.0.0:amd64 (1.0.1k-3+deb8u2) ...
 Setting up libgnutls-deb0-28:amd64 (3.3.8-6+deb8u3) ...
 Setting up libgnutls-openssl27:amd64 (3.3.8-6+deb8u3) ...
 Setting up libkrb5support0:amd64 (1.12.1+dfsg-19+deb8u1) ...
@@ -427,6 +444,7 @@ Setting up python-apt-common (0.9.3.12) ...
 Setting up python-apt (0.9.3.12) ...
 Setting up libio-socket-ssl-perl (2.002-2+deb8u1) ...
 Setting up libsasl2-modules:amd64 (2.1.26.dfsg1-13+deb8u1) ...
+Setting up openssl (1.0.1k-3+deb8u2) ...
 Setting up screen (4.2.1-3+deb8u1) ...
 Setting up unzip (6.0-16+deb8u2) ...
 Processing triggers for libc-bin (2.19-18+deb8u1) ...
@@ -444,10 +462,10 @@ Building dependency tree...
 Reading state information...
 libnet-ssleay-perl is already the newest version.
 libnet-ssleay-perl set to manually installed.
-openssl is already the newest version.
-openssl set to manually installed.
 perl is already the newest version.
 sudo is already the newest version.
+openssl is already the newest version.
+openssl set to manually installed.
 The following extra packages will be installed:
   apache2-bin apache2-data apache2-utils dh-python fontconfig
   fontconfig-config fonts-dejavu-core fonts-droid ghostscript git-man gsfonts
@@ -525,37 +543,37 @@ Get:4 http://ftp.us.debian.org/debian/ jessie/main libaprutil1-dbd-sqlite3 amd64
 Get:5 http://ftp.us.debian.org/debian/ jessie/main libaprutil1-ldap amd64 1.5.4-1 [17.2 kB]
 Get:6 http://ftp.us.debian.org/debian/ jessie/main liblua5.1-0 amd64 5.1.5-7.1 [108 kB]
 Get:7 http://ftp.us.debian.org/debian/ jessie/main apache2-bin amd64 2.4.10-10+deb8u3 [1,031 kB]
-Get:8 http://security.debian.org/ jessie/updates/main libgdk-pixbuf2.0-common all 2.31.1-2+deb8u3 [294 kB]
-Get:9 http://ftp.us.debian.org/debian/ jessie/main apache2-utils amd64 2.4.10-10+deb8u3 [194 kB]
-Get:10 http://security.debian.org/ jessie/updates/main libgdk-pixbuf2.0-0 amd64 2.31.1-2+deb8u3 [166 kB]
+Get:8 http://security.debian.org/ jessie/updates/main libcupsfilters1 amd64 1.0.61-5+deb8u2 [106 kB]
+Get:9 http://security.debian.org/ jessie/updates/main libgdk-pixbuf2.0-common all 2.31.1-2+deb8u3 [294 kB]
+Get:10 http://ftp.us.debian.org/debian/ jessie/main apache2-utils amd64 2.4.10-10+deb8u3 [194 kB]
 Get:11 http://ftp.us.debian.org/debian/ jessie/main apache2-data all 2.4.10-10+deb8u3 [163 kB]
-Get:12 http://ftp.us.debian.org/debian/ jessie/main apache2 amd64 2.4.10-10+deb8u3 [205 kB]
-Get:13 http://ftp.us.debian.org/debian/ jessie/main fonts-dejavu-core all 2.34-1 [1,047 kB]
-Get:14 http://ftp.us.debian.org/debian/ jessie/main fontconfig-config all 2.11.0-6.3 [273 kB]
-Get:15 http://ftp.us.debian.org/debian/ jessie/main libfontconfig1 amd64 2.11.0-6.3 [329 kB]
-Get:16 http://ftp.us.debian.org/debian/ jessie/main fontconfig amd64 2.11.0-6.3 [402 kB]
-Get:17 http://ftp.us.debian.org/debian/ jessie/main fonts-droid all 1:4.4.4r2-6 [3,729 kB]
-Get:18 http://ftp.us.debian.org/debian/ jessie/main imagemagick-common all 8:6.8.9.9-5 [148 kB]
-Get:19 http://ftp.us.debian.org/debian/ jessie/main libavahi-common-data amd64 0.6.31-5 [98.6 kB]
-Get:20 http://ftp.us.debian.org/debian/ jessie/main libavahi-common3 amd64 0.6.31-5 [51.1 kB]
-Get:21 http://ftp.us.debian.org/debian/ jessie/main libavahi-client3 amd64 0.6.31-5 [54.4 kB]
-Get:22 http://ftp.us.debian.org/debian/ jessie/main libpixman-1-0 amd64 0.32.6-3 [507 kB]
-Get:23 http://ftp.us.debian.org/debian/ jessie/main libxau6 amd64 1:1.0.8-1 [20.7 kB]
-Get:24 http://ftp.us.debian.org/debian/ jessie/main libxdmcp6 amd64 1:1.1.1-1+b1 [24.9 kB]
-Get:25 http://ftp.us.debian.org/debian/ jessie/main libxcb1 amd64 1.10-3+b1 [44.4 kB]
-Get:26 http://ftp.us.debian.org/debian/ jessie/main libx11-data all 2:1.6.2-3 [126 kB]
-Get:27 http://ftp.us.debian.org/debian/ jessie/main libx11-6 amd64 2:1.6.2-3 [729 kB]
-Get:28 http://ftp.us.debian.org/debian/ jessie/main libxcb-render0 amd64 1.10-3+b1 [17.5 kB]
-Get:29 http://ftp.us.debian.org/debian/ jessie/main libxcb-shm0 amd64 1.10-3+b1 [11.5 kB]
-Get:30 http://ftp.us.debian.org/debian/ jessie/main libxext6 amd64 2:1.3.3-1 [52.7 kB]
-Get:31 http://ftp.us.debian.org/debian/ jessie/main libxrender1 amd64 1:0.9.8-1+b1 [31.4 kB]
-Get:32 http://ftp.us.debian.org/debian/ jessie/main libcairo2 amd64 1.14.0-2.1 [742 kB]
-Get:33 http://ftp.us.debian.org/debian/ jessie/main libcups2 amd64 1.7.5-11+deb8u1 [283 kB]
-Get:34 http://ftp.us.debian.org/debian/ jessie/main libcupsimage2 amd64 1.7.5-11+deb8u1 [117 kB]
-Get:35 http://ftp.us.debian.org/debian/ jessie/main libjpeg62-turbo amd64 1:1.3.1-12 [116 kB]
-Get:36 http://ftp.us.debian.org/debian/ jessie/main libjbig0 amd64 2.1-3.1 [30.7 kB]
-Get:37 http://ftp.us.debian.org/debian/ jessie/main libtiff5 amd64 4.0.3-12.3 [217 kB]
-Get:38 http://ftp.us.debian.org/debian/ jessie/main libcupsfilters1 amd64 1.0.61-5+deb8u1 [106 kB]
+Get:12 http://security.debian.org/ jessie/updates/main libgdk-pixbuf2.0-0 amd64 2.31.1-2+deb8u3 [166 kB]
+Get:13 http://ftp.us.debian.org/debian/ jessie/main apache2 amd64 2.4.10-10+deb8u3 [205 kB]
+Get:14 http://ftp.us.debian.org/debian/ jessie/main fonts-dejavu-core all 2.34-1 [1,047 kB]
+Get:15 http://ftp.us.debian.org/debian/ jessie/main fontconfig-config all 2.11.0-6.3 [273 kB]
+Get:16 http://ftp.us.debian.org/debian/ jessie/main libfontconfig1 amd64 2.11.0-6.3 [329 kB]
+Get:17 http://ftp.us.debian.org/debian/ jessie/main fontconfig amd64 2.11.0-6.3 [402 kB]
+Get:18 http://ftp.us.debian.org/debian/ jessie/main fonts-droid all 1:4.4.4r2-6 [3,729 kB]
+Get:19 http://ftp.us.debian.org/debian/ jessie/main imagemagick-common all 8:6.8.9.9-5 [148 kB]
+Get:20 http://ftp.us.debian.org/debian/ jessie/main libavahi-common-data amd64 0.6.31-5 [98.6 kB]
+Get:21 http://ftp.us.debian.org/debian/ jessie/main libavahi-common3 amd64 0.6.31-5 [51.1 kB]
+Get:22 http://ftp.us.debian.org/debian/ jessie/main libavahi-client3 amd64 0.6.31-5 [54.4 kB]
+Get:23 http://ftp.us.debian.org/debian/ jessie/main libpixman-1-0 amd64 0.32.6-3 [507 kB]
+Get:24 http://ftp.us.debian.org/debian/ jessie/main libxau6 amd64 1:1.0.8-1 [20.7 kB]
+Get:25 http://ftp.us.debian.org/debian/ jessie/main libxdmcp6 amd64 1:1.1.1-1+b1 [24.9 kB]
+Get:26 http://ftp.us.debian.org/debian/ jessie/main libxcb1 amd64 1.10-3+b1 [44.4 kB]
+Get:27 http://ftp.us.debian.org/debian/ jessie/main libx11-data all 2:1.6.2-3 [126 kB]
+Get:28 http://ftp.us.debian.org/debian/ jessie/main libx11-6 amd64 2:1.6.2-3 [729 kB]
+Get:29 http://ftp.us.debian.org/debian/ jessie/main libxcb-render0 amd64 1.10-3+b1 [17.5 kB]
+Get:30 http://ftp.us.debian.org/debian/ jessie/main libxcb-shm0 amd64 1.10-3+b1 [11.5 kB]
+Get:31 http://ftp.us.debian.org/debian/ jessie/main libxext6 amd64 2:1.3.3-1 [52.7 kB]
+Get:32 http://ftp.us.debian.org/debian/ jessie/main libxrender1 amd64 1:0.9.8-1+b1 [31.4 kB]
+Get:33 http://ftp.us.debian.org/debian/ jessie/main libcairo2 amd64 1.14.0-2.1 [742 kB]
+Get:34 http://ftp.us.debian.org/debian/ jessie/main libcups2 amd64 1.7.5-11+deb8u1 [283 kB]
+Get:35 http://ftp.us.debian.org/debian/ jessie/main libcupsimage2 amd64 1.7.5-11+deb8u1 [117 kB]
+Get:36 http://ftp.us.debian.org/debian/ jessie/main libjpeg62-turbo amd64 1:1.3.1-12 [116 kB]
+Get:37 http://ftp.us.debian.org/debian/ jessie/main libjbig0 amd64 2.1-3.1 [30.7 kB]
+Get:38 http://ftp.us.debian.org/debian/ jessie/main libtiff5 amd64 4.0.3-12.3 [217 kB]
 Get:39 http://ftp.us.debian.org/debian/ jessie/main libdatrie1 amd64 0.2.8-1 [32.6 kB]
 Get:40 http://ftp.us.debian.org/debian/ jessie/main libdjvulibre-text all 3.5.25.4-4 [59.8 kB]
 Get:41 http://ftp.us.debian.org/debian/ jessie/main libdjvulibre21 amd64 3.5.25.4-4+b1 [578 kB]
@@ -664,8 +682,9 @@ Get:143 http://ftp.us.debian.org/debian/ jessie/main x11-utils amd64 7.7+2 [191 
 Get:144 http://ftp.us.debian.org/debian/ jessie/main xbitmaps all 1.1.1-2 [32.1 kB]
 Get:145 http://ftp.us.debian.org/debian/ jessie/main xdg-user-dirs amd64 0.15-2 [52.1 kB]
 Get:146 http://ftp.us.debian.org/debian/ jessie/main xterm amd64 312-2 [605 kB]
+Extracting templates from packages: 20%Extracting templates from packages: 41%Extracting templates from packages: 61%Extracting templates from packages: 82%Extracting templates from packages: 100%
 Preconfiguring packages ...
-Fetched 66.7 MB in 21s (3,046 kB/s)
+Fetched 66.7 MB in 16s (3,954 kB/s)
 Selecting previously unselected package libapr1:amd64.
 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 24185 files and directories currently installed.)
 Preparing to unpack .../libapr1_1.5.1-3_amd64.deb ...
@@ -773,8 +792,8 @@ Selecting previously unselected package libtiff5:amd64.
 Preparing to unpack .../libtiff5_4.0.3-12.3_amd64.deb ...
 Unpacking libtiff5:amd64 (4.0.3-12.3) ...
 Selecting previously unselected package libcupsfilters1:amd64.
-Preparing to unpack .../libcupsfilters1_1.0.61-5+deb8u1_amd64.deb ...
-Unpacking libcupsfilters1:amd64 (1.0.61-5+deb8u1) ...
+Preparing to unpack .../libcupsfilters1_1.0.61-5+deb8u2_amd64.deb ...
+Unpacking libcupsfilters1:amd64 (1.0.61-5+deb8u2) ...
 Selecting previously unselected package libdatrie1:amd64.
 Preparing to unpack .../libdatrie1_0.2.8-1_amd64.deb ...
 Unpacking libdatrie1:amd64 (0.2.8-1) ...
@@ -1290,7 +1309,7 @@ Setting up xdg-user-dirs (0.15-2) ...
 Setting up xterm (312-2) ...
 update-alternatives: using /usr/bin/xterm to provide /usr/bin/x-terminal-emulator (x-terminal-emulator) in auto mode
 update-alternatives: using /usr/bin/lxterm to provide /usr/bin/x-terminal-emulator (x-terminal-emulator) in auto mode
-Setting up libcupsfilters1:amd64 (1.0.61-5+deb8u1) ...
+Setting up libcupsfilters1:amd64 (1.0.61-5+deb8u2) ...
 Setting up python3 (3.4.2-2) ...
 running python rtupdate hooks for python3.4...
 running python post-rtupdate hooks for python3.4...
@@ -1324,6 +1343,7 @@ Begin updating the IP tables rules
 
 EXPECT - 
 
+cat: /tmp/iptables-persistent.loghttps://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/add-website.sh: No such file or directory
 
 Update the IP tables rules
 
@@ -1380,8 +1400,8 @@ The following NEW packages will be installed:
 0 upgraded, 11 newly installed, 0 to remove and 0 not upgraded.
 Need to get 8,676 kB of archives.
 After this operation, 95.8 MB of additional disk space will be used.
-Get:1 http://security.debian.org/ jessie/updates/main mysql-common all 5.5.46-0+deb8u1 [85.5 kB]
-Get:2 http://ftp.us.debian.org/debian/ jessie/main libaio1 amd64 0.3.110-1 [9,312 B]
+Get:1 http://ftp.us.debian.org/debian/ jessie/main libaio1 amd64 0.3.110-1 [9,312 B]
+Get:2 http://security.debian.org/ jessie/updates/main mysql-common all 5.5.46-0+deb8u1 [85.5 kB]
 Get:3 http://ftp.us.debian.org/debian/ jessie/main libdbi-perl amd64 1.631-3+b1 [816 kB]
 Get:4 http://security.debian.org/ jessie/updates/main libmysqlclient18 amd64 5.5.46-0+deb8u1 [678 kB]
 Get:5 http://ftp.us.debian.org/debian/ jessie/main libdbd-mysql-perl amd64 4.028-2+b1 [119 kB]
@@ -1392,7 +1412,7 @@ Get:9 http://security.debian.org/ jessie/updates/main mysql-server-core-5.5 amd6
 Get:10 http://security.debian.org/ jessie/updates/main mysql-server-5.5 amd64 5.5.46-0+deb8u1 [1,776 kB]
 Get:11 http://security.debian.org/ jessie/updates/main mysql-server all 5.5.46-0+deb8u1 [83.7 kB]
 Preconfiguring packages ...
-Fetched 8,676 kB in 6s (1,281 kB/s)
+Fetched 8,676 kB in 7s (1,171 kB/s)
 Selecting previously unselected package libaio1:amd64.
 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 31288 files and directories currently installed.)
 Preparing to unpack .../libaio1_0.3.110-1_amd64.deb ...
@@ -1440,8 +1460,8 @@ Setting up libterm-readkey-perl (2.32-1+b1) ...
 Setting up mysql-client-5.5 (5.5.46-0+deb8u1) ...
 Setting up mysql-server-core-5.5 (5.5.46-0+deb8u1) ...
 Setting up mysql-server-5.5 (5.5.46-0+deb8u1) ...
-151124  5:27:25 [Warning] Using unique option prefix key_buffer instead of key_buffer_size is deprecated and will be removed in a future release. Please use the full name instead.
-151124  5:27:25 [Note] /usr/sbin/mysqld (mysqld 5.5.46-0+deb8u1) starting as process 17706 ...
+151206 18:31:14 [Warning] Using unique option prefix key_buffer instead of key_buffer_size is deprecated and will be removed in a future release. Please use the full name instead.
+151206 18:31:14 [Note] /usr/sbin/mysqld (mysqld 5.5.46-0+deb8u1) starting as process 19062 ...
 Setting up libhtml-template-perl (2.95-1) ...
 Setting up mysql-server (5.5.46-0+deb8u1) ...
 Processing triggers for libc-bin (2.19-18+deb8u1) ...
@@ -1475,11 +1495,11 @@ Get:6 http://ftp.us.debian.org/debian/ jessie/main libonig2 amd64 5.9.5-3.2 [118
 Get:7 http://ftp.us.debian.org/debian/ jessie/main libqdbm14 amd64 1.8.78-5+b1 [118 kB]
 Get:8 http://ftp.us.debian.org/debian/ jessie/main php5-json amd64 1.3.6-1 [18.6 kB]
 Get:9 http://ftp.us.debian.org/debian/ jessie/main libmcrypt4 amd64 2.5.8-3.3 [71.2 kB]
-Get:10 http://security.debian.org/ jessie/updates/main php5-cli amd64 5.6.14+dfsg-0+deb8u1 [2,173 kB]
-Get:11 http://ftp.us.debian.org/debian/ jessie/main libapparmor1 amd64 2.9.0-3 [60.3 kB]
-Get:12 http://ftp.us.debian.org/debian/ jessie/main php5-imagick amd64 3.2.0~rc1-1 [101 kB]
-Get:13 http://ftp.us.debian.org/debian/ jessie/main php5-memcached amd64 2.2.0-2 [56.4 kB]
-Get:14 http://ftp.us.debian.org/debian/ jessie/main php5-xdebug amd64 2.2.5-1 [242 kB]
+Get:10 http://ftp.us.debian.org/debian/ jessie/main libapparmor1 amd64 2.9.0-3 [60.3 kB]
+Get:11 http://ftp.us.debian.org/debian/ jessie/main php5-imagick amd64 3.2.0~rc1-1 [101 kB]
+Get:12 http://ftp.us.debian.org/debian/ jessie/main php5-memcached amd64 2.2.0-2 [56.4 kB]
+Get:13 http://ftp.us.debian.org/debian/ jessie/main php5-xdebug amd64 2.2.5-1 [242 kB]
+Get:14 http://security.debian.org/ jessie/updates/main php5-cli amd64 5.6.14+dfsg-0+deb8u1 [2,173 kB]
 Get:15 http://ftp.us.debian.org/debian/ jessie/main ttf-dejavu-core all 2.34-1 [30.7 kB]
 Get:16 http://security.debian.org/ jessie/updates/main libapache2-mod-php5 amd64 5.6.14+dfsg-0+deb8u1 [2,214 kB]
 Get:17 http://security.debian.org/ jessie/updates/main php-pear all 5.6.14+dfsg-0+deb8u1 [268 kB]
@@ -1491,7 +1511,7 @@ Get:22 http://security.debian.org/ jessie/updates/main php5-intl amd64 5.6.14+df
 Get:23 http://security.debian.org/ jessie/updates/main php5-mcrypt amd64 5.6.14+dfsg-0+deb8u1 [15.3 kB]
 Get:24 http://security.debian.org/ jessie/updates/main php5-mysql amd64 5.6.14+dfsg-0+deb8u1 [65.2 kB]
 Get:25 http://security.debian.org/ jessie/updates/main php5-readline amd64 5.6.14+dfsg-0+deb8u1 [12.5 kB]
-Fetched 9,524 kB in 13s (687 kB/s)
+Fetched 9,524 kB in 7s (1,276 kB/s)
 Selecting previously unselected package libvpx1:amd64.
 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 31758 files and directories currently installed.)
 Preparing to unpack .../libvpx1_1.3.0-3_amd64.deb ...
@@ -1678,7 +1698,32 @@ Processing triggers for php5-fpm (5.6.14+dfsg-0+deb8u1) ...
 
 ########## MODIFY DEFAULT VHOST CONFIGURATION FILES ###
 
+Modify Headers Served for a More Secure Server
+
+
 ########## ADD STARTSSSL CLASS2 CERTIFICATE FILES ###
+--2015-12-06 18:32:01--  https://www.startssl.com/certs/class2/sha2/pem/sub.class2.server.sha2.ca.pem
+Resolving www.startssl.com (www.startssl.com)... 192.116.242.20
+Connecting to www.startssl.com (www.startssl.com)|192.116.242.20|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 2090 (2.0K) [application/x509-ca-cert]
+Saving to: ‘/var/www/certs/2015/start-ssl-class2/sub.class2.server.sha2.ca.pem’
+
+     0K ..                                                    100% 52.4M=0s
+
+2015-12-06 18:32:03 (52.4 MB/s) - ‘/var/www/certs/2015/start-ssl-class2/sub.class2.server.sha2.ca.pem’ saved [2090/2090]
+
+--2015-12-06 18:32:03--  https://www.startssl.com/certs/ca.pem
+Resolving www.startssl.com (www.startssl.com)... 192.116.242.20
+Connecting to www.startssl.com (www.startssl.com)|192.116.242.20|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 2760 (2.7K) [application/x509-ca-cert]
+Saving to: ‘/var/www/certs/2015/start-ssl-class2/ca.pem’
+
+     0K ..                                                    100% 39.4M=0s
+
+2015-12-06 18:32:04 (39.4 MB/s) - ‘/var/www/certs/2015/start-ssl-class2/ca.pem’ saved [2760/2760]
+
 
 ########## GENERATE SSL FOR DEFAULT SITE ###
 
@@ -1686,13 +1731,18 @@ Configure Apache
 
 Generating SSL
 
-openssl req -nodes -sha256 -newkey rsa:2048 -keyout /var/www/certs/2015/start-ssl/ssl.key -out /var/www/certs/2015/start-ssl/ssl.csr -subj "/C=US/ST=Ohio/L=Eastlake/O=Rust Belt Rebellion/OU=Web Development/CN=rustbeltrebellion.com"
+openssl req -nodes -sha256 -newkey rsa:2048 -keyout /var/www/certs/2015/start-ssl-class2/ssl.key -out /var/www/certs/2015/start-ssl-class2/ssl.csr -subj "/C=US/ST=Ohio/L=Eastlake/O=Rust Belt Rebellion/OU=Web Development/CN=rustbeltrebellion.com"
 
+Generating a 2048 bit RSA private key
+.................+++
+.............+++
+writing new private key to '/var/www/certs/2015/start-ssl-class2/ssl.key'
+-----
 
 ########## DISABLE THE ACTIONS APACHE MODULE ###
 Module actions already disabled
 
-########## ENABLE THE PROXY FCGI APACHE MODULE ###
+########## ENABLE THE PROXY FCGI, SSL, & HEADERS APACHE MODULES ###
 Considering dependency proxy for proxy_fcgi:
 Enabling module proxy.
 Enabling module proxy_fcgi.
@@ -1704,6 +1754,7 @@ Considering dependency socache_shmcb for ssl:
 Enabling module socache_shmcb.
 Enabling module ssl.
 See /usr/share/doc/apache2/README.Debian.gz on how to configure SSL and create self-signed certificates.
+Enabling module headers.
 To activate the new configuration, you need to run:
   service apache2 restart
 
@@ -1773,7 +1824,7 @@ Get:17 http://ftp.us.debian.org/debian/ jessie/main librbl1 amd64 2.9.2-2 [42.3 
 Get:18 http://ftp.us.debian.org/debian/ jessie/main libvbr2 amd64 2.9.2-2 [44.4 kB]
 Get:19 http://ftp.us.debian.org/debian/ jessie/main opendkim amd64 2.9.2-2 [203 kB]
 Get:20 http://ftp.us.debian.org/debian/ jessie/main opendkim-tools amd64 2.9.2-2 [129 kB]
-Fetched 7,272 kB in 2s (3,003 kB/s)
+Fetched 7,272 kB in 2s (3,459 kB/s)
 Selecting previously unselected package libunistring0:amd64.
 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 32215 files and directories currently installed.)
 Preparing to unpack .../libunistring0_0.9.3-5.2+b1_amd64.deb ...
@@ -1866,7 +1917,16 @@ Setting up opendkim-tools (2.9.2-2) ...
 Processing triggers for libc-bin (2.19-18+deb8u1) ...
 Processing triggers for systemd (215-17+deb8u2) ...
 /var/www/certs/dkim ~/bin
+Generating RSA private key, 1024 bit long modulus
+...++++++
+..........++++++
+e is 65537 (0x10001)
+writing RSA key
 ~/bin
+./build-script.sh: line 757: ${cat /var/www/certs/dkim/dkim.default.pub | sed -e s/"-.*"// | tr -d '\n'}: bad substitution
+default._domainkey.rustbeltrebellion.com IN TXT "v=DKIM1;p="
+verify with this command:
+host -t txt default._domainkey.rustbeltrebellion.com default._domainkey.rustbeltrebellion.com descriptive text "v=DKIM1\;p=
 
 ########## SET UPDATE-EXIM4.CONF MAIL CONFIGS ###
 
@@ -1882,6 +1942,8 @@ Processing triggers for systemd (215-17+deb8u2) ...
 No DNS configuration mail testing:
 The trick is that you have to use 'disposable email' services that exist because in some cases it is not always the wisest decision to only do business with the best of the best. These services allow otherwise questionable mail to come in, melded into mail stamped as legit from a sender with sufficient SPF, DMARC, & DKIM-- and is sent along to your real mail box --or at least that is how it works with 33mail.com
 Welcome to the seedy world of email laundering.
+
+########## CONFIGURE SYSSTAT ###
 
 ########## CLEAN UP ###
 
@@ -1911,15 +1973,15 @@ Reading state information...
 
 
 ########## CREATE A PLACE TO STORE THE OUTPUT FOR SHARING TROUBLESHOOTING DATA###
-Location of troubleshooting files: /root/bin/troubleshooting/1448342652
+Location of troubleshooting files: /root/bin/troubleshooting/1449426740
 
 mkdir: created directory ‘/root/bin/troubleshooting’
-mkdir: created directory ‘/root/bin/troubleshooting/1448342652’
+mkdir: created directory ‘/root/bin/troubleshooting/1449426740’
 Start collecting config files
 
 Start collecting log files
 
 Apache log files
-FPM log files
+FPM log file
 Whole shebang log files
 
