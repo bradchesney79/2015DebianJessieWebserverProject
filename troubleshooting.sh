@@ -83,7 +83,7 @@ hostname >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
 printf "\n########## PROCESSORS AVAILABLE (COUNT) ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
 grep processor /proc/cpuinfo | wc -l >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
 
-printf "\n########## UPTIME, USERS (COUNT), AND LOAD AVG (LOAD MAX = 100% * PROCESSORS AVAILABLE FOR PREVIOUS 1, 5, & 15 MINUTES) ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
+printf "\n########## UPTIME, USERS (COUNT), AND LOAD AVG (LOAD MAX = 100 PERCENT x PROCESSORS AVAILABLE FOR PREVIOUS 1, 5, & 15 MINUTES) ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
 uptime >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
 
 

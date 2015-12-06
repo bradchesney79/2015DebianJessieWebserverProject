@@ -140,7 +140,7 @@ DBBACKUPUSERPASSWORD="thirddummypassword"
 #http://serverfault.com/questions/570288/is-it-bad-to-redirect-http-to-https
 
 ###For me to test the whole thing as-is
-#pushd /root; mkdir bin; pushd bin; wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/build-script.sh; wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/add-web-person-user.sh; wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/add-website.sh; chmod +x *.sh; time ./build-script.sh 2>&1 | tee /var/log/auto-install.log; popd; popd
+#pushd /root; mkdir bin; pushd bin; wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/build-script.sh; wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/add-web-person-user.sh; wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/add-website.sh; wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/troubleshooting.sh; chmod +x *.sh; time ./build-script.sh 2>&1 | tee /var/log/auto-install.log; popd; popd
 
 #Takes ... on a Linode 1024
 #real    7m55.128s
@@ -151,7 +151,7 @@ DBBACKUPUSERPASSWORD="thirddummypassword"
 ###For myself and others to acquire & modify 
 
 #Acquire the scripts
-#pushd /root; mkdir bin; pushd bin; wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/build-script.sh; wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/add-web-person-user.sh; wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/add-website.sh; chmod +x *.sh
+#pushd /root; mkdir bin; pushd bin; wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/build-script.sh; wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/add-web-person-user.sh; wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/add-website.sh; wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/troubleshooting.sh; chmod +x *.sh
 
 #Modify the scripts
 #--You'll have to manage this on your own.
