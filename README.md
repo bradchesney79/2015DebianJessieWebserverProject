@@ -10,12 +10,6 @@ I will use the bash script as a roadmap to build an Ansible playbook.
 
 TODO:
 
-a script to add a new virtualhost & new 'website' system users
-
-a script to add human user acccounts (new VHOST fires this if 'person' user doesn't exist by default)
-
-a note displays to ensure users are added to groups appropriately
-
 make security improvement changes to apache
 (like hiding version & whatnot, much guided by securityheaders.com)
 
