@@ -600,12 +600,6 @@ printf "        Header set Content-Security-Policy: \"default-src 'self';script-
 printf "\n        #   Used by Adobe PDF & Flash -- Don't Use Flash\n\n" >> /etc/apache2/sites-available/default-ssl.conf
 printf "#        Header set X-Permitted-Cross-Domain-Policies: "master-only"\n\n" >> /etc/apache2/sites-available/default-ssl.conf
 
-    
-    
-    
-    
-    
-
 printf "        #   SSL Protocol Adjustments:\n" >> /etc/apache2/sites-available/default-ssl.conf
 printf "        #   The safe and default but still SSL/TLS standard compliant shutdown\n" >> /etc/apache2/sites-available/default-ssl.conf
 printf "        #   approach is that mod_ssl sends the close notify alert but doesn't wait for\n" >> /etc/apache2/sites-available/default-ssl.conf
