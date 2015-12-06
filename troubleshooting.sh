@@ -100,7 +100,7 @@ printf "\n\n########## RUNNING PROCESSES ###########\n\n" >> ${TROUBLESHOOTINGFI
 pidstat >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
 
 printf "\n\n########## IO USAGE ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
-iostat -xz 1 >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
+iostat -xz >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
 
 printf "\n\n########## MEMORY USAGE ###########\n\n" >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
 free -m >> ${TROUBLESHOOTINGFILES}/troubleshootingReport.txt
