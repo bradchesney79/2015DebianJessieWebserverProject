@@ -46,8 +46,6 @@ fi
 
 adduser "$1"
 
-
-
 if [ "$2" ]
   then
 	if [ "$2" == TRUE ]
@@ -59,5 +57,7 @@ fi
 
 cat /etc/group | tr '\n' ' '
 
+echo ""
 echo "How to give a user access to other groups:"
-echo "usermod -a -groups <pre-existing-group> [<pre-existing-group>]..."
+echo "usermod -a --groups <pre-existing-group>[,<pre-existing-group>...] username"
+echo "example: usermod -a --groups xyzcom-web,default-web bradchesney79"
