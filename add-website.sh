@@ -142,6 +142,30 @@ printf "  <Proxy fcgi://$DOMAIN>\n" >> /etc/apache2/sites-available/$DOMAIN.conf
 printf "    ProxySet connectiontimeout=5 timeout=240\n" >> /etc/apache2/sites-available/$DOMAIN.conf
 printf "  </Proxy>\n\n" >> /etc/apache2/sites-available/$DOMAIN.conf
 
+printf "\n        #   Configure Apache to Advertise Trying SSL First\n\n" >> /etc/apache2/sites-available/default.conf
+printf "        Header always set Strict-Transport-Security \"max-age=63072000; includeSubdomains; preload\"\n\n" >> /etc/apache2/sites-available/default.conf
+
+printf "\n        #   Do Not Permit Embedding In an iframe Tag\n\n" >> /etc/apache2/sites-available/default.conf
+printf "\n        #   See SAMEORIGIN or ALLOW-FROM Documentation for More Relaxed X-Frame Usage\n\n" >> /etc/apache2/sites-available/default.conf
+printf "        Header always set X-Frame-Options DENY\n\n" >> /etc/apache2/sites-available/default.conf
+
+printf "\n        #   Set Server Level XSS Prevention\n\n" >> /etc/apache2/sites-available/default.conf
+printf "        Header set X-XSS-Protection: \"1; mode=block\"\n\n" >> /etc/apache2/sites-available/default.conf
+
+printf "\n        #   Remove Poorly Performing etag Cache Invalidation Header\n\n" >> /etc/apache2/sites-available/default.conf
+printf "        Header unset ETag\n\n" >> /etc/apache2/sites-available/default.conf
+
+printf "\n        #   Prevent MIME sniffing a non-declared content type\n\n" >> /etc/apache2/sites-available/default.conf
+printf "        Header set X-Content-Type-Options: nosniff\n\n" >> /etc/apache2/sites-available/default.conf
+
+printf "\n        #   Allow Running Scripts from Self and Third-Party Resources from Google\n\n" >> /etc/apache2/sites-available/default.conf
+printf "        Header set X-WebKit-CSP: \"default-src 'self';script-src 'self' www.google-analytics.com ajax.googleapis.com;\"\n\n" >> /etc/apache2/sites-available/default.conf
+printf "        Header set X-Content-Security-Policy: \"default-src 'self';script-src 'self' www.google-analytics.com ajax.googleapis.com;\"\n\n" >> /etc/apache2/sites-available/default.conf
+printf "        Header set Content-Security-Policy: \"default-src 'self';script-src 'self' www.google-analytics.com ajax.googleapis.com;\"\n\n" >> /etc/apache2/sites-available/default.conf
+
+printf "\n        #   Used by Adobe PDF & Flash -- Don't Use Flash\n\n" >> /etc/apache2/sites-available/default.conf
+printf "        Header set X-Permitted-Cross-Domain-Policies: "master-only"\n\n" >> /etc/apache2/sites-available/default.conf
+
 printf "</VirtualHost>\n" >> /etc/apache2/sites-available/$DOMAIN.conf
 
 
@@ -170,12 +194,41 @@ printf "        </Proxy>\n" >> /etc/apache2/sites-available/$DOMAIN-ssl.conf
 
 printf "        Include /etc/apache2/includes/vhost-ssl\n\n" >> /etc/apache2/sites-available/$DOMAIN-ssl.conf
 
-printf "        #   The StartSSL Certificate\n\n" >> /etc/apache2/sites-available/$DOMAIN-ssl.conf
-printf "        SSLCertificateFile $WEBROOT/certs/$YEAR/$SSLPROVIDER/ssl.crt\n" >> /etc/apache2/sites-available/$DOMAIN-ssl.conf
-printf "        SSLCertificateKeyFile $WEBROOT/certs/$YEAR/$SSLPROVIDER/ssl.key\n" >> /etc/apache2/sites-available/$DOMAIN-ssl.conf
-printf "        SSLCertificateChainFile $WEBROOT/certs/$YEAR/$SSLPROVIDER/sub.class2.server.ca.pem\n" >> /etc/apache2/sites-available/$DOMAIN-ssl.conf
-printf "        SSLCACertificateFile $WEBROOT/certs/$YEAR/$SSLPROVIDER/ca.pem\n\n" >> /etc/apache2/sites-available/$DOMAIN-ssl.conf
-printf "        \n" >> /etc/apache2/sites-available/$DOMAIN-ssl.conf
+if [ "$SSLPROVIDER" = "start-ssl-class2" ]
+then
+printf "        #   The StartSSL Certificate\n\n" >> /etc/apache2/sites-available/default-ssl.conf
+printf "        SSLCertificateFile $WEBROOT/certs/$YEAR/$SSLPROVIDER/ssl.crt\n" >> /etc/apache2/sites-available/default-ssl.conf
+printf "        SSLCertificateKeyFile $WEBROOT/certs/$YEAR/$SSLPROVIDER/ssl.key\n" >> /etc/apache2/sites-available/default-ssl.conf
+printf "        SSLCertificateChainFile $WEBROOT/certs/$YEAR/$SSLPROVIDER/sub.class2.server.ca.pem\n" >> /etc/apache2/sites-available/default-ssl.conf
+printf "        SSLCACertificateFile $WEBROOT/certs/$YEAR/$SSLPROVIDER/ca.pem\n\n" >> /etc/apache2/sites-available/default-ssl.conf
+printf "        \n" >> /etc/apache2/sites-available/default-ssl.conf
+fi
+
+printf "\nModify Headers Served for a More Secure Server\n\n"
+
+printf "\n        #   Configure Apache to Advertise Trying SSL First\n\n" >> /etc/apache2/sites-available/default-ssl.conf
+printf "        Header always set Strict-Transport-Security \"max-age=63072000; includeSubdomains; preload\"\n\n" >> /etc/apache2/sites-available/default-ssl.conf
+
+printf "\n        #   Do Not Permit Embedding In an iframe Tag\n\n" >> /etc/apache2/sites-available/default-ssl.conf
+printf "\n        #   See SAMEORIGIN or ALLOW-FROM Documentation for More Relaxed X-Frame Usage\n\n" >> /etc/apache2/sites-available/default-ssl.conf
+printf "        Header always set X-Frame-Options DENY\n\n" >> /etc/apache2/sites-available/default-ssl.conf
+
+printf "\n        #   Set Server Level XSS Prevention\n\n" >> /etc/apache2/sites-available/default-ssl.conf
+printf "        Header set X-XSS-Protection: \"1; mode=block\"\n\n" >> /etc/apache2/sites-available/default-ssl.conf
+
+printf "\n        #   Remove Poorly Performing etag Cache Invalidation Header\n\n" >> /etc/apache2/sites-available/default-ssl.conf
+printf "        Header unset ETag\n\n" >> /etc/apache2/sites-available/default-ssl.conf
+
+printf "\n        #   Prevent MIME sniffing a non-declared content type\n\n" >> /etc/apache2/sites-available/default-ssl.conf
+printf "        Header set X-Content-Type-Options: nosniff\n\n" >> /etc/apache2/sites-available/default-ssl.conf
+
+printf "\n        #   Allow Running Scripts from Self and Third-Party Resources from Google\n\n" >> /etc/apache2/sites-available/default-ssl.conf
+printf "        Header set X-WebKit-CSP: \"default-src 'self';script-src 'self' www.google-analytics.com ajax.googleapis.com;\"\n\n" >> /etc/apache2/sites-available/default-ssl.conf
+printf "        Header set X-Content-Security-Policy: \"default-src 'self';script-src 'self' www.google-analytics.com ajax.googleapis.com;\"\n\n" >> /etc/apache2/sites-available/default-ssl.conf
+printf "        Header set Content-Security-Policy: \"default-src 'self';script-src 'self' www.google-analytics.com ajax.googleapis.com;\"\n\n" >> /etc/apache2/sites-available/default-ssl.conf
+
+printf "\n        #   Used by Adobe PDF & Flash -- Don't Use Flash\n\n" >> /etc/apache2/sites-available/default-ssl.conf
+printf "#        Header set X-Permitted-Cross-Domain-Policies: "master-only"\n\n" >> /etc/apache2/sites-available/default-ssl.conf
 
 printf "        #   SSL Protocol Adjustments:\n" >> /etc/apache2/sites-available/$DOMAIN-ssl.conf
 printf "        #   The safe and default but still SSL/TLS standard compliant shutdown\n" >> /etc/apache2/sites-available/$DOMAIN-ssl.conf
