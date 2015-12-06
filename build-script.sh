@@ -860,6 +860,8 @@ printf "\n#                                                #"
 printf "\n#                                                #"
 printf "\n##################################################\n\n"
 
+./troubleshooting.sh
+
 printf "\nSSL Certs come from a third-party, be sure to get them and put any in the appropriate directory.\n"
 
 printf "\nThinking inside my head that a few minutes of uptime is trivial at this point-- nobody is actually depending on the system being up or even using it at this exact moment-- a reboot might be a smart idea.\n"
