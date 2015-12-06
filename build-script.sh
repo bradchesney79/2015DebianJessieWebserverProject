@@ -8,8 +8,6 @@ DATE=`date +%Y-%m-%d`
 YEAR=`date +%Y`
 EXECUTIONLOG="/var/log/auto-install.log"
 
-TROUBLESHOOTINGFILES="$SCRIPTLOCATION/troubleshooting/$UNIXTIMESTAMP"
-
 ##### HOST INFO #####
 
 HOSTNAME="www"
@@ -838,10 +836,6 @@ echo "No DNS configuration mail testing:"
 echo "The trick is that you have to use 'disposable email' services that exist because in some cases it is not always the wisest decision to only do business with the best of the best. These services allow otherwise questionable mail to come in, melded into mail stamped as legit from a sender with sufficient SPF, DMARC, & DKIM-- and is sent along to your real mail box --or at least that is how it works with 33mail.com"
 echo "Welcome to the seedy world of email laundering."
 
-printf "\n########## ADD FIRST PERSON USER ###\n"
-
-./add-web-person-user.sh $USERID1001 $USER true
-
 printf "\n########## CONFIGURE SYSSTAT ###\n"
 
 sed -i "s/ENABLED=\"false\"/ENABLED=\"true\"/" /etc/default/sysstat
@@ -862,10 +856,12 @@ printf "\n##################################################\n\n"
 
 ./troubleshooting.sh
 
-printf "\nSSL Certs come from a third-party, be sure to get them and put any in the appropriate directory.\n"
+printf "\n Add a person user. Best practices dictate using the root account less. ( ./add-web-person-user.sh $USERID1001 TRUE )\n"
+
+printf "\nSSL Certs come from a third-party, be sure to get the applicable files and put them in the appropriate directory.\n"
 
 printf "\nThinking inside my head that a few minutes of uptime is trivial at this point-- nobody is actually depending on the system being up or even using it at this exact moment-- a reboot might be a smart idea.\n"
 
-printf "\nDon't forget to set up Reverse DNS while you wait -- gets rid of those pesky problem with the server being referred to by the linode assigned machine name in most places."
+printf "\nSet up Reverse DNS while you wait if applicable-- gets rid of those pesky problem with the server being referred to by the linode assigned machine name in most places."
 
 exit 0
