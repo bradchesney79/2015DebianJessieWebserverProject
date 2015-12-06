@@ -36,11 +36,11 @@ if [ -z "$1" ]
 then usage
 fi
 
-if [ "$1" == "-h" ]; then
+if [ "$1" == "-h" ]
 then usage
 fi
 
-if [ "$1" == "--help" ]; then
+if [ "$1" == "--help" ]
 then usage
 fi
 
