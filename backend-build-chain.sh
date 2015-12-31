@@ -64,17 +64,25 @@ else
 composer install --no-dev
 fi
 
-apt-get install nodejs npm
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.30.1/install.sh | bash
 
-npm cache clean -f
-npm install -g n
-n stable
+# This command need run every time the node version is changed.
+# It provides global access to the nvm installed node version.
 
-npm install -g n node-gyp npm
-n stable
+# n=$(which node);n=${n%/bin/node}; chmod -R 755 $n/bin/*; sudo cp -r $n/{bin,lib,share} /usr/local
+
+
+nvm install v0.10.41
+
+npm install -g npm@latest
+
+n=$(which node);n=${n%/bin/node}; chmod -R 755 $n/bin/*; sudo cp -r $n/{bin,lib,share} /usr/local
+nvm install v5.3.0
+n=$(which node);n=${n%/bin/node}; chmod -R 755 $n/bin/*; sudo cp -r $n/{bin,lib,share} /usr/local
+
+npm install -g npm@latest
 
 cd https
-
 
 echo '{
   "name": "Debian-Host",
@@ -90,7 +98,8 @@ echo '{
   "repository": {
     "type": "git",
     "url": "https://github.com/bradchesney79/2015DebianJessieWebserverProject"
-  }
+  },
+  "license": "Unlicense"
 }' > package.json
 
 chmod 770 package.json
@@ -101,8 +110,4 @@ if [ $DEV = 'TRUE' ]
 npm install gulp gulp-sass webpack jasmine karma karma-jasmine karma-browserstack-launcher --save-dev --no-optional
 fi
 
-npm init
-
-
-
-bower install foundation-apps --save
+npm ini
