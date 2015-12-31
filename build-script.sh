@@ -16,6 +16,8 @@ IPV4="45.33.112.226"
 IPV6="2600:3c00::f03c:91ff:fe26:42cf"
 TIMEZONE="Etc/UTC" # This is a server, UTC is the only appropriate timezone
 
+XDEBUG="YES" # The conditional below looks for "YES", everything else is no, essentially
+
 ##### SYSTEM USER RESPONSIBLE FOR DEFAULT DOMAIN #####
 
 USER="default-web"
@@ -101,6 +103,8 @@ DBBACKUPUSERPASSWORD="thirddummypassword"
 
 # break into modular Ansible scripts
 
+# <Enter>, <~>, <.> -- will break out of a locked SSH session, say if you blow up the server before closing the connection
+
 ######################################################################
 
 #####NICE TO HAVE
@@ -133,11 +137,16 @@ DBBACKUPUSERPASSWORD="thirddummypassword"
 # http://www.rackspace.com/knowledge_center/article/checking-system-load-on-linux
 #CSR Generation-- use full state name and not the abbreviation
 #http://www.cisco.com/c/en/us/support/docs/application-networking-services/sca-11000-series-secure-content-accelerators/22400-cert-request-22400.html
-###BRAAAAAAD, these:
 #http://www.html5rocks.com/en/tutorials/security/content-security-policy/
 #https://www.linode.com/docs/tools-reference/linux-system-administration-basics
 #http://techblog.netflix.com/2015/11/linux-performance-analysis-in-60s.html
+#https://www.digitalocean.com/community/tutorials/how-to-share-php-sessions-on-multiple-memcached-servers-on-ubuntu-14-04
+
+
 #http://serverfault.com/questions/570288/is-it-bad-to-redirect-http-to-https
+#http://xdebug.org/docs/install
+#https://www.jetbrains.com/phpstorm/help/configuring-xdebug.html
+#http://xmodulo.com/block-network-traffic-by-country-linux.html
 
 ###For me to test the whole thing as-is
 #pushd /root; mkdir bin; pushd bin; wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/build-script.sh; wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/add-web-person-user.sh; wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/add-website.sh; wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/troubleshooting.sh; chmod +x *.sh; time ./build-script.sh 2>&1 | tee /var/log/auto-install.log; popd; popd
@@ -330,7 +339,7 @@ expect {
 send "\r"
 EOD
 
-cat /tmp/iptables-persistent.loghttps://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/add-website.sh
+cat /tmp/iptables-persistent.log
 
 #FIXME rm /tmp/iptables-persistent.log
 
@@ -397,6 +406,9 @@ printf "\n########## USING fail2ban DEFAULT CONFIG ###\n"
 
 
 printf "\n########## CONFIGURE APACHE ###\n"
+
+sed -i "s/ServerSignature.*/ServerSignature Off/" /etc/apache2/conf-available/security.conf
+sed -i "s/ServerTokens.*/ServerTokens Prod/" /etc/apache2/conf-available/security.conf
 
 printf "\n########## CREATE A USER FOR THE DEFAULT SITE ###\n"
 printf "\n########## THIS AIDS RESOURCE SEGREGATION ###\n"
@@ -485,9 +497,16 @@ mysql -u "root" -p"$DBPASSWORD" -e "$SQL7"
 
 printf "\n########## CONFIGURE PHP ###\n"
 
-apt-get -y install php5-fpm libapache2-mod-php5 php-pear php5-curl php5-mysql php5-gd php5-gmp php5-mcrypt php5-memcached php5-imagick php5-intl php5-xdebug
+apt-get -y install php5-fpm libapache2-mod-php5 php-pear php5-curl php5-mysql php5-gd php5-gmp php5-mcrypt php5-memcached php5-imagick php5-intl 
 
 cp /etc/php5/fpm/php.ini /etc/php5/fpm/php.ini.original
+
+printf "\n########## OPTIONALLY INSTALL XDEBUG ON DEVELOPMENT INSTANCE ###\n"
+
+if [ $XDEBUG = 'YES' ]
+  then
+  apt-get -y install php5-xdebug
+fi
 
 printf "\n########## MODIFY DEFAULT VHOST CONFIGURATION FILES ###\n"
 
@@ -713,6 +732,33 @@ sed -i "s/;*session.cookie_httponly.*/session.cookie_httponly = 1/" /etc/php5/fp
 
 
 sed -i "s/;*disable_functions.*/disable_functions = apache_child_terminate, apache_setenv, define_syslog_variables, escapeshellarg, escapeshellcmd, eval, exec, fp, fput, ftp_connect, ftp_exec, ftp_get, ftp_login, ftp_nb_fput, ftp_put, ftp_raw, ftp_rawlist, highlight_file, ini_alter, ini_get_all, ini_restore, inject_code, mysql_pconnect, openlog, passthru, pcntl_alarm, pcntl_exec, pcntl_fork, pcntl_get_last_error, pcntl_getpriority, pcntl_setpriority, pcntl_signal, pcntl_signal_dispatch, pcntl_sigprocmask, pcntl_sigtimedwait, pcntl_sigwaitinfo, pcntl_strerror, pcntl_wait, pcntl_waitpid, pcntl_wexitstatus, pcntl_wifexited, pcntl_wifsignaled, pcntl_wifstopped, pcntl_wstopsig, pcntl_wtermsig, phpAds_XmlRpc, phpAds_remoteInfo, phpAds_xmlrpcDecode, phpAds_xmlrpcEncode, php_uname, popen, posix_getpwuid, posix_kill, posix_mkfifo, posix_setpgid, posix_setsid, posix_setuid, posix_uname, proc_close, proc_get_status, proc_nice, proc_open, proc_terminate, shell_exec, syslog, system, xmlrpc_entity_decode/" /etc/php5/fpm/php.ini
+
+
+# These settings allow you to load balance for horizontal scaling-- this is for sharing your PHP Session data.
+
+sed -i "s/session.save_handler =.*/session.save_handler = memcached/" /etc/php5/fpm/php.ini
+
+# To share PHP Session data you have to specify that the session data is stored to all memcached instances on all servers
+# Once stored on all hosts, reading is just a matter of hitting the local memcached.
+# Security Note: Only specifying listening on IP:port of private networks behind firewalls
+
+sed -i "s/;session.save_path =.*/session.save_path = \"127.0.0.1:11211\"\nmemcached.sess_prefix = \"\"/" /etc/php5/fpm/php.ini
+
+# Problems with session_destroy() are solved with this:
+# memcached.sess_prefix = \"\"
+# added after editing session.save_path above
+
+sed -i "s/session.gc_maxlifetime =.*/session.gc_maxlifetime = 720/" /etc/php5/fpm/php.ini
+
+
+# You may need to modify the memcached settings if more machines are pooled
+
+# listen on a port of a firewalled/private network IP
+# memcached -l 127.0.0.1:11211,10.1.2.3:11211
+# or go straight for the config file to edit the service 
+# vi /etc/memcached.conf
+
+# service memcached restart
 
 printf "\n########## INSTALL WEBDEVELOPER RESOURCES ###\n"
 
