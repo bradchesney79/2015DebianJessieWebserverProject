@@ -141,7 +141,7 @@ DBBACKUPUSERPASSWORD="thirddummypassword"
 #https://www.linode.com/docs/tools-reference/linux-system-administration-basics
 #http://techblog.netflix.com/2015/11/linux-performance-analysis-in-60s.html
 #https://www.digitalocean.com/community/tutorials/how-to-share-php-sessions-on-multiple-memcached-servers-on-ubuntu-14-04
-
+#https://www.digitalocean.com/community/tutorials/how-to-install-node-js-with-nvm-node-version-manager-on-a-vps
 
 #http://serverfault.com/questions/570288/is-it-bad-to-redirect-http-to-https
 #http://xdebug.org/docs/install

@@ -107,7 +107,9 @@ chmod 770 package.json
 npm install pngjs foundation-cli --save
 
 if [ $DEV = 'TRUE' ]
-npm install gulp gulp-sass webpack jasmine karma karma-jasmine karma-browserstack-launcher --save-dev --no-optional
+npm install gulp gulp-sass sassdoc karma gulp-karma karma-jasmine karma-browserstack-launcher phantomjs jasmine-core webpack--save-dev --no-optional
+npm install -g karma-cli
+
 fi
 
 npm ini
