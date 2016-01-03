@@ -506,7 +506,7 @@ printf "\n########## OPTIONALLY INSTALL XDEBUG ON DEVELOPMENT INSTANCE ###\n"
 
 if [ "$DEV" = 'YES' ]
   then
-  apt-get -y install php5-dev php5-xdebug make
+  apt-get -y install php5-dev php5-xdebug make build-essential g++
 fi
 
 printf "\n########## MODIFY DEFAULT VHOST CONFIGURATION FILES ###\n"
