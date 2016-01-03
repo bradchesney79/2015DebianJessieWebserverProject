@@ -3,13 +3,14 @@
 DEV=${1:-'TRUE'}
 WEBROOT=${2:-'/var/www'}
 
-#todo test for ~2GB of ram available...
-#todo for now just always make 2GB of swap
+#todo test for ~3GB of ram available...
+#todo for now just always make 3GB of swap
 
-touch /tmp/swap.img
-chmod 600 /tmp/swap.img
-dd if=/dev/zero of=/tmp/swap.img bs=1024k count=2000
-swapon /tmp/swap.img
+touch /root/swap.img
+chmod 600 /root/swap.img
+dd if=/dev/zero of=/root/swap.img bs=1024k count=3000
+mkswap /root/swap.img
+swapon /root/swap.img
 
 php5dismod xdebug
 
@@ -88,12 +89,12 @@ n=$(which node);n=${n%/bin/node}; chmod -R 755 $n/bin/*; sudo cp -r $n/{bin,lib,
 
 source /root/.bashrc 
 
-nvm install v0.10.41
+nvm install v5.3.0
+n=$(which node);n=${n%/bin/node}; chmod -R 755 $n/bin/*; sudo cp -r $n/{bin,lib,share} /usr/local
 
 npm install -g npm@latest
 
-n=$(which node);n=${n%/bin/node}; chmod -R 755 $n/bin/*; sudo cp -r $n/{bin,lib,share} /usr/local
-nvm install v5.3.0
+nvm install v0.10.41
 n=$(which node);n=${n%/bin/node}; chmod -R 755 $n/bin/*; sudo cp -r $n/{bin,lib,share} /usr/local
 
 npm install -g npm@latest
