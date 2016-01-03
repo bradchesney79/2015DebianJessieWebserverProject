@@ -16,7 +16,7 @@ IPV4="45.33.112.226"
 IPV6="2600:3c00::f03c:91ff:fe26:42cf"
 TIMEZONE="Etc/UTC" # This is a server, UTC is the only appropriate timezone
 
-XDEBUG="YES" # The conditional below looks for "YES", everything else is no, essentially
+DEV="YES" # The conditional below looks for "YES", everything else is no, essentially
 
 ##### SYSTEM USER RESPONSIBLE FOR DEFAULT DOMAIN #####
 
@@ -504,9 +504,9 @@ cp /etc/php5/fpm/php.ini /etc/php5/fpm/php.ini.original
 
 printf "\n########## OPTIONALLY INSTALL XDEBUG ON DEVELOPMENT INSTANCE ###\n"
 
-if [ $XDEBUG = 'YES' ]
+if [ "$DEV" = 'YES' ]
   then
-  apt-get -y install php5-dev php5-xdebug
+  apt-get -y install php5-dev php5-xdebug make
 fi
 
 printf "\n########## MODIFY DEFAULT VHOST CONFIGURATION FILES ###\n"
