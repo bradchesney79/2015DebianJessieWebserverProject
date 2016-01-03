@@ -3,7 +3,13 @@
 DEV=${1:-'TRUE'}
 WEBROOT=${2:-'/var/www'}
 
+#todo test for ~2GB of ram available...
+#todo for now just always make 2GB of swap
 
+touch /tmp/swap.img
+chmod 600 /tmp/swap.img
+dd if=/dev/zero of=/tmp/swap.img bs=1024k count=2000
+swapon /tmp/swap.img
 
 curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
@@ -53,16 +59,16 @@ cd $WEBROOT
 
 if [ "$DEV" = 'TRUE' ];
 then
-  composer install --dev
+  composer install
 else
   composer install --no-dev
 fi
 
-
+sudo apt-get -y install nodejs nodejs-legacy
 
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.30.1/install.sh | bash
 
-sudo apt-get install nodejs-legacy
+
 
 # so there is this networking executable that pre-exists as 'node'
 # if you run:
@@ -122,3 +128,5 @@ npm install -g karma-cli
 fi
 
 npm ini
+
+swapoff /tmp/swap.img
