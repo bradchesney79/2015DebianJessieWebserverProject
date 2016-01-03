@@ -3,14 +3,7 @@
 DEV=${1:-'TRUE'}
 WEBROOT=${2:-'/var/www'}
 
-# so there is this networking executable that pre-exists as 'node'
-# if you run:
-# which node
-#
-# and you don't see any output-- you are not using that other 'node' executable
-# and you are free to softlink nodejs (as it is installed on Debian)
-# The following command softlinks 'nodejs' to 'node' as it is known just about everywhere else
-ln -s /usr/bin/nodejs /usr/bin/node
+
 
 curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
@@ -64,7 +57,20 @@ else
 composer install --no-dev
 fi
 
+
+
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.30.1/install.sh | bash
+
+sudo apt-get install nodejs-legacy
+
+# so there is this networking executable that pre-exists as 'node'
+# if you run:
+# which node
+#
+# and you don't see any output-- you are not using that other 'node' executable
+# and you are free to softlink nodejs (as it is installed on Debian)
+# The following command softlinks 'nodejs' to 'node' as it is known just about everywhere else
+# ln -s /usr/bin/nodejs /usr/bin/node
 
 # This command need run every time the node version is changed.
 # It provides global access to the nvm installed node version.
@@ -88,6 +94,7 @@ echo '{
   "name": "Debian-Host",
   "description": "Performant, secure LAMP",
   "version": "1.0.0",
+  "author": "Brad Chesney <bradchesney79@gmail.com> (https://rustbeltrebellion.com)
   "maintainers": [
     {
       "name": "Brad Chesney",
@@ -107,7 +114,7 @@ chmod 770 package.json
 npm install pngjs foundation-cli --save
 
 if [ $DEV = 'TRUE' ]
-npm install gulp gulp-sass sassdoc karma gulp-karma karma-jasmine karma-browserstack-launcher phantomjs jasmine-core webpack--save-dev --no-optional
+npm install gulp gulp-sass sassdoc karma gulp-karma karma-jasmine karma-browserstack-launcher phantomjs jasmine-core webpack node-inspector --save-dev --no-optional
 npm install -g karma-cli
 
 fi
