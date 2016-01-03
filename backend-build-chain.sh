@@ -51,11 +51,11 @@ echo '{
 
 cd $WEBROOT
 
-composer install --no-dev
-
 if [ "$DEV" = 'TRUE' ];
 then
   composer install --dev
+else
+  composer install --no-dev
 fi
 
 
@@ -114,7 +114,7 @@ chmod 770 package.json
 
 npm install pngjs foundation-cli --save
 
-if [ $DEV = 'TRUE' ];
+if [ $DEV = 'TRUE' ]
 then
 npm install gulp gulp-sass sassdoc karma gulp-karma karma-jasmine karma-browserstack-launcher phantomjs jasmine-core webpack node-inspector --save-dev --no-optional
 npm install -g karma-cli
