@@ -11,6 +11,8 @@ chmod 600 /tmp/swap.img
 dd if=/dev/zero of=/tmp/swap.img bs=1024k count=2000
 swapon /tmp/swap.img
 
+php5dismod xdebug
+
 curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 
@@ -102,7 +104,7 @@ echo '{
   "name": "Debian-Host",
   "description": "Performant, secure LAMP",
   "version": "1.0.0",
-  "author": "Brad Chesney <bradchesney79@gmail.com> (https://rustbeltrebellion.com)
+  "author": "Brad Chesney <bradchesney79@gmail.com> (https://rustbeltrebellion.com)",
   "maintainers": [
     {
       "name": "Brad Chesney",
@@ -121,13 +123,11 @@ chmod 770 package.json
 
 npm install pngjs foundation-cli --save
 
-if [ $DEV = 'TRUE' ]
+if [ "$DEV" = 'TRUE' ]
 then
 npm install gulp gulp-sass sassdoc karma gulp-karma karma-jasmine karma-browserstack-launcher phantomjs jasmine-core webpack node-inspector --save-dev --no-optional
 npm install -g karma-cli
-
+php5enmod xdebug
 fi
 
-npm ini
-
-swapoff /tmp/swap.img
+swapoff -a
