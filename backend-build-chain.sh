@@ -51,11 +51,11 @@ echo '{
 
 cd $WEBROOT
 
-if [[ $DEV = 'TRUE' ]];
+if [[ "$DEV" = 'TRUE' ]];
 then
-composer install --dev
+  composer install --dev
 else
-composer install --no-dev
+  composer install --no-dev
 fi
 
 
