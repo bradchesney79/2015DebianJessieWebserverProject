@@ -1,7 +1,9 @@
 #!/bin/bash
 
-DEV=${1:-'TRUE'}
-WEBROOT=${2:-'/var/www'}
+USER=${1:-'default-web'}
+DEV=${2:-'TRUE'}
+WEBROOT=${3:-'/var/www'}
+NTH_RUN=${4:-'TRUE'}
 
 #todo test for ~3GB of ram available...
 #todo for now just always make 3GB of swap
@@ -60,14 +62,16 @@ echo '{
 
 cd $WEBROOT
 
-if [ "$DEV" = 'TRUE' ];
+if [ "$DEV" = 'TRUE' ]
 then
   composer install
 else
   composer install --no-dev
 fi
 
-sudo apt-get -y install nodejs nodejs-legacy
+if [ "$NTH_RUN" != 'TRUE' ] 
+then
+apt-get -y install nodejs nodejs-legacy
 
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.30.1/install.sh | bash
 
@@ -94,10 +98,7 @@ n=$(which node);n=${n%/bin/node}; chmod -R 755 $n/bin/*; sudo cp -r $n/{bin,lib,
 
 npm install -g npm@latest
 
-#nvm install v0.10.41
-#n=$(which node);n=${n%/bin/node}; chmod -R 755 $n/bin/*; sudo cp -r $n/{bin,lib,share} /usr/local
-
-#npm install -g npm@latest
+fi
 
 cd https
 
@@ -117,38 +118,50 @@ echo '{
     "type": "git",
     "url": "https://github.com/bradchesney79/2015DebianJessieWebserverProject"
   },
-  "license": "Unlicense"
-}' > package.json
-
-
-
+  "license": "Unlicense",
+  "dependencies": {
+    "foundation-cli": "^2.0.1",
+    "pngjs": "^2.2.0"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-karma": "0.0.5",
+    "gulp-sass": "^2.1.1",
+    "jasmine-core": "^2.4.1",
+    "karma": "^0.12.37",
+    "karma-browserstack-launcher": "^0.1.8",
+    "karma-jasmine": "^0.3.6",
+    "node-inspector": "^0.12.5",
+    "phantomjs": "^1.9.19",
+    "sassdoc": "^2.1.19",
+    "webpack": "^1.12.9"
+  }
+}' > $WEBROOT/https/package.json
 
 chmod 770 package.json
-
-npm install pngjs foundation-cli --save
 
 if [ "$DEV" = 'TRUE' ]
 then
 
-#npm install -g karma-cli
-#npm install
+  if [ "$NTH_RUN" != 'TRUE' ] 
+  then
+    npm install -g karma-cli
+  fi
 
-npm install gulp gulp-sass sassdoc --save-dev --no-optional
+  npm install
 
-npm install karma gulp-karma karma-jasmine --save-dev --no-optional
-
-npm install karma-browserstack-launcher --save-dev --no-optional
-
-npm install phantomjs jasmine-core --save-dev --no-optional
-
-npm install webpack node-inspector --save-dev --no-optional
-
-npm install -g karma-cli
-
-php5enmod xdebug
+  php5enmod xdebug
 
 else
- npm install --production
+  npm install --production
 fi
+
+# reset ownership & permissions on files
+chown -R $USER:$USER $WEBROOT
+chmod -R 774 $WEBROOT
+
+chown -R www-data:www-data $WEBROOT/sockets
+find $WEBROOT -type d -exec chmod -R 775 {} \;
+
 
 swapoff -a

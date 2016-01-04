@@ -459,10 +459,10 @@ mkdir $WEBROOT/sockets
 mkdir $WEBROOT/tmp
 
 chown -R $USER:$USER $WEBROOT
-chmod -R 744 $WEBROOT
+chmod -R 774 $WEBROOT
 
 chown -R www-data:www-data $WEBROOT/sockets
-find $WEBROOT -type d -exec chmod -R 755 {} \;
+find $WEBROOT -type d -exec chmod -R 775 {} \;
 
 printf "\n########## INSTALL MYSQL ###\n"
 
