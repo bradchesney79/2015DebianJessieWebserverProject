@@ -94,10 +94,10 @@ n=$(which node);n=${n%/bin/node}; chmod -R 755 $n/bin/*; sudo cp -r $n/{bin,lib,
 
 npm install -g npm@latest
 
-nvm install v0.10.41
-n=$(which node);n=${n%/bin/node}; chmod -R 755 $n/bin/*; sudo cp -r $n/{bin,lib,share} /usr/local
+#nvm install v0.10.41
+#n=$(which node);n=${n%/bin/node}; chmod -R 755 $n/bin/*; sudo cp -r $n/{bin,lib,share} /usr/local
 
-npm install -g npm@latest
+#npm install -g npm@latest
 
 cd https
 
@@ -126,9 +126,20 @@ npm install pngjs foundation-cli --save
 
 if [ "$DEV" = 'TRUE' ]
 then
-npm install gulp gulp-sass sassdoc karma gulp-karma karma-jasmine karma-browserstack-launcher phantomjs jasmine-core webpack node-inspector --save-dev --no-optional
+npm install gulp gulp-sass sassdoc --save-dev --no-optional
+
+npm install karma gulp-karma karma-jasmine --save-dev --no-optional
+
+npm install karma-browserstack-launcher --save-dev --no-optional
+
+npm install phantomjs jasmine-core --save-dev --no-optional
+
+npm install webpack node-inspector --save-dev --no-optional
+
 npm install -g karma-cli
+
 php5enmod xdebug
+
 fi
 
 swapoff -a

@@ -158,6 +158,8 @@ DBBACKUPUSERPASSWORD="thirddummypassword"
 #real    4m27.518s
 #real    3m56.291s
 #real    4m4.988s
+#(installs build tools)
+#real   23m23.967s
 
 ###For myself and others to acquire & modify 
 
