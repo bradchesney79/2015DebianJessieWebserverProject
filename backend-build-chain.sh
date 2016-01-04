@@ -120,12 +120,19 @@ echo '{
   "license": "Unlicense"
 }' > package.json
 
+
+
+
 chmod 770 package.json
 
 npm install pngjs foundation-cli --save
 
 if [ "$DEV" = 'TRUE' ]
 then
+
+#npm install -g karma-cli
+#npm install
+
 npm install gulp gulp-sass sassdoc --save-dev --no-optional
 
 npm install karma gulp-karma karma-jasmine --save-dev --no-optional
@@ -140,6 +147,8 @@ npm install -g karma-cli
 
 php5enmod xdebug
 
+else
+ npm install --production
 fi
 
 swapoff -a
