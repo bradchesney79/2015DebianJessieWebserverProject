@@ -156,6 +156,8 @@ else
   npm install --production
 fi
 
+npm install font-awesome --save
+
 # reset ownership & permissions on files
 chown -R $USER:$USER $WEBROOT
 chmod -R 774 $WEBROOT
