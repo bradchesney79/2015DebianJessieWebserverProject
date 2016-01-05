@@ -58,7 +58,7 @@ echo '{
     "filp/whoops": "dev-master",
     "guzzlehttp/guzzle": "~6.0"
   }
-}' >> $WEBROOT/composer.json
+}' > $WEBROOT/composer.json
 
 cd $WEBROOT
 
@@ -69,7 +69,7 @@ else
   composer install --no-dev
 fi
 
-if [ "$NTH_RUN" != 'TRUE' ] 
+if [ "$NTH_RUN" = 'FALSE' ] 
 then
 apt-get -y install nodejs nodejs-legacy
 
@@ -120,6 +120,7 @@ echo '{
   },
   "license": "Unlicense",
   "dependencies": {
+    "font-awesome": "^4.5.0",
     "foundation-cli": "^2.0.1",
     "pngjs": "^2.2.0"
   },
@@ -143,7 +144,7 @@ chmod 770 package.json
 if [ "$DEV" = 'TRUE' ]
 then
 
-  if [ "$NTH_RUN" != 'TRUE' ] 
+  if [ "$NTH_RUN" = 'FALSE' ] 
   then
     npm install -g karma-cli
   fi
@@ -155,8 +156,6 @@ then
 else
   npm install --production
 fi
-
-npm install font-awesome --save
 
 # reset ownership & permissions on files
 chown -R $USER:$USER $WEBROOT
