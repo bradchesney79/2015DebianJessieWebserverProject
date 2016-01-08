@@ -150,7 +150,19 @@ DBBACKUPUSERPASSWORD="thirddummypassword"
 #http://xmodulo.com/block-network-traffic-by-country-linux.html
 
 ###For me to test the whole thing as-is
-#date +%s >> /root/time.txt; pushd /root; mkdir bin; pushd bin; wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/build-script.sh; wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/add-web-person-user.sh; wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/add-website.sh; wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/troubleshooting.sh; wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/backend-build-chain.sh; chmod +x *.sh; time ./build-script.sh 2>&1 | tee /var/log/auto-install.log; time ./backend-build-chain.sh default-web TRUE /var/www FALSE 2>&1 | tee /var/log/auto-install.log; time ./add-web-person-user.sh bradchesney79 TRUE 2>&1 | tee /var/log/auto-install.log; popd; popd; date +%s >> /root/time.txt
+#
+date +%s >> /root/time.txt;
+pushd /root;
+mkdir bin;
+pushd bin;
+wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/build-script.sh; wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/add-web-person-user.sh; wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/add-website.sh; wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/troubleshooting.sh; wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/backend-build-chain.sh;
+chmod +x *.sh;
+./build-script.sh 2>&1 | tee /var/log/auto-install.log;
+./backend-build-chain.sh default-web TRUE /var/www FALSE 2>&1 | tee /var/log/auto-install.log;
+date +%s >> /root/time.txt;
+./add-web-person-user.sh bradchesney79 TRUE 2>&1 | tee /var/log/auto-install.log;
+usermod -a --groups default-web bradchesney792>&1 | tee /var/log/auto-install.log;
+popd; popd
 
 #Takes ... on a Linode 1024
 #real    7m55.128s

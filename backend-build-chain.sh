@@ -1,6 +1,6 @@
 #!/bin/bash
 
-USER=${1:-'default-web'}
+WEBUSER=${1:-'default-web'}
 DEV=${2:-'TRUE'}
 WEBROOT=${3:-'/var/www'}
 NTH_RUN=${4:-'TRUE'}
@@ -38,7 +38,7 @@ echo '{
     "fabpot/goutte": "^3.1",
     "phpoffice/phpexcel": "^1.8",
     "mpdf/mpdf": "^6.0",
-    "roave/security-advisories": "dev-master"
+	"cartalyst/sentinel:: "2.0.*"
 
   },
 
@@ -56,9 +56,12 @@ echo '{
     "behat/mink-sahi-driver": "*",
     "behat/mink-zombie-driver": "*",
     "filp/whoops": "dev-master",
-    "guzzlehttp/guzzle": "~6.0"
+    "guzzlehttp/guzzle": "~6.0",
+    "roave/security-advisories": "dev-master"
   }
 }' > $WEBROOT/composer.json
+
+composer require league/oauth2-client league/oauth2-facebook league/oauth2-github league/oauth2-google league/oauth2-linkedin  stevenmaguire/oauth2-microsoft stevenmaguire/oauth2-paypal hayageek/oauth2-yahoo
 
 cd $WEBROOT
 
@@ -71,7 +74,7 @@ fi
 
 if [ "$NTH_RUN" = 'FALSE' ] 
 then
-apt-get -y install nodejs nodejs-legacy
+apt-get -y install nodejs nodejs-legacy ruby-dev ruby
 
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.30.1/install.sh | bash
 
@@ -98,9 +101,11 @@ n=$(which node);n=${n%/bin/node}; chmod -R 755 $n/bin/*; sudo cp -r $n/{bin,lib,
 
 npm install -g npm@latest
 
-fi
+runuser -l "$WEBUSER" -c 'npm install -g foundation-cli bower gulp karma-cli'
 
-cd https
+
+
+fi
 
 echo '{
   "name": "Debian-Host",
@@ -121,11 +126,11 @@ echo '{
   "license": "Unlicense",
   "dependencies": {
     "font-awesome": "^4.5.0",
-    "foundation-cli": "^2.0.1",
-    "pngjs": "^2.2.0"
+    "pngjs": "^2.2.0",
+    "zxcvbn": "^4.2.0"
+
   },
   "devDependencies": {
-    "gulp": "^3.9.0",
     "gulp-karma": "0.0.5",
     "gulp-sass": "^2.1.1",
     "jasmine-core": "^2.4.1",
@@ -144,12 +149,7 @@ chmod 770 package.json
 if [ "$DEV" = 'TRUE' ]
 then
 
-  if [ "$NTH_RUN" = 'FALSE' ] 
-  then
-    npm install -g karma-cli
-  fi
-
-  npm install
+  runuser -l "$WEBUSER" -c 'npm install'
 
   php5enmod xdebug
 
@@ -158,7 +158,7 @@ else
 fi
 
 # reset ownership & permissions on files
-chown -R $USER:$USER $WEBROOT
+chown -R $WEBUSER:$WEBUSER $WEBROOT
 chmod -R 774 $WEBROOT
 
 chown -R www-data:www-data $WEBROOT/sockets
