@@ -37,7 +37,8 @@ echo '{
     "google/apiclient": "^1.1",
     "fabpot/goutte": "^3.1",
     "phpoffice/phpexcel": "^1.8",
-    "mpdf/mpdf": "^6.0"
+    "mpdf/mpdf": "^6.0",
+    "cartalyst/sentinel": "2.0.*"
 
   },
 
@@ -60,7 +61,7 @@ echo '{
   }
 }' > $WEBROOT/composer.json
 
-composer require league/oauth2-client league/oauth2-facebook league/oauth2-github league/oauth2-google league/oauth2-linkedin  stevenmaguire/oauth2-microsoft stevenmaguire/oauth2-paypal hayageek/oauth2-yahoo
+composer require 
 
 cd $WEBROOT
 
@@ -100,7 +101,7 @@ n=$(which node);n=${n%/bin/node}; chmod -R 755 $n/bin/*; sudo cp -r $n/{bin,lib,
 
 npm install -g npm@latest
 
-runuser -l "$WEBUSER" -c 'npm install -g foundation-cli bower gulp karma-cli'
+npm install -g foundation-cli bower gulp karma-cli
 
 
 
