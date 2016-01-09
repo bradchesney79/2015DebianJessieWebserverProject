@@ -37,8 +37,7 @@ echo '{
     "google/apiclient": "^1.1",
     "fabpot/goutte": "^3.1",
     "phpoffice/phpexcel": "^1.8",
-    "mpdf/mpdf": "^6.0",
-	"cartalyst/sentinel:: "2.0.*"
+    "mpdf/mpdf": "^6.0"
 
   },
 
