@@ -143,17 +143,22 @@ echo '{
 
 chmod 770 $WEBROOT/https/package.json
 
-pushd $WEBROOT/https
+# reset ownership & permissions on files
+chown -R $WEBUSER:$WEBUSER $WEBROOT
+chmod -R 774 $WEBROOT
+
+chown -R www-data:www-data $WEBROOT/sockets
+find $WEBROOT -type d -exec chmod -R 775 {} \;
 
 if [ "$DEV" = 'TRUE' ]
 then
 
-  runuser -l "$WEBUSER" -c 'npm install'
+  runuser -l "$WEBUSER" -c "cd $WEBROOT/https; npm install"
 
   php5enmod xdebug
 
 else
-  npm install --production
+  runuser -l "$WEBUSER" -c "cd $WEBROOT/https; npm install --production"
 fi
 
 # reset ownership & permissions on files
