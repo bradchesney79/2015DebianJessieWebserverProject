@@ -39,7 +39,6 @@ echo '{
     "phpoffice/phpexcel": "^1.8",
     "mpdf/mpdf": "^6.0",
     "cartalyst/sentinel": "2.0.*"
-
   },
 
   "require-dev": {
@@ -60,8 +59,6 @@ echo '{
     "roave/security-advisories": "dev-master"
   }
 }' > $WEBROOT/composer.json
-
-composer require 
 
 cd $WEBROOT
 
@@ -144,7 +141,9 @@ echo '{
   }
 }' > $WEBROOT/https/package.json
 
-chmod 770 package.json
+chmod 770 $WEBROOT/https/package.json
+
+pushd $WEBROOT/https
 
 if [ "$DEV" = 'TRUE' ]
 then
@@ -164,5 +163,5 @@ chmod -R 774 $WEBROOT
 chown -R www-data:www-data $WEBROOT/sockets
 find $WEBROOT -type d -exec chmod -R 775 {} \;
 
-
+popd
 swapoff -a
