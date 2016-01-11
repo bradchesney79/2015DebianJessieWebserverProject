@@ -1,9 +1,15 @@
 #!/bin/bash
 
 WEBUSER=${1:-'default-web'}
-DEV=${2:-'TRUE'}
-WEBROOT=${3:-'/var/www'}
-NTH_RUN=${4:-'TRUE'}
+DBWEBUSERPASSWORD="$2"
+
+DBROOTUSER="$3"
+DBROOTPASSWORD="$4"
+
+DEV=${5:-'TRUE'}
+WEBROOT=${6:-'/var/www'}
+SENTINELDB=${7:-'sentinel'}
+NTH_RUN=${8:-'TRUE'}
 
 #todo test for ~3GB of ram available...
 #todo for now just always make 3GB of swap
@@ -14,10 +20,23 @@ dd if=/dev/zero of=/root/swap.img bs=1024k count=3000
 mkswap /root/swap.img
 swapon /root/swap.img
 
-php5dismod xdebug
+printf "\n########## TURN OFF XDEBUG IF A DEV SERVER ###\n"
 
+if [ "$DEV" = 'TRUE' ]
+then
+  php5dismod xdebug
+fi
+
+printf "\n########## INSTALL COMPOSER ###\n"
+
+# only want to install the global resources the first time--
+# specified via supplied argument or a default setting
+if [ "$NTH_RUN" = 'FALSE' ] 
+then
 curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+fi
 
+printf "\n########## PLACE A POPULATED composer.json FILE ###\n"
 
 echo '{
 
@@ -38,7 +57,8 @@ echo '{
     "fabpot/goutte": "^3.1",
     "phpoffice/phpexcel": "^1.8",
     "mpdf/mpdf": "^6.0",
-    "cartalyst/sentinel": "2.0.*"
+    "cartalyst/sentinel": "2.0.*",
+    "illuminate/database": "^5.2"
   },
 
   "require-dev": {
@@ -60,6 +80,8 @@ echo '{
   }
 }' > $WEBROOT/composer.json
 
+printf "\n########## INSTALL COMPOSER DEPENDENCIES FROM THE composer.json ###\n"
+
 cd $WEBROOT
 
 if [ "$DEV" = 'TRUE' ]
@@ -69,6 +91,11 @@ else
   composer install --no-dev
 fi
 
+printf "\n########## START LOADING FRONT END RESOURCES ###\n"
+
+
+# only want to install the global resources the first time--
+# specified via supplied argument or a default setting
 if [ "$NTH_RUN" = 'FALSE' ] 
 then
 apt-get -y install nodejs nodejs-legacy ruby-dev ruby
@@ -100,9 +127,9 @@ npm install -g npm@latest
 
 npm install -g foundation-cli bower gulp karma-cli
 
-
-
 fi
+
+printf "\n########## PLACE A POPULATED package.json FILE ###\n"
 
 echo '{
   "name": "Debian-Host",
@@ -144,22 +171,29 @@ echo '{
 chmod 770 $WEBROOT/https/package.json
 
 # reset ownership & permissions on files
+
+printf "\n########## FIRST ASSIGNMENT OF OWNERSHIP & PERMISSIONS ###\n"
+
 chown -R $WEBUSER:$WEBUSER $WEBROOT
 chmod -R 774 $WEBROOT
 
 chown -R www-data:www-data $WEBROOT/sockets
 find $WEBROOT -type d -exec chmod -R 775 {} \;
 
+printf "\n########## INSTALL FRONT END ASSETS & RESOURCES ###\n"
+
 if [ "$DEV" = 'TRUE' ]
 then
 
   runuser -l "$WEBUSER" -c "cd $WEBROOT/https; npm install"
-
+  # you'll want this back on...
   php5enmod xdebug
 
 else
   runuser -l "$WEBUSER" -c "cd $WEBROOT/https; npm install --production"
 fi
+
+printf "\n########## SECOND ASSIGNMENT OF OWNERSHIP & PERMISSIONS ###\n"
 
 # reset ownership & permissions on files
 chown -R $WEBUSER:$WEBUSER $WEBROOT
@@ -169,4 +203,13 @@ chown -R www-data:www-data $WEBROOT/sockets
 find $WEBROOT -type d -exec chmod -R 775 {} \;
 
 popd
+
 swapoff -a
+
+printf "\n########## CONFIGURE SENTINEL DB TABLES###\n"
+
+# "datalord:seconddummypassword"
+
+mysql -u$ -pseconddummypassword <<<'CREATE DATABASE sentinel' 
+
+mysql -udatalord -pseconddummypassword -DsentineL < '/var/www/vendor/cartalyst/sentinel/schema/mysql.sql'
