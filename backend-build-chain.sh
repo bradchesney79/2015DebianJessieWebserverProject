@@ -1,15 +1,16 @@
 #!/bin/bash
 
 WEBUSER=${1:-'default-web'}
-DBWEBUSERPASSWORD="$2"
+DBWEBUSER="$2"
+DBWEBUSERPASSWORD="$3"
 
-DBROOTUSER="$3"
-DBROOTPASSWORD="$4"
+DBROOTUSER="$4"
+DBROOTPASSWORD="$5"
 
-DEV=${5:-'TRUE'}
-WEBROOT=${6:-'/var/www'}
-SENTINELDB=${7:-'sentinel'}
-NTH_RUN=${8:-'TRUE'}
+DEV=${6:-'TRUE'}
+WEBROOT=${7:-'/var/www'}
+SENTINELDB=${8:-'sentinel'}
+NTH_RUN=${9:-'TRUE'}
 
 #todo test for ~3GB of ram available...
 #todo for now just always make 3GB of swap
@@ -210,6 +211,9 @@ printf "\n########## CONFIGURE SENTINEL DB TABLES###\n"
 
 # "datalord:seconddummypassword"
 
-mysql -u$ -pseconddummypassword <<<'CREATE DATABASE sentinel' 
+mysql -u$DBROOTUSER -p$DBROOTPASSWORD <<<"CREATE DATABASE $SENTINELDB"
 
-mysql -udatalord -pseconddummypassword -DsentineL < '/var/www/vendor/cartalyst/sentinel/schema/mysql.sql'
+mysql -u$DBROOTUSER -p$DBROOTPASSWORD <<< "GRANT ALL PRIVILEGES ON $SENTINELDB.* TO '$DBWEBUSER'@'localhost' IDENTIFIED BY '$DBWEBUSERPASSWORD' WITH GRANT OPTION;"
+
+mysql -u$DBWEBUSER -p$DBWEBUSERPASSWORD -D$SENTINELDB < '/var/www/vendor/cartalyst/sentinel/schema/mysql.sql'
+
