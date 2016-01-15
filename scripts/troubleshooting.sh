@@ -1,14 +1,6 @@
 #!/bin/bash
 
-SCRIPTLOCATION=`pwd`
-UNIXTIMESTAMP=`date +%s`
-DATE=`date +%Y-%m-%d`
-YEAR=`date +%Y`
-EXECUTIONLOG="/var/log/auto-install.log"
-
-TROUBLESHOOTINGFILES="$SCRIPTLOCATION/troubleshooting/$UNIXTIMESTAMP"
-
-WEBROOT="/var/www/http"
+source ../setup.conf
 
 printf "\n##################################################"
 printf "\n#                                                #"
@@ -23,7 +15,10 @@ printf "\n########## CREATE A PLACE TO STORE THE OUTPUT FOR SHARING TROUBLESHOOT
 printf "Location of troubleshooting files: $TROUBLESHOOTINGFILES\n\n"
 mkdir -pv ${TROUBLESHOOTINGFILES}
 
+
 printf "Start collecting config files\n\n"
+
+cp /root/bin/setup.conf ${TROUBLESHOOTINGFILES}/root-bin-setup.conf
 
 cp /etc/hosts ${TROUBLESHOOTINGFILES}/etc-hosts
 
