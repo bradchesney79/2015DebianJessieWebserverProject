@@ -81,6 +81,11 @@ printf "\n#                                                #"
 printf "\n#                                                #"
 printf "\n##################################################\n\n"
 
+date +%s >> /root/time.txt
+pushd /root
+mkdir bin
+pushd bin
+
 printf "\n########## SCRIPT EXECUTION PARTICULARS ##########\n\n"
 
 #echo the config to the setup report
