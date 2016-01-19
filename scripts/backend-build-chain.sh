@@ -1,6 +1,8 @@
 #!/bin/bash
 
-source ../setup.conf
+CONFIGURATION="${1:-'../setup.conf'}"
+
+source $CONFIGURATION
 
 #todo test for ~3GB of ram available...
 #todo for now just always make 3GB of swap

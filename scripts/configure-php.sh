@@ -1,6 +1,8 @@
 #!/bin/bash
 
-source ../setup.conf
+CONFIGURATION="${1:-'../setup.conf'}"
+
+source $CONFIGURATION
 
 printf "\n########## CONFIG PHP-FPM ###\n"
 

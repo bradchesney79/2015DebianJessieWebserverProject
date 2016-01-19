@@ -1,6 +1,8 @@
 #!/bin/bash
 
-source ../setup.conf
+CONFIGURATION="${1:-'../setup.conf'}"
+
+source $CONFIGURATION
 
 printf "Set the timezone to UTC \n\n\n"
 

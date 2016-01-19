@@ -1,6 +1,8 @@
 #!/bin/bash
 
-source ../setup.conf
+CONFIGURATION="${1:-'../setup.conf'}"
+
+source $CONFIGURATION
 
 echo "mysql-server mysql-server/root_password select $DBROOTPASSWORD" | debconf-set-selections
 echo "mysql-server mysql-server/root_password_again select $DBROOTPASSWORD" | debconf-set-selections
@@ -9,27 +11,19 @@ apt-get -y install mysql-server
 
 #mysql_secure_installation #bug report, currently requires an expect script
 
-SQL0="DELETE FROM mysql.user WHERE User=''; DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1'); DROP DATABASE IF EXISTS test; FLUSH PRIVILEGES;"
+mysql -uroot -p"$DBROOTPASSWORD" <<< "DELETE FROM mysql.user WHERE User=''; DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1'); DROP DATABASE IF EXISTS test; FLUSH PRIVILEGES;"
 
 #A common vector is to attack the MySQL root user since it is the default omipotent user put on almost all #MySQL installs.
 #So, give your 'root' user a different name. (Is admin more secure than root, meh. Yeah, I guess.)
 
-SQL1="GRANT ALL PRIVILEGES ON *.* TO '$DBROOTUSER'@'localhost' IDENTIFIED BY '$DBROOTPASSWORD' WITH GRANT OPTION;"
-SQL2="GRANT ALL PRIVILEGES ON *.* TO '$DBROOTUSER'@'127.0.0.1' IDENTIFIED BY '$DBROOTPASSWORD' WITH GRANT OPTION;"
-SQL3="GRANT ALL PRIVILEGES ON *.* TO '$DBROOTUSER'@'::1' IDENTIFIED BY '$DBROOTPASSWORD' WITH GRANT OPTION;"
+mysql -u"root" -p"$DBROOTPASSWORD" <<< "GRANT ALL PRIVILEGES ON *.* TO '$DBROOTUSER'@'localhost' IDENTIFIED BY '$DBROOTPASSWORD' WITH GRANT OPTION;"
+mysql -u"$root" -p"$DBROOTPASSWORD" <<< "GRANT ALL PRIVILEGES ON *.* TO '$DBROOTUSER'@'127.0.0.1' IDENTIFIED BY '$DBROOTPASSWORD' WITH GRANT OPTION;"
+mysql -u"$root" -p"$DBROOTPASSWORD" <<< "GRANT ALL PRIVILEGES ON *.* TO '$DBROOTUSER'@'::1' IDENTIFIED BY '$DBROOTPASSWORD' WITH GRANT OPTION;"
 
-SQL4="DELETE FROM mysql.user WHERE User='root';"
+mysql -u"$DBROOTUSER" -p"$DBROOTPASSWORD" <<< "DELETE FROM mysql.user WHERE User='root';"
 
-SQL5="CREATE USER 'backup'@'localhost' IDENTIFIED BY '$DBBACKUPUSERPASSWORD';"
-SQL6="GRANT SELECT, SHOW VIEW, RELOAD, REPLICATION CLIENT, EVENT, TRIGGER ON *.* TO 'backup'@'localhost';"
+mysql -u"$DBROOTUSER" -p"$DBROOTPASSWORD" <<< "CREATE USER 'backup'@'localhost' IDENTIFIED BY '$DBBACKUPUSERPASSWORD';"
 
-SQL7="FLUSH PRIVILEGES;"
+mysql -u"$DBROOTUSER" -p"$DBROOTPASSWORD" <<< "GRANT SELECT, SHOW VIEW, RELOAD, REPLICATION CLIENT, EVENT, TRIGGER ON *.* TO 'backup'@'localhost';"
 
-mysql -u "root" -p"$DBROOTPASSWORD" -e "$SQL0"
-mysql -u "root" -p"$DBROOTPASSWORD" -e "$SQL1"
-mysql -u "root" -p"$DBROOTPASSWORD" -e "$SQL2"
-mysql -u "root" -p"$DBROOTPASSWORD" -e "$SQL3"
-mysql -u "root" -p"$DBROOTPASSWORD" -e "$SQL4"
-mysql -u "root" -p"$DBROOTPASSWORD" -e "$SQL5"
-mysql -u "root" -p"$DBROOTPASSWORD" -e "$SQL6"
-mysql -u "root" -p"$DBROOTPASSWORD" -e "$SQL7"
+mysql -u"$DBROOTUSER" -p"$DBROOTPASSWORD" <<< "FLUSH PRIVILEGES;"

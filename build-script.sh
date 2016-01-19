@@ -1,6 +1,8 @@
 #!/bin/bash
 
-source setup.conf
+CONFIGURATION="${1:-'../setup.conf'}"
+
+source $CONFIGURATION
 
 ######################################################################
 ######################################################################
@@ -156,6 +158,8 @@ printf "\n########## SETUP MAIL ###\n"
 printf "\n########## CONFIGURE SYSSTAT ###\n"
 
 sed -i "s/ENABLED=\"false\"/ENABLED=\"true\"/" /etc/default/sysstat
+
+usermod -a --groups $USER $USERID1001
 
 printf "\n########## CLEAN UP ###\n"
 
