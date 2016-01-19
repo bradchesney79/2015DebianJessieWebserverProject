@@ -2,6 +2,8 @@
 
 ####### INIT SCRIPT ####
 
+date +%s >> /root/starttime.txt
+
 mkdir -p /root/bin
 
 pushd /root/bin
@@ -16,3 +18,4 @@ chmod -R 770 /root/bin/*
 find /root/bin/* -type d -exec chmod -R 771 {} \;
 
 rm -rf /root/init.sh /root/bin/2015DebianJessieWebserverProject /root/bin/master.zip
+

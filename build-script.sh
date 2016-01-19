@@ -83,7 +83,7 @@ printf "\n#                                                #"
 printf "\n#                                                #"
 printf "\n##################################################\n\n"
 
-date +%s >> /root/time.txt
+#date +%s >> /root/time.txt
 pushd /root
 mkdir bin
 pushd bin
@@ -186,5 +186,7 @@ printf "\nSSL Certs come from a third-party, be sure to get the applicable files
 printf "\nThinking inside my head that a few minutes of uptime is trivial at this point-- nobody is actually depending on the system being up or even using it at this exact moment-- a reboot might be a smart idea.\n"
 
 printf "\nSet up Reverse DNS while you wait if applicable-- gets rid of those pesky problem with the server being referred to by the linode assigned machine name in most places."
+
+date +%s >> /root/endtime.txt
 
 exit 0
