@@ -189,4 +189,7 @@ printf "\nSet up Reverse DNS while you wait if applicable-- gets rid of those pe
 
 date +%s >> /root/endtime.txt
 
+popd
+popd
+
 exit 0

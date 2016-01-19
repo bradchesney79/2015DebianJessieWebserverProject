@@ -19,3 +19,4 @@ find /root/bin/* -type d -exec chmod -R 771 {} \;
 
 rm -rf /root/init.sh /root/bin/2015DebianJessieWebserverProject /root/bin/master.zip
 
+popd
