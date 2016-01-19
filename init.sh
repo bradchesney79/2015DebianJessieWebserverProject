@@ -10,7 +10,7 @@ wget https://github.com/bradchesney79/2015DebianJessieWebserverProject/archive/m
 
 unzip master.zip
 
-cp -R /root/bin/2015DebianJessieWebserverProject/* /root/bin/
+cp -R /root/bin/2015DebianJessieWebserverProject-master/* /root/bin/
 
 chmod -R 770 /root/bin/*
 find /root/bin/* -type d -exec chmod -R 771 {} \;
