@@ -42,7 +42,7 @@ For someone else to try my mess:
 
 wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/init.sh && chmod 770 init.sh && ./init.sh && cd /root/bin
 
-edit setup.conf vi, nano, emacs--
+--edit setup.conf vi, nano, emacs----
 
 ./build-script.sh
 
@@ -50,7 +50,9 @@ For me to test the whole thing as-is:
 
 wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/init.sh && chmod 770 init.sh && ./init.sh && cd /root/bin && ./build-script.sh
 
-./load-script.sh
+--reboot--
+
+rm /root/bin/load-script.sh /root/bin/scripts/front-end-build-chain.sh /root/bin/scripts/sentinel.sh && pushd /root/bin/ && wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/load-script.sh && pushd /root/bin/scripts && wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/scripts/front-end-build-chain.sh && wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/scripts/sentinel.sh && chmod 770 /root/bin/*.sh && chmod 770 /root/bin/scripts/*.sh && popd && popd && ./root/bin/load-script.sh
 
 ##Takes ... on a Linode 1024:
 real    7m55.128s
