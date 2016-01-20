@@ -4,10 +4,10 @@
 
 #source $CONFIGURATION
 
-fuser -vk /var/cache/debconf/config.dat
+#fuser -vk /var/cache/debconf/config.dat
 
-echo "mysql-server mysql-server/root_password select $DBROOTPASSWORD" | debconf-set-selections
-echo "mysql-server mysql-server/root_password_again select $DBROOTPASSWORD" | debconf-set-selections
+#echo "mysql-server mysql-server/root_password select $DBROOTPASSWORD" | debconf-set-selections
+#echo "mysql-server mysql-server/root_password_again select $DBROOTPASSWORD" | debconf-set-selections
 
 apt-get -y install mysql-server
 
