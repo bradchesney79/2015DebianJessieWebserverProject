@@ -1,8 +1,8 @@
 #!/bin/bash
 
-#CONFIGURATION="${1:-'../setup.conf'}"
+CONFIGURATION="${1:-'./setup.conf'}"
 
-#source $CONFIGURATION
+source $CONFIGURATION
 
 sed -i "s/ServerSignature.*/ServerSignature Off/" /etc/apache2/conf-available/security.conf
 sed -i "s/ServerTokens.*/ServerTokens Prod/" /etc/apache2/conf-available/security.conf

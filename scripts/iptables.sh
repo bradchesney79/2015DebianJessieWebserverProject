@@ -1,11 +1,11 @@
 #!/bin/bash
 
-#CONFIGURATION="${1:-'../setup.conf'}"
+CONFIGURATION="${1:-'./setup.conf'}"
 
-#source $CONFIGURATION
+source $CONFIGURATION
 
 echo "Creating the iptables directory in /etc"
-mkdir /etc/iptables
+mkdir -p /etc/iptables
 
 printf "\n/etc/iptables exists!!\n\n"
 
