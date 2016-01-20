@@ -52,7 +52,7 @@ wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverPr
 
 --reboot--
 
-rm /root/bin/load-script.sh /root/bin/scripts/front-end-build-chain.sh /root/bin/scripts/sentinel.sh && pushd /root/bin/ && wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/load-script.sh && pushd /root/bin/scripts && wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/scripts/front-end-build-chain.sh && wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/scripts/sentinel.sh && chmod 770 /root/bin/*.sh && chmod 770 /root/bin/scripts/*.sh && popd && popd && ./root/bin/load-script.sh
+rm /root/bin/load-script.sh /root/bin/scripts/back-end-build-chain.sh /root/bin/scripts/front-end-build-chain.sh /root/bin/scripts/sentinel.sh; pushd /root/bin/ && wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/load-script.sh && pushd /root/bin/scripts&& wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/scripts/back-end-build-chain.sh  && wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/scripts/front-end-build-chain.sh && wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/scripts/sentinel.sh && chmod 770 /root/bin/*.sh && chmod 770 /root/bin/scripts/*.sh && popd && popd && . /root/bin/load-script.sh
 
 ##Takes ... on a Linode 1024:
 real    7m55.128s
