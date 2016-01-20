@@ -1,8 +1,8 @@
 #!/bin/bash
 
-CONFIGURATION="${1:-'./setup.conf'}"
+#CONFIGURATION="${1:-'./setup.conf'}"
 
-source $CONFIGURATION
+source /root/bin/setup.conf
 
 ######################################################################
 ######################################################################
@@ -84,9 +84,7 @@ printf "\n#                                                #"
 printf "\n##################################################\n\n"
 
 #date +%s >> /root/time.txt
-pushd /root
-mkdir bin
-pushd bin
+pushd /root/bin
 
 printf "\n########## SCRIPT EXECUTION PARTICULARS ##########\n\n"
 
@@ -189,7 +187,6 @@ printf "\nSet up Reverse DNS while you wait if applicable-- gets rid of those pe
 
 date +%s >> /root/endtime.txt
 
-popd
 popd
 
 exit 0
