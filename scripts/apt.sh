@@ -16,6 +16,8 @@ printf "\n" >> /etc/apt/sources.list
 echo "deb http://security.debian.org/ jessie/updates main contrib non-free" >> /etc/apt/sources.list
 printf "\n" >> /etc/apt/sources.list
 echo "deb http://http.debian.net/debian jessie-backports main contrib non-free" >> /etc/apt/sources.list
+printf "\n" >> /etc/apt/sources.list
+echo "deb http://repo.mysql.com/apt/debian/ jessie mysql-5.7" >> /etc/apt/sources.list
 
 printf "\n########## UPDATE THE SYSTEM ###\n"
 
