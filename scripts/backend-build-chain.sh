@@ -84,7 +84,7 @@ fi
 printf "\n########## SECOND ASSIGNMENT OF OWNERSHIP & PERMISSIONS ###\n"
 
 # reset ownership & permissions on files
-chown -R $WEBUSER:$WEBUSER $WEBROOT
+chown -R $USER:$USER $WEBROOT
 chmod -R 774 $WEBROOT
 
 chown -R www-data:www-data $WEBROOT/sockets
