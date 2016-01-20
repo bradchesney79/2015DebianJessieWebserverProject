@@ -2,7 +2,7 @@
 
 ####### INIT SCRIPT ####
 
-date +%s >> /root/starttime.txt
+date +%s >> /root/basestarttime.txt
 
 mkdir -p /root/bin
 

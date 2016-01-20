@@ -185,7 +185,7 @@ printf "\nThinking inside my head that a few minutes of uptime is trivial at thi
 
 printf "\nSet up Reverse DNS while you wait if applicable-- gets rid of those pesky problem with the server being referred to by the linode assigned machine name in most places."
 
-date +%s >> /root/endtime.txt
+date +%s >> /root/base-endtime.txt
 
 popd
 

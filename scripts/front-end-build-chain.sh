@@ -1,4 +1,6 @@
 
+date +%s >> /root/loadstarttime.txt
+
 printf "\n########## START LOADING FRONT END RESOURCES ###\n"
 
 
@@ -100,3 +102,5 @@ then
 else
   runuser -l "$WEBUSER" -c "cd $WEBROOT/https; npm install --production"
 fi
+
+date +%s >> /root/loadendtime.txt
