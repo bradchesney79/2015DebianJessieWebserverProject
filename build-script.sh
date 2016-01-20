@@ -121,7 +121,7 @@ printf "\n########## INSTALL MYSQL ###\n"
 
 printf "\n########## CONFIGURE PHP ###\n"
 
-. /root/bin/scripts/php.sh
+. /root/bin/scripts/install-php.sh
 
 printf "\n########## OPTIONALLY INSTALL DEVELOPMENT INSTANCE PACKAGES ###\n"
 
@@ -157,8 +157,6 @@ printf "\n########## CONFIGURE SYSSTAT ###\n"
 
 sed -i "s/ENABLED=\"false\"/ENABLED=\"true\"/" /etc/default/sysstat
 
-usermod -a --groups $USER $USERID1001
-
 printf "\n########## CLEAN UP ###\n"
 
 printf "\nLast autoremove of packages\n\n"
@@ -178,6 +176,8 @@ printf "\n##################################################\n\n"
 printf "\n Add a person user. Best practices dictate using the root account less. ( ./add-web-person-user.sh $USERID1001 TRUE )\n"
 
 ./root/bin/scripts/add-web-person-user.sh $USERID1001 TRUE
+
+usermod -a --groups $USER $USERID1001
 
 printf "\nSSL Certs come from a third-party, be sure to get the applicable files and put them in the appropriate directory.\n"
 

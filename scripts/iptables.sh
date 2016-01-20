@@ -36,7 +36,7 @@ expect {
 send "\r"
 EOD
 
-cat /tmp/iptables-persistent.log
+#FIXME cat /tmp/iptables-persistent.log
 
 #FIXME rm /tmp/iptables-persistent.log
 
