@@ -84,7 +84,7 @@ chmod 770 $WEBROOT/https/package.json
 
 printf "\n########## FIRST ASSIGNMENT OF OWNERSHIP & PERMISSIONS ###\n"
 
-chown -R $WEBUSER:$WEBUSER $WEBROOT
+chown -R $USER:$USER $WEBROOT
 chmod -R 774 $WEBROOT
 
 chown -R www-data:www-data $WEBROOT/sockets
@@ -95,12 +95,12 @@ printf "\n########## INSTALL FRONT END ASSETS & RESOURCES ###\n"
 if [ "$DEV" = 'TRUE' ]
 then
 
-  runuser -l "$WEBUSER" -c "cd $WEBROOT/https; npm install"
+  runuser -l "$USER" -c "cd $WEBROOT/https; npm install"
   # you'll want this back on...
   php5enmod xdebug
 
 else
-  runuser -l "$WEBUSER" -c "cd $WEBROOT/https; npm install --production"
+  runuser -l "$USER" -c "cd $WEBROOT/https; npm install --production"
 fi
 
 date +%s >> /root/loadendtime.txt
