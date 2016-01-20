@@ -1,16 +1,18 @@
 
 export DEBIAN_FRONTEND="noninteractive"
 
-fuser -vk /var/cache/debconf/config.dat
+#fuser -vk /var/cache/debconf/config.dat
 
 debconf-set-selections <<<  "mysql-server mysql-server/root_password select $DBROOTPASSWORD" 
 debconf-set-selections <<<  "mysql-server mysql-server/root_password_again select $DBROOTPASSWORD"
 
-spawn apt-get -y install mysql-server
-expect "Enter password:"
-send "$DBROOTPASSWORD\n"
-expect "Enter password:"
-send "$DBROOTPASSWORD\n"
+apt-get -y install mysql-server
+
+#spawn apt-get -y install mysql-server
+#expect "Enter password:"
+#send "$DBROOTPASSWORD\n"
+#expect "Enter password:"
+#send "$DBROOTPASSWORD\n"
 
 #mysql_secure_installation #bug report, currently requires an expect script
 
@@ -19,9 +21,9 @@ mysql -uroot -p"$DBROOTPASSWORD" <<< "DELETE FROM mysql.user WHERE User=''; DELE
 #A common vector is to attack the MySQL root user since it is the default omipotent user put on almost all #MySQL installs.
 #So, give your 'root' user a different name. (Is admin more secure than root, meh. Yeah, I guess.)
 
-mysql -u"root" -p"$DBROOTPASSWORD" <<< "GRANT ALL PRIVILEGES ON *.* TO '$DBROOTUSER'@'localhost' IDENTIFIED BY '$DBROOTPASSWORD' WITH GRANT OPTION;"
-mysql -u"$root" -p"$DBROOTPASSWORD" <<< "GRANT ALL PRIVILEGES ON *.* TO '$DBROOTUSER'@'127.0.0.1' IDENTIFIED BY '$DBROOTPASSWORD' WITH GRANT OPTION;"
-mysql -u"$root" -p"$DBROOTPASSWORD" <<< "GRANT ALL PRIVILEGES ON *.* TO '$DBROOTUSER'@'::1' IDENTIFIED BY '$DBROOTPASSWORD' WITH GRANT OPTION;"
+mysql -uroot -p"$DBROOTPASSWORD" <<< "GRANT ALL PRIVILEGES ON *.* TO '$DBROOTUSER'@'localhost' IDENTIFIED BY '$DBROOTPASSWORD' WITH GRANT OPTION;"
+mysql -uroot -p"$DBROOTPASSWORD" <<< "GRANT ALL PRIVILEGES ON *.* TO '$DBROOTUSER'@'127.0.0.1' IDENTIFIED BY '$DBROOTPASSWORD' WITH GRANT OPTION;"
+mysql -uroot -p"$DBROOTPASSWORD" <<< "GRANT ALL PRIVILEGES ON *.* TO '$DBROOTUSER'@'::1' IDENTIFIED BY '$DBROOTPASSWORD' WITH GRANT OPTION;"
 
 mysql -u"$DBROOTUSER" -p"$DBROOTPASSWORD" <<< "DELETE FROM mysql.user WHERE User='root';"
 
