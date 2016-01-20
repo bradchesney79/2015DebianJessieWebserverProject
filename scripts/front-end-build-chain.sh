@@ -1,9 +1,3 @@
-#!/bin/bash
-
-CONFIGURATION="${1:-'./setup.conf'}"
-
-source $CONFIGURATION
-
 
 printf "\n########## START LOADING FRONT END RESOURCES ###\n"
 

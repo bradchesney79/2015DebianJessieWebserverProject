@@ -1,8 +1,3 @@
-#!/bin/bash
-
-CONFIGURATION="${1:-'./setup.conf'}"
-
-source $CONFIGURATION
 
 #fuser -vk /var/cache/debconf/config.dat
 
