@@ -40,7 +40,7 @@ Start up a blank linode, initially provision it with Debian 8.1, SSH into the ma
 
 For me to test the whole thing as-is:
 
-wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/init.sh && chmod 770 init.sh && ./init.sh
+wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/init.sh && chmod 770 init.sh && ./init.sh && cd /root/bin
 
 ##Takes ... on a Linode 1024:
 real    7m55.128s
