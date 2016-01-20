@@ -1,8 +1,8 @@
 #!/bin/bash
 
-CONFIGURATION="${1:-'../setup.conf'}"
+#CONFIGURATION="${1:-'../setup.conf'}"
 
-source $CONFIGURATION
+#source $CONFIGURATION
 
 printf "\nInstall the PHP packages\n\n"
 

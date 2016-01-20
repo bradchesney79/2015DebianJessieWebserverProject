@@ -1,8 +1,8 @@
 #!/bin/bash
 
-CONFIGURATION="${1:-'../setup.conf'}"
+#CONFIGURATION="${1:-'../setup.conf'}"
 
-source $CONFIGURATION
+#source $CONFIGURATION
 
 # These settings allow you to load balance for horizontal scaling-- this is for sharing your PHP Session data.
 

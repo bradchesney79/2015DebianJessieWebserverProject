@@ -1,8 +1,8 @@
 #!/bin/bash
 
-CONFIGURATION="${1:-'../setup.conf'}"
+#CONFIGURATION="${1:-'../setup.conf'}"
 
-source $CONFIGURATION
+#source $CONFIGURATION
 
 echo "mysql-server mysql-server/root_password select $DBROOTPASSWORD" | debconf-set-selections
 echo "mysql-server mysql-server/root_password_again select $DBROOTPASSWORD" | debconf-set-selections
