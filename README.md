@@ -50,12 +50,21 @@ For me to test the whole thing as-is:
 
 wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/init.sh && chmod 770 init.sh && ./init.sh && cd /root/bin && ./build-script.sh
 
+./load-script.sh
+
 ##Takes ... on a Linode 1024:
 real    7m55.128s
+
 real    9m49.525s
+
 real    4m27.518s
+
 real    3m56.291s
+
 real    4m4.988s
 (installs build tools)
 real   23m23.967s
+
 real   11m24.996s
+
+real    6m36.334s + 

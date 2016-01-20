@@ -146,7 +146,7 @@ service php5-fpm restart
 
 if [ "$DEV" = 'TRUE' ]
 then
-echo "<?php phpinfo(); ?>" >> /var/www/http/index.php
+echo "<?php phpinfo(); ?>" > /var/www/http/index.php
 fi
 
 printf "\n########## SETUP MAIL ###\n"
