@@ -119,7 +119,7 @@ printf "\n########## INSTALL MYSQL ###\n"
 
 . /root/bin/scripts/mysql.sh
 
-printf "\n########## CONFIGURE PHP ###\n"
+printf "\n########## INSTALL PHP ###\n"
 
 . /root/bin/scripts/install-php.sh
 
