@@ -20,7 +20,7 @@ printf "\n" >> /etc/apt/sources.list
 echo "deb http://repo.mysql.com/apt/debian/ jessie mysql-5.7" >> /etc/apt/sources.list
 
 # gpg key for Oracle Community MySQL Server 5.7
-gpg --recv-keys 5072E1F5 --keyserver keys.gnupg.net
+gpg --keyserver hkp://keys.gnupg.net --recv-keys 5072E1F5
 gpg --export -a 5072e1f5 > pubkey_mysql.asc
 sudo apt-key add pubkey_mysql.asc
 
