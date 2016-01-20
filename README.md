@@ -38,9 +38,17 @@ INSTRUCTIONS:
 
 Start up a blank linode, initially provision it with Debian 8.1, SSH into the machine, cut/paste the monster concatenated list of commands below.
 
-For me to test the whole thing as-is:
+For someone else to try my mess:
 
 wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/init.sh && chmod 770 init.sh && ./init.sh && cd /root/bin
+
+edit setup.conf vi, nano, emacs--
+
+./build-script.sh
+
+For me to test the whole thing as-is:
+
+wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/init.sh && chmod 770 init.sh && ./init.sh && cd /root/bin && ./build-script.sh
 
 ##Takes ... on a Linode 1024:
 real    7m55.128s
