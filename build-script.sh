@@ -94,19 +94,19 @@ printf "\n########## SCRIPT EXECUTION PARTICULARS ##########\n\n"
 
 printf "\n########## CONFIGURE THE HOSTNAME & HOSTS OVERRIDES ###\n"
 
-./scripts/host.sh
+. /scripts/host.sh
 
 printf "\n########## SET THE TIMEZONE & TIME ###\n\n"
 
-./scripts/time.sh
+. /scripts/time.sh
 
 printf "\n########## APT SOURCES, FIRST UPDATE, & COMMON PACKAGES INSTALL ###\n\n"
 
-./scripts/apt.sh
+. /scripts/apt.sh
 
 printf "\n########## UPDATE THE IPTABLES RULES ###\n"
 
-./scripts/iptables.sh
+. /scripts/iptables.sh
 
 printf "\n########## USING fail2ban DEFAULT CONFIG ###\n"
 
@@ -115,28 +115,28 @@ printf "\n########## USING fail2ban DEFAULT CONFIG ###\n"
 
 printf "\n########## CONFIGURE APACHE ###\n"
 
-./scripts/install-apache.sh
+. /scripts/install-apache.sh
 
 printf "\n########## INSTALL MYSQL ###\n"
 
-./scripts/mysql.sh
+. /scripts/mysql.sh
 
 printf "\n########## CONFIGURE PHP ###\n"
 
-./scripts/php.sh
+. /scripts/php.sh
 
 printf "\n########## OPTIONALLY INSTALL DEVELOPMENT INSTANCE PACKAGES ###\n"
 
-./scripts/dev.sh
+. /scripts/dev.sh
 
 printf "\n########## CONFIGURE APACHE ###\n\n"
 
-./scripts/configure-apache.sh
+. /scripts/configure-apache.sh
 
 printf "\n########## SETUP THE DEFAULT SITE FASTCGI ###\n"
 
-./scripts/configure-php.sh
-./scripts/memcached.sh
+. /scripts/configure-php.sh
+. /scripts/memcached.sh
 
 printf "\n########## INSTALL WEBDEVELOPER RESOURCES ###\n"
 
@@ -153,7 +153,7 @@ fi
 
 printf "\n########## SETUP MAIL ###\n"
 
-./scripts/system-mail.sh
+. /scripts/system-mail.sh
 
 printf "\n########## CONFIGURE SYSSTAT ###\n"
 
@@ -175,7 +175,7 @@ printf "\n#                                                #"
 printf "\n#                                                #"
 printf "\n##################################################\n\n"
 
-./scripts/troubleshooting.sh
+. /scripts/troubleshooting.sh
 
 printf "\n Add a person user. Best practices dictate using the root account less. ( ./add-web-person-user.sh $USERID1001 TRUE )\n"
 
