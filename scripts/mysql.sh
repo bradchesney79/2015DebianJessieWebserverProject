@@ -1,10 +1,16 @@
 
-#fuser -vk /var/cache/debconf/config.dat
+export DEBIAN_FRONTEND="noninteractive"
 
-#echo "mysql-server mysql-server/root_password select $DBROOTPASSWORD" | debconf-set-selections
-#echo "mysql-server mysql-server/root_password_again select $DBROOTPASSWORD" | debconf-set-selections
+fuser -vk /var/cache/debconf/config.dat
 
-apt-get -y install mysql-server
+debconf-set-selections <<<  "mysql-server mysql-server/root_password select $DBROOTPASSWORD" 
+debconf-set-selections <<<  "mysql-server mysql-server/root_password_again select $DBROOTPASSWORD"
+
+spawn apt-get -y install mysql-server
+expect "Enter password:"
+send "$DBROOTPASSWORD\n"
+expect "Enter password:"
+send "$DBROOTPASSWORD\n"
 
 #mysql_secure_installation #bug report, currently requires an expect script
 

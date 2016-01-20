@@ -119,11 +119,6 @@ printf "\n########## CONFIGURE APACHE ###\n"
 
 printf "\n########## INSTALL MYSQL ###\n"
 
-export DEBIAN_FRONTEND="noninteractive"
-
-debconf-set-selections <<<  "mysql-server mysql-server/root_password select $DBROOTPASSWORD" 
-debconf-set-selections <<<  "mysql-server mysql-server/root_password_again select $DBROOTPASSWORD"
-
 . /root/bin/scripts/mysql.sh
 
 printf "\n########## CONFIGURE PHP ###\n"
