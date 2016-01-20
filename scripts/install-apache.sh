@@ -37,15 +37,15 @@ printf "\nCreate the Default Site directory structure\n\n"
 
 rm -rf /var/www/html
 
-mkdir $WEBROOT/http
-mkdir $WEBROOT/https
-mkdir $WEBROOT/fonts
-mkdir $WEBROOT/certs
-mkdir $WEBROOT/certs/$YEAR
-mkdir $WEBROOT/certs/$YEAR/$SSLPROVIDER
-mkdir $LOGDIR
-mkdir $WEBROOT/sockets
-mkdir $WEBROOT/tmp
+mkdir "$WEBROOT/http"
+mkdir "$WEBROOT/https"
+mkdir "$WEBROOT/fonts"
+mkdir "$WEBROOT/certs"
+mkdir "$WEBROOT/certs/$YEAR"
+mkdir "$WEBROOT/certs/$YEAR/$SSLPROVIDER"
+mkdir "$LOGDIR"
+mkdir "$WEBROOT/sockets"
+mkdir "$WEBROOT/tmp"
 
 chown -R $USER:$USER $WEBROOT
 chmod -R 774 $WEBROOT

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CONFIGURATION="${1:-'../setup.conf'}"
+CONFIGURATION="${1:-'./setup.conf'}"
 
 source $CONFIGURATION
 
