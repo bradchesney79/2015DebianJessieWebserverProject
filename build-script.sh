@@ -144,7 +144,7 @@ printf "\n########## RESTART THE WEBSERVER SERVICES ###\n"
 service apache2 restart
 service php5-fpm restart
 
-if [ "$DEV" = 'YES' ]
+if [ "$DEV" = 'TRUE' ]
 then
 echo "<?php phpinfo(); ?>" >> /var/www/http/index.php
 fi

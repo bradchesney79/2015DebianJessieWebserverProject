@@ -17,3 +17,5 @@ linode stop "$LINODELABEL"
 linode rebuild $LINODELABEL --distribution "$DISTRIBUTION" --password "$PASSWORD"
 
 linode start "$LINODELABEL"
+
+ssh-keygen -f "/home/brad/.ssh/known_hosts" -R 45.33.112.226
