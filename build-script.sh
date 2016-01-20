@@ -94,19 +94,19 @@ printf "\n########## SCRIPT EXECUTION PARTICULARS ##########\n\n"
 
 printf "\n########## CONFIGURE THE HOSTNAME & HOSTS OVERRIDES ###\n"
 
-. /scripts/host.sh
+. /root/bin/scripts/host.sh
 
 printf "\n########## SET THE TIMEZONE & TIME ###\n\n"
 
-. /scripts/time.sh
+. /root/bin/scripts/time.sh
 
 printf "\n########## APT SOURCES, FIRST UPDATE, & COMMON PACKAGES INSTALL ###\n\n"
 
-. /scripts/apt.sh
+. /root/bin/scripts/apt.sh
 
 printf "\n########## UPDATE THE IPTABLES RULES ###\n"
 
-. /scripts/iptables.sh
+. /root/bin/scripts/iptables.sh
 
 printf "\n########## USING fail2ban DEFAULT CONFIG ###\n"
 
@@ -115,28 +115,28 @@ printf "\n########## USING fail2ban DEFAULT CONFIG ###\n"
 
 printf "\n########## CONFIGURE APACHE ###\n"
 
-. /scripts/install-apache.sh
+. /root/bin/scripts/install-apache.sh
 
 printf "\n########## INSTALL MYSQL ###\n"
 
-. /scripts/mysql.sh
+. /root/bin/scripts/mysql.sh
 
 printf "\n########## CONFIGURE PHP ###\n"
 
-. /scripts/php.sh
+. /root/bin/scripts/php.sh
 
 printf "\n########## OPTIONALLY INSTALL DEVELOPMENT INSTANCE PACKAGES ###\n"
 
-. /scripts/dev.sh
+. /root/bin/scripts/dev.sh
 
 printf "\n########## CONFIGURE APACHE ###\n\n"
 
-. /scripts/configure-apache.sh
+. /root/bin/scripts/configure-apache.sh
 
 printf "\n########## SETUP THE DEFAULT SITE FASTCGI ###\n"
 
-. /scripts/configure-php.sh
-. /scripts/memcached.sh
+. /root/bin/scripts/configure-php.sh
+. /root/bin/scripts/memcached.sh
 
 printf "\n########## INSTALL WEBDEVELOPER RESOURCES ###\n"
 
@@ -153,7 +153,7 @@ fi
 
 printf "\n########## SETUP MAIL ###\n"
 
-. /scripts/system-mail.sh
+. /root/bin/scripts/system-mail.sh
 
 printf "\n########## CONFIGURE SYSSTAT ###\n"
 
@@ -175,11 +175,11 @@ printf "\n#                                                #"
 printf "\n#                                                #"
 printf "\n##################################################\n\n"
 
-. /scripts/troubleshooting.sh
+. /root/bin/scripts/troubleshooting.sh
 
 printf "\n Add a person user. Best practices dictate using the root account less. ( ./add-web-person-user.sh $USERID1001 TRUE )\n"
 
-./scripts/add-web-person-user.sh $USERID1001 TRUE
+./root/bin/scripts/add-web-person-user.sh $USERID1001 TRUE
 
 printf "\nSSL Certs come from a third-party, be sure to get the applicable files and put them in the appropriate directory.\n"
 
