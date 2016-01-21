@@ -39,7 +39,7 @@ printf "\n########## INSTALL THE FIRST BATCHES OF PACKAGES ###\n"
 
 printf "\nInstall the first batch of packages for Apache\n\n"
 
-apt-get -y install sudo tcl perl python3 apache2 tmux ssh openssl openssl-blacklist libnet-ssleay-perl fail2ban git debconf-utils imagemagick expect
+apt-get -y install sudo tcl perl python3 apache2 tmux ssh openssl openssl-blacklist libnet-ssleay-perl fail2ban git debconf-utils curl imagemagick expect
 
 printf "\n########## CLEAN UP ###\n"
 

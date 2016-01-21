@@ -191,4 +191,4 @@ date +%s >> /root/base-endtime.txt
 
 popd
 
-exit 0
+#exit 0
