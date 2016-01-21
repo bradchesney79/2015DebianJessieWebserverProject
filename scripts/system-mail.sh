@@ -28,9 +28,9 @@ openssl genrsa -out dkim.default.key 1024
 openssl rsa -in dkim.default.key -out dkim.default.pub -pubout -outform PEM
 popd
 
-#FIXME
+#FIXME Don't forget to remind the user at the end to set this up externally to the server
 
-DKIMPUBLICKEY=${cat /var/www/certs/dkim/dkim.default.pub | sed -e s/"-.*"// | tr -d '\n' }
+DKIMPUBLICKEY=$(cat /var/www/certs/dkim/dkim.default.pub | sed -e s/"-.*"// | tr -d '\n')
 
 echo "default._domainkey.$DOMAIN IN TXT \"v=DKIM1;p=$DKIMPUBLICKEY\""
 
