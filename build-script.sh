@@ -173,11 +173,13 @@ printf "\n##################################################\n\n"
 
 . /root/bin/scripts/troubleshooting.sh
 
+#FIXME Commenting these until front end is squared away-- or I make an expect script for them and configuration settings for it.
+
 printf "\n Add a person user. Best practices dictate using the root account less. ( ./add-web-person-user.sh $USERID1001 TRUE )\n"
 
-. /root/bin/add-web-person-user.sh $USERID1001 TRUE
+#. /root/bin/add-web-person-user.sh $USERID1001 TRUE
 
-usermod -a --groups $USER $USERID1001
+#usermod -a --groups $USER $USERID1001
 
 printf "\nSSL Certs come from a third-party, be sure to get the applicable files and put them in the appropriate directory.\n"
 
