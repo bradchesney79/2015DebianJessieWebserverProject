@@ -30,7 +30,7 @@ popd
 
 #FIXME
 
-DKIMPUBLICKEY=${cat /var/www/certs/dkim/dkim.default.pub | sed -e s/"-.*"/""/ | tr -d '\n' }
+DKIMPUBLICKEY=${cat /var/www/certs/dkim/dkim.default.pub | sed -e s/"-.*"// | tr -d '\n' }
 
 echo "default._domainkey.$DOMAIN IN TXT \"v=DKIM1;p=$DKIMPUBLICKEY\""
 
