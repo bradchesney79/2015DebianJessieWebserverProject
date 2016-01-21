@@ -175,7 +175,7 @@ printf "\n##################################################\n\n"
 
 printf "\n Add a person user. Best practices dictate using the root account less. ( ./add-web-person-user.sh $USERID1001 TRUE )\n"
 
-./root/bin/scripts/add-web-person-user.sh $USERID1001 TRUE
+./root/bin/add-web-person-user.sh $USERID1001 TRUE
 
 usermod -a --groups $USER $USERID1001
 
