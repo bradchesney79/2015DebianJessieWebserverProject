@@ -66,4 +66,4 @@ real   23m23.967s
 
 real   11m24.996s
 
-real    6m36.334s + 
+real   15m28 
