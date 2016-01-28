@@ -33,6 +33,9 @@ source /root/.bashrc
 nvm install v5.3.0
 n=$(which node);n=${n%/bin/node}; chmod -R 755 $n/bin/*; sudo cp -r $n/{bin,lib,share} /usr/local
 
+## Supposedly yields a faster install
+npm set progress=false
+
 npm install -g npm@latest
 
 npm install -g foundation-cli bower gulp karma-cli
