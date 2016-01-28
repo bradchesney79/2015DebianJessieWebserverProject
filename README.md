@@ -11,9 +11,11 @@ Bear in mind this is very much in progress.
 
 #How to use this on a very basic level:
 
-\#1 Start up a blank linode, initially provision it with Debian 8.1
+\#1 Start up a blank [linode](https://www.linode.com/docs/getting-started), initially provision it with Debian 8.1
 
-\#2 SSH into the machine
+(If you are a new VPS person one way or another to linode and want to do me a solid, this is my referral code, [47a784faf04635f5f0cc532168f534fdde765000](https://www.linode.com/?r=47a784faf04635f5f0cc532168f534fdde765000). Thanks.)
+
+\#2 [SSH into the machine](https://www.linode.com/docs/getting-started#logging-in-for-the-first-time)
 
 \#3 cut/paste this mess into the command line:
 
@@ -29,7 +31,9 @@ You can almost use it as it is, if you just want to see it go, but you'll _need_
 
 `IPV6=<your linode IPV6 address>`
 
-`TARGETEMAIL=<your email with the junk email service>` 
+`TARGETEMAIL=<your email with the junk email service>`
+
+[What is my linode IP?](https://www.linode.com/docs/getting-started#finding-the-ip-address)
 
 \#6 then cut/paste this in the command line to run these two scripts:
 
