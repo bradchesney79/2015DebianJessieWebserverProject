@@ -1,9 +1,0 @@
-127.0.0.1			localhost.localdomain localhost
-127.0.1.1			debian
-45.33.112.226				www.rustbeltrebellion.com www
-
-# The following lines are desirable for IPv6 capable hosts
-::1				localhost ip6-localhost ip6-loopback
-ff02::1				ip6-allnodes
-ff02::2				ip6-allrouters
-2600:3c00::f03c:91ff:fe26:42cf	www.rustbeltrebellion.com www
