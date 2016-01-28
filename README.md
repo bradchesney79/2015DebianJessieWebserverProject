@@ -9,7 +9,7 @@ I will use the bash script as a roadmap to build an Ansible playbook.
 
 Bear in mind this is very much in progress.
 
-#How to use this:
+#How to use this on a very basic level:
 
 \#1 Start up a blank linode, initially provision it with Debian 8.1
 
@@ -21,7 +21,9 @@ Bear in mind this is very much in progress.
 
 \#4 set up a junk email service, I reccomend [http://33mail.com](http://33mail.com) -- they even have a configuration for people like us in the works
 
-\#5 edit setup.conf with your hosts particulars you'll _need_ to edit a few things:
+\#5 edit setup.conf with your hosts' particulars
+
+You can almost use it as it is, if you just want to see it go, but you'll _need_ to edit a few things:
 
 `IPV4=<your linode IPV4 address>`
 
@@ -32,6 +34,8 @@ Bear in mind this is very much in progress.
 \#6 then cut/paste this in the command line to run these two scripts:
 
 `. /root/bin/build-script.sh && . /root/bin/load-script.sh`
+
+\#7 you can hit the host by navigating to the IP address with your browser at the very least (or your domain name if setup)
 
 TODO:
 
