@@ -41,7 +41,7 @@ You can almost use it as it is, if you just want to see it go, but you'll _need_
 
 \#7 you can hit the host by navigating to the IP address with your browser at the very least (or your domain name if setup)
 
-TODO:
+##TODO:
 
 finish configuring sentinel
 
@@ -58,13 +58,14 @@ improve readability
 break into modular Ansible scripts
 
 
-NICE TO HAVE:
+##NICE TO HAVE:
 
 disk partitions
 
-THANKS:
+#THANKS:
 
 simplified logging - http://reddit.com/user/cheaphomemadeacid
+reminder that my instructions sucked - https://www.reddit.com/user/iAMthePRONY
 
 
 For me to test the whole thing as-is:
