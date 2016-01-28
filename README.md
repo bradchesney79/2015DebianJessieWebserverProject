@@ -7,6 +7,28 @@ Initially this will be in implemented with bash until I arrive at an end result 
 
 I will use the bash script as a roadmap to build an Ansible playbook.
 
+Bear in mind this is very much in progress.
+
+#How to use this:
+
+\#1 Start up a blank linode, initially provision it with Debian 8.1
+
+\#2 SSH into the machine
+
+\#3 cut/paste this mess into the command line:
+`wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/init.sh && chmod 770 init.sh && ./init.sh && cd /root/bin`
+
+\#4 set up a junk email service, I reccomend [http://33mail.com](http://33mail.com) -- they even have a configuration for people like us in the works
+
+\#5 edit setup.conf with your hosts particulars you'll _need_ to edit a few things:
+`IPV4=<your linode IPV4 address>`
+
+`IPV6=<your linode IPV6 address>`
+
+`TARGETEMAIL=<your email with the junk email service>` 
+
+\#6 then cut/paste this in the command line to run these two scripts:
+`. /root/bin/build-script.sh && . /root/bin/load-script.sh`
 
 TODO:
 
@@ -34,36 +56,13 @@ THANKS:
 simplified logging - http://reddit.com/user/cheaphomemadeacid
 
 
-INSTRUCTIONS:
-
-Start up a blank linode, initially provision it with Debian 8.1, SSH into the machine, cut/paste the monster concatenated list of commands below.
-
-For someone else to try my mess:
-
-wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/init.sh && chmod 770 init.sh && ./init.sh && cd /root/bin
-
---edit setup.conf vi, nano, emacs----
-
-./build-script.sh
-
 For me to test the whole thing as-is:
 
-wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/init.sh && chmod 770 init.sh && ./init.sh && cd /root/bin && . /root/bin/build-script.sh && . /root/bin/load-script.sh
+`wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/init.sh && chmod 770 init.sh && ./init.sh && cd /root/bin && . /root/bin/build-script.sh && . /root/bin/load-script.sh`
 
 
 ##Takes ... on a Linode 1024:
-real    7m55.128s
-
-real    9m49.525s
-
-real    4m27.518s
-
-real    3m56.291s
-
-real    4m4.988s
-(installs build tools)
-real   23m23.967s
 
 real   11m24.996s
 
-real   15m28 
+real   15m28s 
