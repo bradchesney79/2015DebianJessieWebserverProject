@@ -7,7 +7,7 @@ Initially this will be in implemented with bash until I arrive at an end result 
 
 I will use the bash script as a roadmap to build an Ansible playbook.
 
-Bear in mind this is very much in progress.
+Bear in mind this is very much "in progress".
 
 #How to use this on a very basic level:
 
