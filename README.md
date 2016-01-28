@@ -16,6 +16,7 @@ Bear in mind this is very much in progress.
 \#2 SSH into the machine
 
 \#3 cut/paste this mess into the command line:
+
 `wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/init.sh && chmod 770 init.sh && ./init.sh && cd /root/bin`
 
 \#4 set up a junk email service, I reccomend [http://33mail.com](http://33mail.com) -- they even have a configuration for people like us in the works
