@@ -68,7 +68,7 @@ simplified logging - http://reddit.com/user/cheaphomemadeacid
 reminder that my instructions sucked - https://www.reddit.com/user/iAMthePRONY
 
 
-For me to test the whole thing as-is:
+###For me to test the whole thing as-is:
 
 `wget https://raw.githubusercontent.com/bradchesney79/2015DebianJessieWebserverProject/master/init.sh && chmod 770 init.sh && ./init.sh && cd /root/bin && . /root/bin/build-script.sh && . /root/bin/load-script.sh`
 
