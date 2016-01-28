@@ -14,4 +14,5 @@ printf "\nnpm resources\n\n"
 
 printf "\nConfigure sentinel\n\n"
 
-. /root/bin/scripts/sentinel.sh
+. /root/bin/scripts/sentinel-db-setup.sh
+. /root/bin/scripts/implement-sentinel.sh
