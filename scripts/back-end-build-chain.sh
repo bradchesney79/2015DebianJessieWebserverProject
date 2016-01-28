@@ -28,15 +28,16 @@ printf "\n########## PLACE A POPULATED composer.json FILE ###\n"
 
 echo '{
 
-  "name": "Debian-Host",
+  "name": "bradchesney79/Debian-Host",
   "description": "Performant, secure LAMP",
   "minimum-stability": "dev",
+  "license": "Unlicense",
 
   "require": {
-    "nategood/httpful": "*",
-    "gabordemooij/redbean": "dev-master",
+    "nategood/httpful": "^0.2",
+    "gabordemooij/redbean": "^4.3",
     "phpmailer/phpmailer": "~5.2",
-    "swiftmailer/swiftmailer": "@stable",
+    "swiftmailer/swiftmailer": "^5.4",
     "league/csv": "^8.0",
     "funct/funct": "^1.1",
     "mobiledetect/mobiledetectlib": "^2.8",
@@ -46,7 +47,8 @@ echo '{
     "phpoffice/phpexcel": "^1.8",
     "mpdf/mpdf": "^6.0",
     "cartalyst/sentinel": "2.0.*",
-    "illuminate/database": "^5.2"
+    "illuminate/database": "^5.2",
+    "zendframework/zendframework": "^2.5"
   },
 
   "require-dev": {
