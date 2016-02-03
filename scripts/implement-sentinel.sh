@@ -30,3 +30,36 @@ $capsule->bootEloquent();
 
 ?>" > "$WEBROOT/lib/defaultDbConn.php"
 
+echo "<?php
+
+require $WEBROOT/lib/defaultDbConn.php;
+
+class userRegistration {
+
+  $email;
+  $password;
+  $error;
+  $errorType;
+  $errorDescription;
+
+  public function registerUser(dirtyEmail, dirtyPassword) {
+  
+  this.email=saniVali::validateEmail(email);
+  this.email=saniVali::sanitizePassword(password);
+  
+  if (isset(this.email) {
+    // Register a new user
+    
+  }
+  else {
+  
+
+
+Sentinel::register([
+    'email'    => 'test@example.com',
+    'password' => 'foobar',
+]);
+
+}
+
+
