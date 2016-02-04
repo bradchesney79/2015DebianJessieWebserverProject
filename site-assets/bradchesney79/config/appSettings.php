@@ -1,10 +1,14 @@
+namespace bradchesney79/config/AppSettings
+
+
 // Application Settings //
 
-$WEBROOT = "/var/www";
+class AppSettings {
 
-$DOCUMENTROOT = $WEBROOT . "/https
 
-$HOST = "www"
+var $WEBROOT = "/var/www";
+var $DOCUMENTROOT = $WEBROOT . "/https";
+var $HOST = "www";
+var $DOMAIN = "rustbeltrebellion.com";
 
-$DOMAIN = "rustbeltrebellion.com"
-
+}
