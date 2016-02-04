@@ -102,6 +102,10 @@ printf "\n########## APT SOURCES, FIRST UPDATE, & COMMON PACKAGES INSTALL ###\n\
 
 . /root/bin/scripts/apt.sh
 
+printf "\n########## ALLOW SUPPLEMENTAL SSH ALGORITHMS ###\n"
+
+. /root/bin/scripts/configure-sshd.sh
+
 printf "\n########## UPDATE THE IPTABLES RULES ###\n"
 
 . /root/bin/scripts/iptables.sh
