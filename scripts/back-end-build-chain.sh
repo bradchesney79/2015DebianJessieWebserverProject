@@ -34,7 +34,7 @@ echo '{
   "license": "Unlicense",
 
   "require": {
-    "nategood/httpful": "^0.2",
+	"nategood/httpful": "^0.2",
     "gabordemooij/redbean": "^4.3",
     "phpmailer/phpmailer": "~5.2",
     "swiftmailer/swiftmailer": "^5.4",
@@ -48,7 +48,9 @@ echo '{
     "mpdf/mpdf": "^6.0",
     "cartalyst/sentinel": "2.0.*",
     "illuminate/database": "^5.2",
-    "zendframework/zendframework": "^2.5"
+    "zendframework/zendframework": "^2.5",
+    "bradchesney79/2015-debian-jessie-webserver-project-app-assets": "dev-master"
+
   },
 
   "require-dev": {
