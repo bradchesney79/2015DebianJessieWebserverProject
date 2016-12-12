@@ -1,6 +1,7 @@
 #!/bin/bash
 
 #CONFIGURATION="${1:-'./setup.conf'}"
+script /root/setuplog.log
 
 source /root/bin/setup.conf
 
