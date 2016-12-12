@@ -10,6 +10,8 @@ pushd /root/bin
 
 wget https://github.com/bradchesney79/2015DebianJessieWebserverProject/archive/master.zip
 
+apt-get -y install unzip
+
 unzip /root/bin/master.zip
 
 cp -R /root/bin/2015DebianJessieWebserverProject-master/* /root/bin/
